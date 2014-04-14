@@ -1,0 +1,8 @@
+# build directories
+dist
+build
+
+# private properties
+nbproject/project.properties
+nbproject/configs/
+nbproject/private/
