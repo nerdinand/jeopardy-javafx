@@ -54,17 +54,23 @@ public class Jeopardy extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        roundPath = args[0];
-        Loader loader = new Loader();
-        try {
-            Round round = loader.load(roundPath);
-            
-            
-        } catch (JeopardyLoaderException ex) {
-            Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, null, ex);
+        int argCount = args.length;
+        
+        if (argCount == 1) {
+            roundPath = args[0];
+            Loader loader = new Loader();
+            try {
+                Round round = loader.load(roundPath);
+
+            } catch (JeopardyLoaderException ex) {
+                Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            launch(args);
+        } else {
+            System.out.println("ERROR: Pass the round YAML file as an argument.");
         }
         
-        launch(args);
     }
 
 }
