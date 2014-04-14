@@ -33,10 +33,10 @@ public enum MediaType {
     TEXT;
     
     static public MediaType fromString(String type) {
-        switch(type) {
-            case ":image": return IMAGE;
-            case ":text": return TEXT;
-            default: return null;
-        }
+        if(type == ":image")
+            return IMAGE;
+        if(type == ":text")
+            return TEXT;
+        return null;
     }
 }
