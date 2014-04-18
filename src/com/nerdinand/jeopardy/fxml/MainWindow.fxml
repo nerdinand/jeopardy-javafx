@@ -13,13 +13,17 @@
     prefWidth="1280" 
     fx:controller="com.nerdinand.jeopardy.controllers.MainWindowController"
     onKeyPressed="#onKeyPressed" 
-    >
+>
     <center>
         
     </center>
     <bottom>
-        <HBox >
-            <Label text="This is the status bar" fx:id="statusBar"  /> 
+        <HBox spacing="10" >
+            <Label text="This is the status bar" fx:id="statusBarLabel" prefWidth="300" /> 
+            <Label fx:id="player1Label" prefWidth="300" /> 
+            <Label fx:id="player2Label" prefWidth="300" /> 
+            <Label fx:id="player3Label" prefWidth="300" /> 
+            <Label fx:id="player4Label" prefWidth="300" /> 
         </HBox>
     </bottom>
 </BorderPane>

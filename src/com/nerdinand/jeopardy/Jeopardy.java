@@ -24,8 +24,12 @@
 
 package com.nerdinand.jeopardy;
 
+import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Round;
 import com.nerdinand.jeopardy.view.MainWindow;
+import com.sun.prism.paint.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -39,6 +43,7 @@ import javafx.stage.Stage;
 public class Jeopardy extends Application {
     private static String roundPath;
     private static Round round;
+    private static List<Player> playerList;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -54,16 +59,12 @@ public class Jeopardy extends Application {
      */
     public static void main(String[] args) {
         int argCount = args.length;
-        
+                
         if (argCount == 1) {
-            roundPath = args[0];
-            Loader loader = new Loader();
-            try {
-                round = loader.load(roundPath);
+            playerList = initializePlayerList();
 
-            } catch (JeopardyLoaderException ex) {
-                Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            roundPath = args[0];
+            round = loadRound();
 
             launch(args);
         } else {
@@ -71,8 +72,50 @@ public class Jeopardy extends Application {
         }
     }
 
+    private static List<Player> initializePlayerList() {
+        List<Player> playerList = new ArrayList<Player>(4);
+        
+        Player player;
+        player = new Player(1);
+        player.setColor(javafx.scene.paint.Color.MEDIUMTURQUOISE);
+        player.setName("Foo");
+        playerList.add(player);
+        
+        player = new Player(2);
+        player.setColor(javafx.scene.paint.Color.ORANGE);
+        player.setName("Bar");
+        playerList.add(player);
+        
+        player = new Player(3);
+        player.setColor(javafx.scene.paint.Color.FIREBRICK);
+        player.setName("Baz");
+        playerList.add(player);
+        
+        player = new Player(4);
+        player.setColor(javafx.scene.paint.Color.PURPLE);
+        player.setName("Barz");
+        playerList.add(player);
+        
+        return playerList;
+    }
+    
+    private static Round loadRound() {
+        Loader loader = new Loader();
+        try {
+            return loader.load(roundPath);
+            
+        } catch (JeopardyLoaderException ex) {
+            Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+
     public static Round getRound() {
         return round;
     }
     
+    public static List<Player> getPlayerList() {
+        return playerList;
+    }
 }

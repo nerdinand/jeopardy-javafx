@@ -24,21 +24,51 @@
 
 package com.nerdinand.jeopardy.models;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Ferdinand Niedermann
  */
-public enum MediaType {
-    IMAGE,
-    TEXT;
+public class Player {
+    private int id;
+    private String name;
+    private Color color;
+    private int score;
+
+    public Player(int id) {
+        this.id = id;
+    }
     
-    public static MediaType fromString(String type) {
-        if(type.equals(":image")) {
-            return IMAGE;
-        } else if (type.equals(":text")) {
-            return TEXT;
-        }
-            
-        return null;
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    void increaseScore(int diff) {
+        score += diff;
+    }
+    
+    void decreaseScore(int diff) {
+        score -= diff;
+    }
+    
+    public int getScore() {
+        return score;
     }
 }
