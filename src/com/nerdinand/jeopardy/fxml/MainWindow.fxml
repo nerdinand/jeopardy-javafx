@@ -6,16 +6,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane 
-    id="AnchorPane" 
-    prefHeight="200" 
-    prefWidth="320" 
+<BorderPane 
     xmlns:fx="http://javafx.com/fxml/1" 
+    id="BorderPane" 
+    prefHeight="800" 
+    prefWidth="1280" 
     fx:controller="com.nerdinand.jeopardy.controllers.MainWindowController"
     onKeyPressed="#onKeyPressed" 
     >
-    <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
-    </children>
-</AnchorPane>
+    <center>
+        
+    </center>
+    <bottom>
+        <HBox >
+            <Label text="This is the status bar" fx:id="statusBar"  /> 
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -25,11 +25,10 @@
 package com.nerdinand.jeopardy;
 
 import com.nerdinand.jeopardy.models.Round;
+import com.nerdinand.jeopardy.view.MainWindow;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -39,14 +38,14 @@ import javafx.stage.Stage;
  */
 public class Jeopardy extends Application {
     private static String roundPath;
+    private static Round round;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/MainWindow.fxml"));
-
-        Scene scene = new Scene(root);
+        MainWindow mainWindow = new MainWindow(round);
+        mainWindow.initialize();
         stage.setTitle("Jeopardy");
-        stage.setScene(scene);
+        stage.setScene(new Scene(mainWindow.getRoot()));
         stage.show();
     }
 
@@ -60,7 +59,7 @@ public class Jeopardy extends Application {
             roundPath = args[0];
             Loader loader = new Loader();
             try {
-                Round round = loader.load(roundPath);
+                round = loader.load(roundPath);
 
             } catch (JeopardyLoaderException ex) {
                 Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +69,10 @@ public class Jeopardy extends Application {
         } else {
             System.out.println("ERROR: Pass the round YAML file as an argument.");
         }
-        
     }
 
+    public static Round getRound() {
+        return round;
+    }
+    
 }

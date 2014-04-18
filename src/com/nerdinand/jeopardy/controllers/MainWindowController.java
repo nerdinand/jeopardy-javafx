@@ -1,5 +1,6 @@
 package com.nerdinand.jeopardy.controllers;
 
+import com.nerdinand.jeopardy.models.Frame;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -15,21 +16,23 @@ import javafx.scene.input.KeyEvent;
 public class MainWindowController implements Initializable {
 
     @FXML
-    private Label label;
-
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private Label statusBar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }
+    
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+    }
 
     @FXML
     private void onKeyPressed(KeyEvent event) {
         System.out.println(event.getText());
+    }
+    
+    public void handleFrameButtonClick(Frame frame) {
+        statusBar.setText(frame.getPoints()+" was clicked!");
     }
 }
