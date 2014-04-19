@@ -1,7 +1,10 @@
 package com.nerdinand.jeopardy.controllers;
 
+import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
+import com.nerdinand.jeopardy.controllers.listeners.SetPlayerNameKeyEventListener;
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
+import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
@@ -12,9 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import org.controlsfx.dialog.Dialogs;
 
 /**
@@ -35,6 +35,7 @@ public class MainWindowController implements Initializable {
     private Label player4Label;
 
     private Label[] playerLabels;
+    private PlayerKeyEventListener playerKeyEventListener;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -42,6 +43,7 @@ public class MainWindowController implements Initializable {
 
         initializeScoreDisplay();
 
+        setPlayerKeyEventListener(new SetPlayerNameKeyEventListener());
         getPlayers().setPlayersArmed(true);
     }
 
@@ -58,24 +60,16 @@ public class MainWindowController implements Initializable {
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
         if (player != null) {
-            player.setArmed(false);
-
-            String name = Dialogs.create()
-                    .owner(null)
-                    .title("Name")
-                    .masthead(null)
-                    .message("Player " + player.getId() + ", please give us your name!")
-                    .showTextInput(null);
-
-            player.setName(name);
-
+            playerKeyEventListener.onPlayerKeyPressed(player);
             updatePlayerStatus(player);
         }
     }
 
     public void handleFrameButtonClick(Frame frame) {
-        showStatus(frame.getPoints() + " was clicked!");
-
+        getPlayers().setPlayersArmed(true);
+        
+        setPlayerKeyEventListener(new FrameKeyEventListener(frame));
+        
         if (Assets.jeopardyMusic != null) {
             Assets.jeopardyMusic.stop();
             Assets.jeopardyMusic.play();
@@ -89,12 +83,16 @@ public class MainWindowController implements Initializable {
     private void updatePlayerStatus(Player player) {
         Label playerLabel = playerLabels[player.getId() - 1];
         playerLabel.setTextFill(player.getColor());
-        playerLabel.setText(player.getName() + ": " + player.getScore());
+        playerLabel.setText(player.getName() + ": " + player.getPoints());
     }
 
     private void initializeScoreDisplay() {
         for (Player player : getPlayers().getPlayerList()) {
             updatePlayerStatus(player);
         }
+    }
+
+    private void setPlayerKeyEventListener(PlayerKeyEventListener playerKeyEventListener) {
+        this.playerKeyEventListener = playerKeyEventListener;
     }
 }

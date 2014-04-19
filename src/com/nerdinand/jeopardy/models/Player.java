@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.nerdinand.jeopardy.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.paint.Color;
 
 /**
@@ -34,13 +35,14 @@ public class Player {
     private int id;
     private String name;
     private Color color;
-    private int score;
+
     private boolean armed;
+    private List<Score> scores = new ArrayList<Score>();
 
     public Player(int id) {
         this.id = id;
     }
-    
+
     public void setColor(Color color) {
         this.color = color;
     }
@@ -61,16 +63,16 @@ public class Player {
         return name;
     }
 
-    void increaseScore(int diff) {
-        score += diff;
-    }
-    
-    void decreaseScore(int diff) {
-        score -= diff;
-    }
-    
-    public int getScore() {
-        return score;
+    public int getPoints() {
+        int points = 0;
+
+        if (scores != null) {
+            for (Score score : scores) {
+                points += score.getPoints();
+            }
+        }
+
+        return points;
     }
 
     public void setArmed(boolean armed) {
@@ -79,5 +81,9 @@ public class Player {
 
     public boolean isArmed() {
         return armed;
+    }
+
+    public void addScore(Score score) {
+        scores.add(score);
     }
 }

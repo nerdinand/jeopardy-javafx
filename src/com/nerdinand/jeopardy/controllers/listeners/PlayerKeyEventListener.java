@@ -22,60 +22,14 @@
  * THE SOFTWARE.
  */
 
-package com.nerdinand.jeopardy.models;
+package com.nerdinand.jeopardy.controllers.listeners;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import com.nerdinand.jeopardy.models.Player;
 
 /**
  *
  * @author Ferdinand Niedermann
  */
-public class Frame {
-    private int points;
-    private Answer answer;
-    private Question question;
-    private File rootPath;
-    
-    private List<Score> scores = new ArrayList<Score>();
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
-
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setRootPath(File rootPath) {
-        this.rootPath = rootPath;
-        
-        getAnswer().setRootPath(new File(rootPath, String.valueOf(getPoints())));
-        getQuestion().setRootPath(new File(rootPath, String.valueOf(getPoints())));
-    }
-
-    public File getRootPath() {
-        return rootPath;
-    }
-
-    public void addScore(Score score) {
-        scores.add(score);
-    }
+public interface PlayerKeyEventListener {
+    public void onPlayerKeyPressed(Player player);
 }

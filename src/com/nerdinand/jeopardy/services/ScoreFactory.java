@@ -22,60 +22,31 @@
  * THE SOFTWARE.
  */
 
-package com.nerdinand.jeopardy.models;
+package com.nerdinand.jeopardy.services;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import com.nerdinand.jeopardy.models.Frame;
+import com.nerdinand.jeopardy.models.Player;
+import com.nerdinand.jeopardy.models.Score;
 
 /**
  *
  * @author Ferdinand Niedermann
  */
-public class Frame {
-    private int points;
-    private Answer answer;
-    private Question question;
-    private File rootPath;
-    
-    private List<Score> scores = new ArrayList<Score>();
+public class ScoreFactory {
+    private static ScoreFactory instance;
 
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
-
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setRootPath(File rootPath) {
-        this.rootPath = rootPath;
+    public static ScoreFactory getInstance() {
+        if (instance == null) {
+            instance = new ScoreFactory();
+        }
         
-        getAnswer().setRootPath(new File(rootPath, String.valueOf(getPoints())));
-        getQuestion().setRootPath(new File(rootPath, String.valueOf(getPoints())));
+        return instance;
     }
-
-    public File getRootPath() {
-        return rootPath;
-    }
-
-    public void addScore(Score score) {
-        scores.add(score);
+    
+    public Score createScore(Player player, Frame frame, int points) {
+        Score score = new Score(player, frame, points);
+        player.addScore(score);
+        frame.addScore(score);
+        return score;
     }
 }

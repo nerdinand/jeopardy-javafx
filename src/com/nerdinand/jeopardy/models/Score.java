@@ -24,58 +24,23 @@
 
 package com.nerdinand.jeopardy.models;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Ferdinand Niedermann
  */
-public class Frame {
-    private int points;
-    private Answer answer;
-    private Question question;
-    private File rootPath;
+public class Score {
+    private final Player player;
+    private final Frame frame;
+    private final int points;
     
-    private List<Score> scores = new ArrayList<Score>();
-
-    public void setPoints(int points) {
+    public Score(Player player, Frame frame, int points) {
+        this.player = player;
+        this.frame = frame;
         this.points = points;
     }
 
     public int getPoints() {
         return points;
     }
-
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
-
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setRootPath(File rootPath) {
-        this.rootPath = rootPath;
-        
-        getAnswer().setRootPath(new File(rootPath, String.valueOf(getPoints())));
-        getQuestion().setRootPath(new File(rootPath, String.valueOf(getPoints())));
-    }
-
-    public File getRootPath() {
-        return rootPath;
-    }
-
-    public void addScore(Score score) {
-        scores.add(score);
-    }
+    
 }

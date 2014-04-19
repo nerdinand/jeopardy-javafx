@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2014 Ferdinand Niedermann.
+ * Copyright 2014 ferdi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,32 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.nerdinand.jeopardy;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.media.AudioClip;
+package com.nerdinand.jeopardy.controllers.listeners;
+
+import com.nerdinand.jeopardy.models.Frame;
+import com.nerdinand.jeopardy.models.Player;
+import com.nerdinand.jeopardy.models.Score;
+import com.nerdinand.jeopardy.services.ScoreFactory;
 
 /**
  *
- * @author Ferdinand Niedermann
+ * @author ferdi
  */
-public class Assets {
+public class FrameKeyEventListener implements PlayerKeyEventListener {
+    private final Frame frame;
+    private Score score;
 
-    public static final String JEOPARDY_MP3 = "/com/nerdinand/jeopardy/media/jeopardy.mp3";
-    public static final String MAIN_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/MainWindow.fxml";
-    public static AudioClip jeopardyMusic;
-
-    public static void load() {
-        loadAudio();
+    public FrameKeyEventListener(Frame frame) {
+        this.frame = frame;
     }
 
-    private static void loadAudio() {
-        try {
-            String source = Assets.class.getResource(Assets.JEOPARDY_MP3).toString();
-            jeopardyMusic = new AudioClip(source);
-        } catch (Exception ex) {
-            Logger.getLogger(Assets.class.getName()).log(Level.WARNING, "Jeopardy theme music file not found at src" + JEOPARDY_MP3);
-        }
+    @Override
+    public void onPlayerKeyPressed(Player player) {
+        ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
     }
+    
 }
