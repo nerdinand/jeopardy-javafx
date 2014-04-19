@@ -6,3 +6,5 @@ build
 nbproject/project.properties
 nbproject/configs/
 nbproject/private/
+.DS_Store
+src/com/nerdinand/jeopardy/media

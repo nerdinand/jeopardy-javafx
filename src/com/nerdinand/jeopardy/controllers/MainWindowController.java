@@ -1,5 +1,6 @@
 package com.nerdinand.jeopardy.controllers;
 
+import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
@@ -11,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import org.controlsfx.dialog.Dialogs;
 
 /**
@@ -37,7 +41,7 @@ public class MainWindowController implements Initializable {
         playerLabels = new Label[]{player1Label, player2Label, player3Label, player4Label};
 
         initializeScoreDisplay();
-        
+
         getPlayers().setPlayersArmed(true);
     }
 
@@ -55,7 +59,7 @@ public class MainWindowController implements Initializable {
 
         if (player != null) {
             player.setArmed(false);
-            
+
             String name = Dialogs.create()
                     .owner(null)
                     .title("Name")
@@ -64,13 +68,16 @@ public class MainWindowController implements Initializable {
                     .showTextInput(null);
 
             player.setName(name);
-            
+
             updatePlayerStatus(player);
         }
     }
 
     public void handleFrameButtonClick(Frame frame) {
         showStatus(frame.getPoints() + " was clicked!");
+
+        Assets.jeopardyMusic.stop();
+        Assets.jeopardyMusic.play();
     }
 
     private void showStatus(String string) {

@@ -24,6 +24,7 @@
 
 package com.nerdinand.jeopardy.view;
 
+import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.controllers.MainWindowController;
 import com.nerdinand.jeopardy.models.Category;
 import com.nerdinand.jeopardy.models.Frame;
@@ -53,7 +54,7 @@ public class MainWindow {
 
     public void initialize() throws IOException {
         FXMLLoader fXMLLoader = new FXMLLoader();
-        BorderPane root = fXMLLoader.load(getClass().getResource("/com/nerdinand/jeopardy/fxml/MainWindow.fxml").openStream());
+        BorderPane root = fXMLLoader.load(getClass().getResource(Assets.MAIN_WINDOW_FXML).openStream());
         this.root = root;
         this.controller = (MainWindowController) fXMLLoader.getController();
                 

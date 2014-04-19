@@ -46,7 +46,9 @@ public class Jeopardy extends Application {
     private static Players players;
 
     @Override
-    public void start(Stage stage) throws Exception {        
+    public void start(Stage stage) throws Exception {  
+        Assets.load();
+        
         MainWindow mainWindow = new MainWindow(round);
         mainWindow.initialize();
         stage.setTitle("Jeopardy");
