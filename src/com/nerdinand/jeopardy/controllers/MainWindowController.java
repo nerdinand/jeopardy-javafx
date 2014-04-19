@@ -76,8 +76,10 @@ public class MainWindowController implements Initializable {
     public void handleFrameButtonClick(Frame frame) {
         showStatus(frame.getPoints() + " was clicked!");
 
-        Assets.jeopardyMusic.stop();
-        Assets.jeopardyMusic.play();
+        if (Assets.jeopardyMusic != null) {
+            Assets.jeopardyMusic.stop();
+            Assets.jeopardyMusic.play();
+        }
     }
 
     private void showStatus(String string) {

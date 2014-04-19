@@ -42,11 +42,11 @@ public class Assets {
     }
 
     private static void loadAudio() {
-        String source = Assets.class.getResource(Assets.JEOPARDY_MP3).toString();
         try {
+            String source = Assets.class.getResource(Assets.JEOPARDY_MP3).toString();
             jeopardyMusic = new AudioClip(source);
         } catch(Exception ex) {
-            Logger.getLogger(Assets.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Assets.class.getName()).log(Level.WARNING, "Jeopardy theme music file not found at src/com/nerdinand/jeopardy/media/jeopardy.mp3");
         }
     }
 }
