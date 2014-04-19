@@ -61,7 +61,7 @@ public class MainWindow {
         initializeGridMainWindow(root);
     }
 
-    private Button initializeFrameButton(Frame frame) {
+    private Button initializeFrameButton(final Frame frame) {
         Button frameButton = new Button(""+frame.getPoints());
         frameButton.setPrefHeight(150);
         frameButton.setPrefWidth(500);
