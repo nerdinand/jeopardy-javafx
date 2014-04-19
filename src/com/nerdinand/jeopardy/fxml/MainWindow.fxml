@@ -7,18 +7,25 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane 
-    xmlns:fx="http://javafx.com/fxml/1" 
-    id="BorderPane" 
+    xmlns:fx="http://javafx.com/fxml/1"
     prefHeight="800" 
     prefWidth="1280" 
     fx:controller="com.nerdinand.jeopardy.controllers.MainWindowController"
     onKeyPressed="#onKeyPressed" 
 >
     <center>
-        
+        <GridPane fx:id="gridPane" hgap="10" vgap="10" >             
+            <BorderPane.margin>
+                <javafx.geometry.Insets left="10" right="10" bottom="10" top="10" />   
+            </BorderPane.margin>
+        </GridPane> 
     </center>
     <bottom>
         <HBox spacing="10" >
+            <BorderPane.margin>
+                <javafx.geometry.Insets left="10" right="10" bottom="10" top="10" />   
+            </BorderPane.margin>
+            
             <Label text="This is the status bar" fx:id="statusBarLabel" prefWidth="300" /> 
             <Label fx:id="player1Label" prefWidth="300" /> 
             <Label fx:id="player2Label" prefWidth="300" /> 

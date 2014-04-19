@@ -36,8 +36,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 
 /**
  *
@@ -57,41 +56,14 @@ public class MainWindow {
         BorderPane root = fXMLLoader.load(getClass().getResource("/com/nerdinand/jeopardy/fxml/MainWindow.fxml").openStream());
         this.root = root;
         this.controller = (MainWindowController) fXMLLoader.getController();
-        initializeMainWindow(root);
+                
+        initializeGridMainWindow(root);
     }
 
-    private void initializeMainWindow(BorderPane borderPane) {
-        HBox categoriesContainer = new HBox();
-        categoriesContainer.setSpacing(10);
-
-        categoriesContainer.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        for (Category category : round.getCategories()) {
-            categoriesContainer.getChildren().add(initializeCategoryLayout(category));
-        }
-        
-        borderPane.setCenter(categoriesContainer);
-    }
-
-    private VBox initializeCategoryLayout(Category category) {
-        VBox frameContainer = new VBox();
-        frameContainer.setSpacing(10);
-        Label categoryName = new Label(category.getName());
-        frameContainer.getChildren().add(categoryName);
-        
-        for (Frame frame : category.getFrames()) {
-            frameContainer.getChildren().add(initializeFrameLayout(frame));
-        }
-        
-        return frameContainer;
-    }
-    
-    private VBox initializeFrameLayout(Frame frame) {
-        VBox frameLayout = new VBox();
-
+    private Button initializeFrameButton(Frame frame) {
         Button frameButton = new Button(""+frame.getPoints());
         frameButton.setPrefHeight(150);
         frameButton.setPrefWidth(500);
-        frameLayout.getChildren().add(frameButton);
         
         frameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -100,11 +72,31 @@ public class MainWindow {
             }
         });
         
-        return frameLayout;
+        return frameButton;
     }
 
     public Parent getRoot() {
         return root;
     }
-    
+
+    private void initializeGridMainWindow(BorderPane root) {
+        GridPane gridPain = (GridPane) root.getCenter();
+
+        int categoryIndex = 0;
+        
+        for (Category category : round.getCategories()) {
+            int frameIndex = 0;
+            
+            gridPain.add(new Label(category.getName()), categoryIndex, frameIndex);
+            
+            for (Frame frame : category.getFrames()) {
+                gridPain.add(initializeFrameButton(frame), categoryIndex, frameIndex + 1);
+                frameIndex++;
+            }
+            
+            categoryIndex++;
+        }
+        
+        root.setCenter(gridPain);
+    }    
 }
