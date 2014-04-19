@@ -3,6 +3,7 @@ package com.nerdinand.jeopardy.controllers;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
+import com.nerdinand.jeopardy.models.Players;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -33,8 +35,14 @@ public class MainWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         playerLabels = new Label[]{player1Label, player2Label, player3Label, player4Label};
-        
+
         initializeScoreDisplay();
+        
+        getPlayers().setPlayersArmed(true);
+    }
+
+    private static Players getPlayers() {
+        return Jeopardy.getPlayers();
     }
 
     @FXML
@@ -43,7 +51,22 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void onKeyPressed(KeyEvent event) {
-        System.out.println(event.getText());
+        Player player = getPlayers().getArmedPlayerForKey(event.getCode());
+
+        if (player != null) {
+            player.setArmed(false);
+            
+            String name = Dialogs.create()
+                    .owner(null)
+                    .title("Name")
+                    .masthead(null)
+                    .message("Player " + player.getId() + ", please give us your name!")
+                    .showTextInput(null);
+
+            player.setName(name);
+            
+            updatePlayerStatus(player);
+        }
     }
 
     public void handleFrameButtonClick(Frame frame) {
@@ -61,7 +84,7 @@ public class MainWindowController implements Initializable {
     }
 
     private void initializeScoreDisplay() {
-        for (Player player : Jeopardy.getPlayerList()) {
+        for (Player player : getPlayers().getPlayerList()) {
             updatePlayerStatus(player);
         }
     }

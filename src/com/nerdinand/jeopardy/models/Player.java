@@ -35,6 +35,7 @@ public class Player {
     private String name;
     private Color color;
     private int score;
+    private boolean armed;
 
     public Player(int id) {
         this.id = id;
@@ -70,5 +71,13 @@ public class Player {
     
     public int getScore() {
         return score;
+    }
+
+    public void setArmed(boolean armed) {
+        this.armed = armed;
+    }
+
+    public boolean isArmed() {
+        return armed;
     }
 }
