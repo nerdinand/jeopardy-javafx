@@ -12,6 +12,11 @@ Run
 ---
 `./gradlew run '-Pargs=/path/to/your/round.yml'`
 
+Development
+-----------
+
+To import the project into NetBeans, you should install the Gradle Plugin (http://plugins.netbeans.org/plugin/44510/gradle-support) and then open the project via File -> Open Project... . To be able to run the project from within NetBeans, create a custom Profile in the Project Properties, and change the built-in Task "Run" to include the argument `-Pargs=/path/to/your/round.yml`.
+
 Jeopardy Theme Music
 --------------------
 
