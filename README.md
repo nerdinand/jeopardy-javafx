@@ -8,17 +8,16 @@ Requirements
 
 * JDK 1.8 (http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-Preparation
------------
-
-* `cp nbproject/project.properties.sample nbproject/project.properties`
-* Change `javafx.param.0.name=/Users/ferdi/projects/jeopardy/pony-jeopardy/round1.yml` in `nbproject/project.properties` to the path of your round YAML file.
-
 Run
 ---
-`ant run`
+`./gradlew run '-Pargs=/path/to/your/round.yml'`
+
+Development
+-----------
+
+To import the project into NetBeans, you should install the Gradle Plugin (http://plugins.netbeans.org/plugin/44510/gradle-support) and then open the project via File -> Open Project... . To be able to run the project from within NetBeans, create a custom Profile in the Project Properties, and change the built-in Task "Run" to include the argument `-Pargs=/path/to/your/round.yml`.
 
 Jeopardy Theme Music
 --------------------
 
-As the Jeopardy theme music is probably protected (as is the trade mark, most likely :worried:), we do not include the Jeopardy theme music in this project. We do however support playing it back if it happens to lie around as `src/com/nerdinand/jeopardy/media/jeopardy.mp3` in your source tree... :wink:
+As the Jeopardy theme music is probably protected (as is the trade mark, most likely :worried:), we do not include the Jeopardy theme music in this project. We do however support playing it back if it happens to lie around as `src/main/resources/com/nerdinand/jeopardy/media/jeopardy.mp3` in your source tree... :wink:
