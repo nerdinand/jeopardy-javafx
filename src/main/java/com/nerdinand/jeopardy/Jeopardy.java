@@ -24,11 +24,9 @@
 
 package com.nerdinand.jeopardy;
 
-import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.models.Round;
 import com.nerdinand.jeopardy.view.MainWindow;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -42,7 +40,6 @@ import javafx.stage.Stage;
 public class Jeopardy extends Application {
     private static String roundPath;
     private static Round round;
-    private static List<Player> playerList;
     private static Players players;
 
     @Override
@@ -70,7 +67,8 @@ public class Jeopardy extends Application {
 
             launch(args);
         } else {
-            System.out.println("ERROR: Pass the round YAML file as an argument.");
+            Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, "Pass the round YAML file as an argument.");
+            System.exit(-1);
         }
     }
     
