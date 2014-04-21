@@ -22,34 +22,26 @@
  * THE SOFTWARE.
  */
 
-package com.nerdinand.jeopardy.controllers;
+package com.nerdinand.jeopardy.services;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  *
  * @author Ferdinand Niedermann
  */
-public class AnswerWindowController implements Initializable {
-    @FXML
-    private Label textLabel;
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
+public class Util { 
+    public static String readUTF8File(File file) throws IOException {
+        return readFile(file.getPath(), StandardCharsets.UTF_8);
     }
     
-    public void showText(String text) {
-        textLabel.setText(text);
-    }
-    
-    @FXML
-    private void onKeyPressed(KeyEvent event) {
-        System.out.println("key pressed in answer window");
+    private static String readFile(String path, Charset encoding) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
     }
 }

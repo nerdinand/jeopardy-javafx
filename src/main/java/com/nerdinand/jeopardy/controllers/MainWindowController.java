@@ -5,11 +5,11 @@ import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
 import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
 import com.nerdinand.jeopardy.controllers.listeners.SetPlayerNameKeyEventListener;
-import com.nerdinand.jeopardy.models.Answer;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.SceneFactory;
+import com.nerdinand.jeopardy.view.AnswerWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -81,7 +81,9 @@ public class MainWindowController implements Initializable {
     }
 
     private void openAnswerWindow(Frame frame) {
-        Scene scene = SceneFactory.getInstance().sceneForAnswer(frame.getAnswer());
+        AnswerWindow answerWindow = new AnswerWindow(frame.getAnswer());
+
+        Scene scene = answerWindow.initialize();
         
         if (scene != null) {
             Stage stage = new Stage();
