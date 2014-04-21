@@ -21,35 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.nerdinand.jeopardy;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.media.AudioClip;
+package com.nerdinand.jeopardy.controllers;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 
 /**
  *
  * @author Ferdinand Niedermann
  */
-public class Assets {
-
-    public static final String JEOPARDY_MP3 =           "/com/nerdinand/jeopardy/media/jeopardy.mp3";
+public class AnswerWindowController implements Initializable {
+    @FXML
+    private Label textLabel;
     
-    public static final String MAIN_WINDOW_FXML =       "/com/nerdinand/jeopardy/fxml/MainWindow.fxml";
-    public static final String ANSWER_WINDOW_FXML =     "/com/nerdinand/jeopardy/fxml/AnswerWindow.fxml";
-
-    public static AudioClip jeopardyMusic;
-
-    public static void load() {
-        loadAudio();
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
     }
-
-    private static void loadAudio() {
-        try {
-            String source = Assets.class.getResource(Assets.JEOPARDY_MP3).toString();
-            jeopardyMusic = new AudioClip(source);
-        } catch (Exception ex) {
-            Logger.getLogger(Assets.class.getName()).log(Level.WARNING, "Jeopardy theme music file not found at src" + JEOPARDY_MP3);
-        }
+    
+    @FXML
+    private void onKeyPressed(KeyEvent event) {
+        
     }
 }

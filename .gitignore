@@ -1,10 +1,9 @@
-# build directories
-dist
 build
 
-# private properties
-nbproject/project.properties
-nbproject/configs/
-nbproject/private/
+nbproject/
 .DS_Store
-src/com/nerdinand/jeopardy/media
+
+src/main/resources/com/nerdinand/jeopardy/media/
+.gradle/
+.nb-gradle-properties
+.nb-gradle/

@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.nerdinand.jeopardy.models;
 
 import java.io.File;
@@ -33,12 +32,14 @@ import java.util.List;
  * @author Ferdinand Niedermann
  */
 public class Frame {
+
     private int points;
     private Answer answer;
     private Question question;
     private File rootPath;
-    
+
     private List<Score> scores = new ArrayList<Score>();
+    private String categoryName;
 
     public void setPoints(int points) {
         this.points = points;
@@ -66,7 +67,7 @@ public class Frame {
 
     public void setRootPath(File rootPath) {
         this.rootPath = rootPath;
-        
+
         getAnswer().setRootPath(new File(rootPath, String.valueOf(getPoints())));
         getQuestion().setRootPath(new File(rootPath, String.valueOf(getPoints())));
     }
@@ -77,5 +78,17 @@ public class Frame {
 
     public void addScore(Score score) {
         scores.add(score);
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public String toString() {
+        return getCategoryName() + " for " + getPoints();
     }
 }

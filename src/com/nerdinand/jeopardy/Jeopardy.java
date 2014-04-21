@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.nerdinand.jeopardy;
 
 import com.nerdinand.jeopardy.models.Player;
@@ -40,15 +39,16 @@ import javafx.stage.Stage;
  * @author Ferdinand Niedermann
  */
 public class Jeopardy extends Application {
+
     private static String roundPath;
     private static Round round;
     private static List<Player> playerList;
     private static Players players;
 
     @Override
-    public void start(Stage stage) throws Exception {  
+    public void start(Stage stage) throws Exception {
         Assets.load();
-        
+
         MainWindow mainWindow = new MainWindow(round);
         mainWindow.initialize();
         stage.setTitle("Jeopardy");
@@ -61,7 +61,7 @@ public class Jeopardy extends Application {
      */
     public static void main(String[] args) {
         int argCount = args.length;
-                
+
         if (argCount == 1) {
             players = new Players();
 
@@ -73,16 +73,16 @@ public class Jeopardy extends Application {
             System.out.println("ERROR: Pass the round YAML file as an argument.");
         }
     }
-    
+
     private static Round loadRound() {
         Loader loader = new Loader();
         try {
             return loader.load(roundPath);
-            
+
         } catch (JeopardyLoaderException ex) {
-            Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, "Round YAML file could not be loaded.", ex);
         }
-        
+
         return null;
     }
 

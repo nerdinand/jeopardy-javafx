@@ -1,21 +1,24 @@
 package com.nerdinand.jeopardy.controllers;
 
-import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
-import com.nerdinand.jeopardy.controllers.listeners.SetPlayerNameKeyEventListener;
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
+import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
 import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
+import com.nerdinand.jeopardy.controllers.listeners.SetPlayerNameKeyEventListener;
+import com.nerdinand.jeopardy.models.Answer;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
+import com.nerdinand.jeopardy.services.SceneFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import org.controlsfx.dialog.Dialogs;
+import javafx.stage.Stage;
 
 /**
  *
@@ -60,6 +63,8 @@ public class MainWindowController implements Initializable {
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
         if (player != null) {
+            System.out.println(player.getName() + " pressed.");
+
             playerKeyEventListener.onPlayerKeyPressed(player);
             updatePlayerStatus(player);
         }
@@ -67,9 +72,27 @@ public class MainWindowController implements Initializable {
 
     public void handleFrameButtonClick(Frame frame) {
         getPlayers().setPlayersArmed(true);
-        
+
         setPlayerKeyEventListener(new FrameKeyEventListener(frame));
+
+        playJeopardyMusic();
+
+        openAnswerWindow(frame);
+    }
+
+    private void openAnswerWindow(Frame frame) {
+        Scene scene = SceneFactory.getInstance().sceneForAnswer(frame.getAnswer());
         
+        if (scene != null) {
+            Stage stage = new Stage();
+
+            stage.setTitle(frame.toString());
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
+    private void playJeopardyMusic() {
         if (Assets.jeopardyMusic != null) {
             Assets.jeopardyMusic.stop();
             Assets.jeopardyMusic.play();

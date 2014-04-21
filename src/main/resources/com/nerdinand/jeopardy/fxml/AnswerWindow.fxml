@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox 
+    xmlns:fx="http://javafx.com/fxml/1"
+    prefHeight="800" 
+    prefWidth="1280" 
+    fx:controller="com.nerdinand.jeopardy.controllers.AnswerWindowController"
+    onKeyPressed="#onKeyPressed"
+>
+    
+    <Label fx:id="textLabel" alignment="CENTER"  />
+    
+</HBox>

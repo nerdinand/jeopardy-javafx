@@ -24,6 +24,8 @@
 
 package com.nerdinand.jeopardy;
 
+import com.nerdinand.jeopardy.models.Category;
+import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Round;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,6 +51,13 @@ public class Loader {
             Yaml yaml = new Yaml(new Constructor(Round.class));
             round = (Round) yaml.load(new FileInputStream(path));
             round.setRootPath(roundDir);
+            
+            for (Category category : round.getCategories()) {
+                for (Frame frame : category.getFrames()) {
+                    frame.setCategoryName(category.getName());
+                }
+            }
+            
         } catch (Exception e) {
             throw new JeopardyLoaderException(e);
         }
