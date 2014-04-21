@@ -36,7 +36,8 @@ public class Assets {
     public static final String JEOPARDY_MP3 = "/com/nerdinand/jeopardy/media/jeopardy.mp3";
 
     public static final String MAIN_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/MainWindow.fxml";
-    public static final String ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/AnswerWindow.fxml";
+    public static final String TEXT_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/TextAnswerWindow.fxml";
+    public static final String IMAGE_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/ImageAnswerWindow.fxml";
 
     public static AudioClip jeopardyMusic;
 

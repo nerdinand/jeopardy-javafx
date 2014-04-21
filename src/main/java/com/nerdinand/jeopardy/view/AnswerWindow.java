@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -52,11 +52,13 @@ public class AnswerWindow {
 
         final File mediaPath = getAnswer().getMediaPath();
 
-        try {
-            String answerString = Util.readUTF8File(mediaPath);
-            getController().showText(answerString);
-        } catch (IOException ex) {
-            Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "File " + mediaPath + " could not be read.", ex);
+        switch (getAnswer().getMediaType()) {
+            case TEXT:
+                setTextFromFile(mediaPath);
+                break;
+            case IMAGE:
+                setImageFromFile(mediaPath);
+                break;
         }
 
         return scene;
@@ -72,6 +74,25 @@ public class AnswerWindow {
 
     public AnswerWindowController getController() {
         return controller;
+    }
+
+    private void setTextFromFile(File mediaPath) {
+        try {
+            String answerString = Util.readUTF8File(mediaPath);
+            getController().showText(answerString);
+        } catch (IOException ex) {
+            Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Text file " + mediaPath + " could not be read.", ex);
+        }
+    }
+
+    private void setImageFromFile(File mediaPath) {
+        final String uri = mediaPath.toURI().toString();
+        try {
+            Image answerImage = new Image(uri);
+            getController().showImage(answerImage);
+        } catch(Exception ex) {
+            Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Image file " + uri + " could not be read.", ex);
+        }
     }
 
 }

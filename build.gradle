@@ -30,3 +30,9 @@ run {
         args project.args.split('\\s+')
     }
 }
+
+debug {
+    if (project.hasProperty('args')) {
+        args project.args.split('\\s+')
+    }
+}

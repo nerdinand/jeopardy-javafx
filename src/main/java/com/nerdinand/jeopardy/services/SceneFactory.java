@@ -7,7 +7,6 @@ package com.nerdinand.jeopardy.services;
 
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.controllers.AnswerWindowController;
-import com.nerdinand.jeopardy.controllers.MainWindowController;
 import com.nerdinand.jeopardy.models.Answer;
 import com.nerdinand.jeopardy.view.AnswerWindow;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 /**
@@ -37,7 +35,8 @@ public class SceneFactory {
         switch (answer.getMediaType()) {
             case TEXT:
                 return createTextScene(answer.getValue(), answerWindow);
-            // TODO add more media types
+            case IMAGE:
+                return createImageScene(answer.getValue(), answerWindow);
         }
 
         return null;
@@ -48,7 +47,22 @@ public class SceneFactory {
 
         try {
             FXMLLoader fXMLLoader = new FXMLLoader();
-            root = fXMLLoader.load(getClass().getResource(Assets.ANSWER_WINDOW_FXML).openStream());
+            root = fXMLLoader.load(getClass().getResource(Assets.TEXT_ANSWER_WINDOW_FXML).openStream());
+            answerWindow.setController((AnswerWindowController) fXMLLoader.getController());
+
+        } catch (IOException ex) {
+            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return new Scene(root);
+    }
+    
+    private Scene createImageScene(String value, AnswerWindow answerWindow) {
+        HBox root = null;
+
+        try {
+            FXMLLoader fXMLLoader = new FXMLLoader();
+            root = fXMLLoader.load(getClass().getResource(Assets.IMAGE_ANSWER_WINDOW_FXML).openStream());
             answerWindow.setController((AnswerWindowController) fXMLLoader.getController());
 
         } catch (IOException ex) {
