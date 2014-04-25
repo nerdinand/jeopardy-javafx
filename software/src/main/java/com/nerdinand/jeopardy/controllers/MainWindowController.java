@@ -73,17 +73,13 @@ public class MainWindowController implements Initializable {
     }
 
     public void handleFrameButtonClick(Frame frame) {
-        getPlayers().setPlayersArmed(true);
-
-        setPlayerKeyEventListener(new FrameKeyEventListener(frame));
-
         playJeopardyMusic();
 
         openAnswerWindow(frame);
     }
 
     private void openAnswerWindow(Frame frame) {
-        AnswerWindow answerWindow = new AnswerWindow(frame.getAnswer());
+        AnswerWindow answerWindow = new AnswerWindow(frame);
 
         Scene scene = answerWindow.initialize();
         

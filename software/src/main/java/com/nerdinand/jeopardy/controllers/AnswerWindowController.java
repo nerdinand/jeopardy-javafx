@@ -24,6 +24,12 @@
 
 package com.nerdinand.jeopardy.controllers;
 
+import com.nerdinand.jeopardy.Jeopardy;
+import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
+import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
+import com.nerdinand.jeopardy.models.Player;
+import com.nerdinand.jeopardy.models.Players;
+import com.nerdinand.jeopardy.view.AnswerWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -44,9 +50,11 @@ public class AnswerWindowController implements Initializable {
     @FXML
     private ImageView imageView;
     
+    private PlayerKeyEventListener playerKeyEventListener;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        getPlayers().setPlayersArmed(true);
     }
     
     public void showText(String text) {
@@ -57,8 +65,22 @@ public class AnswerWindowController implements Initializable {
         imageView.setImage(image);
     }
     
+    private static Players getPlayers() {
+        return Jeopardy.getPlayers();
+    }
+    
     @FXML
     private void onKeyPressed(KeyEvent event) {
-        System.out.println("key pressed in answer window");
+        Player player = getPlayers().getArmedPlayerForKey(event.getCode());
+
+        if (player != null) {
+            System.out.println(player.getName() +" pressed.");
+
+            playerKeyEventListener.onPlayerKeyPressed(player);
+        }
+    }
+
+    public void setPlayerKeyEventListener(PlayerKeyEventListener playerKeyEventListener) {
+        this.playerKeyEventListener = playerKeyEventListener;
     }
 }

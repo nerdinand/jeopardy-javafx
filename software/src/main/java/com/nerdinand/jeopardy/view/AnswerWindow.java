@@ -25,6 +25,7 @@ package com.nerdinand.jeopardy.view;
 
 import com.nerdinand.jeopardy.controllers.AnswerWindowController;
 import com.nerdinand.jeopardy.models.Answer;
+import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.services.SceneFactory;
 import com.nerdinand.jeopardy.services.Util;
 import java.io.File;
@@ -42,9 +43,11 @@ public class AnswerWindow {
 
     private final Answer answer;
     private AnswerWindowController controller;
+    private final Frame frame;
 
-    public AnswerWindow(Answer answer) {
-        this.answer = answer;
+    public AnswerWindow(Frame frame) {
+        this.frame = frame;
+        this.answer = frame.getAnswer();
     }
 
     public Scene initialize() {
@@ -93,6 +96,10 @@ public class AnswerWindow {
         } catch(Exception ex) {
             Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Image file " + uri + " could not be read.", ex);
         }
+    }
+
+    public Frame getFrame() {
+        return frame;
     }
 
 }

@@ -7,6 +7,7 @@ package com.nerdinand.jeopardy.services;
 
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.controllers.AnswerWindowController;
+import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
 import com.nerdinand.jeopardy.models.Answer;
 import com.nerdinand.jeopardy.view.AnswerWindow;
 import java.io.IOException;
@@ -48,7 +49,11 @@ public class SceneFactory {
         try {
             FXMLLoader fXMLLoader = new FXMLLoader();
             root = fXMLLoader.load(getClass().getResource(Assets.TEXT_ANSWER_WINDOW_FXML).openStream());
-            answerWindow.setController((AnswerWindowController) fXMLLoader.getController());
+            final AnswerWindowController controller = (AnswerWindowController) fXMLLoader.getController();
+
+            controller.setPlayerKeyEventListener(new FrameKeyEventListener(answerWindow.getFrame()));
+
+            answerWindow.setController(controller);
 
         } catch (IOException ex) {
             Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,8 +68,12 @@ public class SceneFactory {
         try {
             FXMLLoader fXMLLoader = new FXMLLoader();
             root = fXMLLoader.load(getClass().getResource(Assets.IMAGE_ANSWER_WINDOW_FXML).openStream());
-            answerWindow.setController((AnswerWindowController) fXMLLoader.getController());
+            final AnswerWindowController controller = (AnswerWindowController) fXMLLoader.getController();
 
+            controller.setPlayerKeyEventListener(new FrameKeyEventListener(answerWindow.getFrame()));
+
+            answerWindow.setController(controller);
+            
         } catch (IOException ex) {
             Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
