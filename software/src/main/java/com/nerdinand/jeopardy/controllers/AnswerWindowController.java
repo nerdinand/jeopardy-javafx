@@ -26,7 +26,7 @@ package com.nerdinand.jeopardy.controllers;
 
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
-import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
+import com.nerdinand.jeopardy.interfaces.Updateable;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
@@ -41,7 +41,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 
@@ -60,6 +59,7 @@ public class AnswerWindowController implements Initializable {
     private ImageView imageView;
     
     private FrameKeyEventListener frameKeyEventListener;
+    private Updateable updateable;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -95,10 +95,16 @@ public class AnswerWindowController implements Initializable {
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
             } 
         }
+        
+        updateable.update();
     }
 
     public void setFrameKeyEventListener(FrameKeyEventListener frameKeyEventListener) {
         this.frameKeyEventListener = frameKeyEventListener;
+    }
+
+    public void setUpdateable(Updateable updateable) {
+        this.updateable = updateable;
     }
 
 }

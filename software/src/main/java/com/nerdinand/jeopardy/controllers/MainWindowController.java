@@ -1,5 +1,6 @@
 package com.nerdinand.jeopardy.controllers;
 
+import com.nerdinand.jeopardy.interfaces.Updateable;
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author Ferdinand Niedermann
  */
-public class MainWindowController implements Initializable {
+public class MainWindowController implements Initializable, Updateable {
 
     @FXML
     private Label statusBarLabel;
@@ -42,7 +43,7 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         playerLabels = new Label[]{player1Label, player2Label, player3Label, player4Label};
 
-        initializeScoreDisplay();
+        updatePlayerStatuses();
 
         setPlayerKeyEventListener(new SetPlayerNameKeyEventListener());
         getPlayers().setPlayersArmed(true);
@@ -75,7 +76,7 @@ public class MainWindowController implements Initializable {
     }
 
     private void openAnswerWindow(Frame frame) {
-        AnswerWindow answerWindow = new AnswerWindow(frame);
+        AnswerWindow answerWindow = new AnswerWindow(frame, this);
 
         Scene scene = answerWindow.initialize();
         
@@ -109,7 +110,7 @@ public class MainWindowController implements Initializable {
         playerLabel.setText(player.getName() + ": " + player.getPoints());
     }
 
-    private void initializeScoreDisplay() {
+    private void updatePlayerStatuses() {
         for (Player player : getPlayers().getPlayerList()) {
             updatePlayerStatus(player);
         }
@@ -117,5 +118,10 @@ public class MainWindowController implements Initializable {
 
     private void setPlayerKeyEventListener(PlayerKeyEventListener playerKeyEventListener) {
         this.playerKeyEventListener = playerKeyEventListener;
+    }
+
+    @Override
+    public void update() {
+        updatePlayerStatuses();
     }
 }

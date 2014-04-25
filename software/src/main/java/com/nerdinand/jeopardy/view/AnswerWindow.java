@@ -24,6 +24,7 @@
 package com.nerdinand.jeopardy.view;
 
 import com.nerdinand.jeopardy.controllers.AnswerWindowController;
+import com.nerdinand.jeopardy.interfaces.Updateable;
 import com.nerdinand.jeopardy.models.Answer;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.services.SceneFactory;
@@ -44,10 +45,12 @@ public class AnswerWindow {
     private final Answer answer;
     private AnswerWindowController controller;
     private final Frame frame;
+    private final Updateable updateable;
 
-    public AnswerWindow(Frame frame) {
+    public AnswerWindow(Frame frame, Updateable updateable) {
         this.frame = frame;
         this.answer = frame.getAnswer();
+        this.updateable = updateable;
     }
 
     public Scene initialize() {
@@ -73,6 +76,7 @@ public class AnswerWindow {
 
     public void setController(AnswerWindowController answerWindowController) {
         this.controller = answerWindowController;
+        getController().setUpdateable(updateable);
     }
 
     public AnswerWindowController getController() {
@@ -100,6 +104,10 @@ public class AnswerWindow {
 
     public Frame getFrame() {
         return frame;
+    }
+
+    public Updateable getUpdateable() {
+        return updateable;
     }
 
 }
