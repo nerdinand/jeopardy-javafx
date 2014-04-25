@@ -26,37 +26,31 @@ package com.nerdinand.jeopardy.controllers.listeners;
 
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
-import com.nerdinand.jeopardy.models.Score;
-import com.nerdinand.jeopardy.services.ScoreFactory;
 import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
 /**
  *
  * @author ferdi
  */
-public class FrameKeyEventListener implements PlayerKeyEventListener {
+public class FrameKeyEventListener {
     private final Frame frame;
 
     public FrameKeyEventListener(Frame frame) {
         this.frame = frame;
     }
 
-    @Override
-    public void onPlayerKeyPressed(Player player) {
-        Action action = Dialogs.create()
+    public Action onPlayerKeyPressed(Player player) {
+        return Dialogs.create()
                 .owner(null)
                 .title("Question")
                 .masthead(null)
                 .message("Player " + player.getName() + ", your solution please?")
                 .showConfirm();
+    }
 
-        if (action == Dialog.Actions.YES) {
-            ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
-        } else if (action == Dialog.Actions.NO) {
-            ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
-        } 
+    public Frame getFrame() {
+        return frame;
     }
     
 }

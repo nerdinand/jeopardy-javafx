@@ -44,38 +44,27 @@ public class SceneFactory {
     }
 
     private Scene createTextScene(AnswerWindow answerWindow) {
-        HBox root = null;
-
-        try {
-            FXMLLoader fXMLLoader = new FXMLLoader();
-            root = fXMLLoader.load(getClass().getResource(Assets.TEXT_ANSWER_WINDOW_FXML).openStream());
-            final AnswerWindowController controller = (AnswerWindowController) fXMLLoader.getController();
-
-            controller.setPlayerKeyEventListener(new FrameKeyEventListener(answerWindow.getFrame()));
-
-            answerWindow.setController(controller);
-
-        } catch (IOException ex) {
-            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return new Scene(root);
+        return createScene(answerWindow, Assets.TEXT_ANSWER_WINDOW_FXML);
     }
     
     private Scene createImageScene(AnswerWindow answerWindow) {
-        HBox root = null;
+        return createScene(answerWindow, Assets.IMAGE_ANSWER_WINDOW_FXML);
+    }
 
+    private Scene createScene(AnswerWindow answerWindow, String fxmlAssetPath) {
+        HBox root = null;
+        
         try {
             FXMLLoader fXMLLoader = new FXMLLoader();
-            root = fXMLLoader.load(getClass().getResource(Assets.IMAGE_ANSWER_WINDOW_FXML).openStream());
+            root = fXMLLoader.load(getClass().getResource(fxmlAssetPath).openStream());
             final AnswerWindowController controller = (AnswerWindowController) fXMLLoader.getController();
 
-            controller.setPlayerKeyEventListener(new FrameKeyEventListener(answerWindow.getFrame()));
+            controller.setFrameKeyEventListener(new FrameKeyEventListener(answerWindow.getFrame()));
 
             answerWindow.setController(controller);
             
         } catch (IOException ex) {
-            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, "Couldn't load or initialize FXML file from source "+fxmlAssetPath, ex);
         }
         
         return new Scene(root);

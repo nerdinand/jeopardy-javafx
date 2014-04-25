@@ -25,7 +25,9 @@
 package com.nerdinand.jeopardy.controllers;
 
 import com.nerdinand.jeopardy.Jeopardy;
+import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
 import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
+import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.ScoreFactory;
@@ -37,9 +39,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -47,12 +51,15 @@ import org.controlsfx.dialog.Dialogs;
  */
 public class AnswerWindowController implements Initializable {
     @FXML
+    private HBox hBox;
+    
+    @FXML
     private Label textLabel;
     
     @FXML
     private ImageView imageView;
     
-    private PlayerKeyEventListener playerKeyEventListener;
+    private FrameKeyEventListener frameKeyEventListener;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -76,12 +83,22 @@ public class AnswerWindowController implements Initializable {
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
         if (player != null) {
-            playerKeyEventListener.onPlayerKeyPressed(player);
+            Action action = frameKeyEventListener.onPlayerKeyPressed(player);
+            Frame frame = frameKeyEventListener.getFrame();
+            
+            if (action == Dialog.Actions.YES) { // player has given the correct solution
+                ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
+                Stage stage = (Stage) hBox.getScene().getWindow();
+                stage.close();
+                
+            } else if (action == Dialog.Actions.NO) { // player has given the wrong solution
+                ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
+            } 
         }
     }
 
-    public void setPlayerKeyEventListener(PlayerKeyEventListener playerKeyEventListener) {
-        this.playerKeyEventListener = playerKeyEventListener;
+    public void setFrameKeyEventListener(FrameKeyEventListener frameKeyEventListener) {
+        this.frameKeyEventListener = frameKeyEventListener;
     }
 
 }

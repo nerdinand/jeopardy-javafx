@@ -15,6 +15,7 @@
     onKeyPressed="#onKeyPressed"
     alignment="CENTER"
     spacing="10"
+    fx:id="hBox"
 >
     
     <ImageView fx:id="imageView" > 
