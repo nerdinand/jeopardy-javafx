@@ -34,15 +34,15 @@ public class SceneFactory {
     public Scene sceneForAnswer(Answer answer, AnswerWindow answerWindow) {
         switch (answer.getMediaType()) {
             case TEXT:
-                return createTextScene(answer.getValue(), answerWindow);
+                return createTextScene(answerWindow);
             case IMAGE:
-                return createImageScene(answer.getValue(), answerWindow);
+                return createImageScene(answerWindow);
         }
 
         return null;
     }
 
-    private Scene createTextScene(String value, AnswerWindow answerWindow) {
+    private Scene createTextScene(AnswerWindow answerWindow) {
         HBox root = null;
 
         try {
@@ -57,7 +57,7 @@ public class SceneFactory {
         return new Scene(root);
     }
     
-    private Scene createImageScene(String value, AnswerWindow answerWindow) {
+    private Scene createImageScene(AnswerWindow answerWindow) {
         HBox root = null;
 
         try {

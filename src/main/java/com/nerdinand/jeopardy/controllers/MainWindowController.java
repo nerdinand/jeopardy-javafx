@@ -65,7 +65,7 @@ public class MainWindowController implements Initializable {
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
         if (player != null) {
-            System.out.println(player.getName() + " pressed.");
+            System.out.println(player.getName() +" pressed.");
 
             playerKeyEventListener.onPlayerKeyPressed(player);
             updatePlayerStatus(player);
