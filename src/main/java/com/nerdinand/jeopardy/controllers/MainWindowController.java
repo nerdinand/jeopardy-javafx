@@ -93,6 +93,10 @@ public class MainWindowController implements Initializable {
             stage.setTitle(frame.toString());
             stage.setScene(scene);
             stage.show();
+            
+            // we need to do the following in order to receive keyboard events in the new window...
+            stage.getScene().getRoot().setFocusTraversable(true);
+            stage.getScene().getRoot().requestFocus();
         }
     }
 
