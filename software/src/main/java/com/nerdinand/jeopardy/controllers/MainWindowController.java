@@ -1,10 +1,10 @@
 package com.nerdinand.jeopardy.controllers;
 
-import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
 import com.nerdinand.jeopardy.controllers.listeners.SetPlayerNameKeyEventListener;
+import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
@@ -20,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -67,7 +66,7 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
         if (player != null) {
-            System.out.println(player.getName() +" pressed.");
+            System.out.println(player.getName() + " pressed.");
 
             playerKeyEventListener.onPlayerKeyPressed(player);
             updatePlayerStatus(player);
@@ -83,15 +82,18 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     private void openAnswerWindow(Frame frame) {
         AnswerWindow answerWindow = new AnswerWindow(frame, this);
 
+        Button buttonForFrame = getButtonForFrame(frame);
+        buttonForFrame.setDisable(true);
+
         Scene scene = answerWindow.initialize();
-        
+
         if (scene != null) {
             Stage stage = new Stage();
 
             stage.setTitle(frame.toString());
             stage.setScene(scene);
             stage.show();
-            
+
             // we need to do the following in order to receive keyboard events in the new window...
             stage.getScene().getRoot().setFocusTraversable(true);
             stage.getScene().getRoot().requestFocus();
@@ -128,20 +130,20 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     @Override
     public void frameAnswered(Frame frame, boolean correct) {
         updatePlayerStatuses();
-        
+
         Button button = getButtonForFrame(frame);
         button.setDisable(true);
-        
+
         if (correct) {
             final String color = Util.toRGBCode(frame.getLastScore().getPlayer().getColor());
-            button.setStyle("-fx-background-color: "+color+";");
+            button.setStyle("-fx-background-color: " + color + ";");
         }
     }
 
     public void setFrameButtons(Map<Frame, Button> frameButtons) {
         this.frameButtons = frameButtons;
     }
-    
+
     private Button getButtonForFrame(Frame frame) {
         return frameButtons.get(frame);
     }
