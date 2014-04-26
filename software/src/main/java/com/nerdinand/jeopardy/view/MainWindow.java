@@ -36,6 +36,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -93,10 +94,15 @@ public class MainWindow {
         for (Category category : round.getCategories()) {
             int frameIndex = 0;
             
-            gridPain.add(new Label(category.getName()), categoryIndex, frameIndex);
+            final Label label = new Label(category.getName());
+            setControlStyle(label);
+            gridPain.add(label, categoryIndex, frameIndex);
             
             for (Frame frame : category.getFrames()) {
                 final Button frameButton = initializeFrameButton(frame);
+                
+                // somehow, stylesheets don't compile correctly on my machine, therefore we set the style manually
+                setControlStyle(frameButton);
                 frameButtons.put(frame, frameButton);
                 gridPain.add(frameButton, categoryIndex, frameIndex + 1);
                 frameIndex++;
@@ -109,4 +115,8 @@ public class MainWindow {
         
         return frameButtons;
     }    
+
+    public static void setControlStyle(Control control) {
+        control.setStyle("-fx-font-size: 15pt;");
+    }
 }

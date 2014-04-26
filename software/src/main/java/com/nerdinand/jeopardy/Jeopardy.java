@@ -29,6 +29,7 @@ import com.nerdinand.jeopardy.view.MainWindow;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -49,7 +50,9 @@ public class Jeopardy extends Application {
         MainWindow mainWindow = new MainWindow(round);
         mainWindow.initialize();
         stage.setTitle("Jeopardy");
-        stage.setScene(new Scene(mainWindow.getRoot()));
+        final Parent root = mainWindow.getRoot();
+        final Scene scene = new Scene(root);
+        stage.setScene(scene);
         stage.show();
     }
 
