@@ -1,6 +1,6 @@
 package com.nerdinand.jeopardy.controllers;
 
-import com.nerdinand.jeopardy.interfaces.Updateable;
+import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
@@ -8,22 +8,26 @@ import com.nerdinand.jeopardy.controllers.listeners.SetPlayerNameKeyEventListene
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
+import com.nerdinand.jeopardy.services.Util;
 import com.nerdinand.jeopardy.view.AnswerWindow;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
  *
  * @author Ferdinand Niedermann
  */
-public class MainWindowController implements Initializable, Updateable {
+public class MainWindowController implements Initializable, FrameAnsweredListener {
 
     @FXML
     private Label statusBarLabel;
@@ -38,6 +42,7 @@ public class MainWindowController implements Initializable, Updateable {
 
     private Label[] playerLabels;
     private PlayerKeyEventListener playerKeyEventListener;
+    private Map<Frame, Button> frameButtons;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -121,7 +126,23 @@ public class MainWindowController implements Initializable, Updateable {
     }
 
     @Override
-    public void update() {
+    public void frameAnswered(Frame frame, boolean correct) {
         updatePlayerStatuses();
+        
+        Button button = getButtonForFrame(frame);
+        button.setDisable(true);
+        
+        if (correct) {
+            final String color = Util.toRGBCode(frame.getLastScore().getPlayer().getColor());
+            button.setStyle("-fx-background-color: "+color+";");
+        }
+    }
+
+    public void setFrameButtons(Map<Frame, Button> frameButtons) {
+        this.frameButtons = frameButtons;
+    }
+    
+    private Button getButtonForFrame(Frame frame) {
+        return frameButtons.get(frame);
     }
 }

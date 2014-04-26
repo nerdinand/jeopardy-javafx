@@ -26,7 +26,7 @@ package com.nerdinand.jeopardy.controllers;
 
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
-import com.nerdinand.jeopardy.interfaces.Updateable;
+import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
@@ -59,7 +59,7 @@ public class AnswerWindowController implements Initializable {
     private ImageView imageView;
     
     private FrameKeyEventListener frameKeyEventListener;
-    private Updateable updateable;
+    private FrameAnsweredListener frameAnsweredListener;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -90,21 +90,23 @@ public class AnswerWindowController implements Initializable {
                 ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
                 Stage stage = (Stage) hBox.getScene().getWindow();
                 stage.close();
-                
+            
+                frameAnsweredListener.frameAnswered(frame, true);
             } else if (action == Dialog.Actions.NO) { // player has given the wrong solution
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
+                
+                frameAnsweredListener.frameAnswered(frame, false);
             } 
+            
         }
-        
-        updateable.update();
     }
 
     public void setFrameKeyEventListener(FrameKeyEventListener frameKeyEventListener) {
         this.frameKeyEventListener = frameKeyEventListener;
     }
 
-    public void setUpdateable(Updateable updateable) {
-        this.updateable = updateable;
+    public void setFrameAnsweredListener(FrameAnsweredListener frameAnsweredListener) {
+        this.frameAnsweredListener = frameAnsweredListener;
     }
 
 }

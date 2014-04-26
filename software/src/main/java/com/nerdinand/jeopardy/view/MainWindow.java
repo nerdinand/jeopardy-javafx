@@ -30,6 +30,8 @@ import com.nerdinand.jeopardy.models.Category;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Round;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -47,7 +49,7 @@ public class MainWindow {
     private final Round round;
     private BorderPane root;
     private MainWindowController controller;
-    
+        
     public MainWindow(Round round) {
         this.round = round;
     }
@@ -58,7 +60,8 @@ public class MainWindow {
         this.root = root;
         this.controller = (MainWindowController) fXMLLoader.getController();
                 
-        initializeGridMainWindow(root);
+        Map<Frame, Button> frameButtons = initializeGridMainWindow(root);
+        controller.setFrameButtons(frameButtons);
     }
 
     private Button initializeFrameButton(final Frame frame) {
@@ -80,9 +83,11 @@ public class MainWindow {
         return root;
     }
 
-    private void initializeGridMainWindow(BorderPane root) {
+    private Map<Frame, Button> initializeGridMainWindow(BorderPane root) {
         GridPane gridPain = (GridPane) root.getCenter();
 
+        Map<Frame, Button> frameButtons = new HashMap<Frame, Button>();
+        
         int categoryIndex = 0;
         
         for (Category category : round.getCategories()) {
@@ -91,7 +96,9 @@ public class MainWindow {
             gridPain.add(new Label(category.getName()), categoryIndex, frameIndex);
             
             for (Frame frame : category.getFrames()) {
-                gridPain.add(initializeFrameButton(frame), categoryIndex, frameIndex + 1);
+                final Button frameButton = initializeFrameButton(frame);
+                frameButtons.put(frame, frameButton);
+                gridPain.add(frameButton, categoryIndex, frameIndex + 1);
                 frameIndex++;
             }
             
@@ -99,5 +106,7 @@ public class MainWindow {
         }
         
         root.setCenter(gridPain);
+        
+        return frameButtons;
     }    
 }

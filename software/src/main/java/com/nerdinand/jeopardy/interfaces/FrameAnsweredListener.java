@@ -6,10 +6,12 @@
 
 package com.nerdinand.jeopardy.interfaces;
 
+import com.nerdinand.jeopardy.models.Frame;
+
 /**
  *
  * @author Ferdinand Niedermann
  */
-public interface Updateable {
-    public void update();
+public interface FrameAnsweredListener {
+    public void frameAnswered(Frame frame, boolean correct);
 }

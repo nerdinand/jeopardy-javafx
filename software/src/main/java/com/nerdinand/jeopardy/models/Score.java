@@ -42,5 +42,9 @@ public class Score {
     public int getPoints() {
         return points;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
     
 }
