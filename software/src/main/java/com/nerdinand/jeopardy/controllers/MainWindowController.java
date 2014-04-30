@@ -10,16 +10,17 @@ import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.Util;
 import com.nerdinand.jeopardy.view.AnswerWindow;
+import com.nerdinand.jeopardy.view.MainWindow;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
@@ -42,6 +43,8 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     private Label[] playerLabels;
     private PlayerKeyEventListener playerKeyEventListener;
     private Map<Frame, Button> frameButtons;
+    @FXML
+    private GridPane gridPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -51,15 +54,18 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
         setPlayerKeyEventListener(new SetPlayerNameKeyEventListener());
         getPlayers().setPlayersArmed(true);
+        
+        MainWindow.setControlStyle(statusBarLabel);
+        
+        for (Label label : playerLabels) {
+            MainWindow.setControlStyle(label);
+        }
     }
 
     private static Players getPlayers() {
         return Jeopardy.getPlayers();
     }
 
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-    }
 
     @FXML
     private void onKeyPressed(KeyEvent event) {

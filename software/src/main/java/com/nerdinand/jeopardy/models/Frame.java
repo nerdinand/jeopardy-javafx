@@ -38,7 +38,7 @@ public class Frame {
     private Question question;
     private File rootPath;
     
-    private List<Score> scores = new ArrayList<Score>();
+    private final List<Score> scores = new ArrayList<Score>();
     private String categoryName;
     
     public void setPoints(int points) {
