@@ -29,6 +29,7 @@ import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
+import com.nerdinand.jeopardy.services.Keymap;
 import com.nerdinand.jeopardy.services.ScoreFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,6 +43,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -80,6 +82,16 @@ public class AnswerWindowController implements Initializable {
 
     @FXML
     private void onKeyPressed(KeyEvent event) {
+        final Keymap.Action action = Keymap.getInstance().getAction(event);
+
+        if (action == Keymap.Action.PLAYER) {
+            handlePlayerKeyPressed(event);
+        } else if (action == Keymap.Action.CANCEL) {
+            cancelFrame();
+        }
+    }
+
+    private void handlePlayerKeyPressed(KeyEvent event) {
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
         if (player != null) {
@@ -134,7 +146,7 @@ public class AnswerWindowController implements Initializable {
             } else if (action == Dialog.Actions.NO) { // player has given the wrong solution
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getDoubleJeopardyWager());
                 closeWindow();
-                
+
                 frameAnsweredListener.frameAnswered(frame, false);
             }
         }
@@ -143,6 +155,22 @@ public class AnswerWindowController implements Initializable {
     private void closeWindow() {
         Stage stage = (Stage) hBox.getScene().getWindow();
         stage.close();
+    }
+
+    private void cancelFrame() {
+        Action cancel = Dialogs.create()
+                .owner(null)
+                .title("Cancel")
+                .masthead(null)
+                .message("Really cancel this frame?")
+                .actions(Dialog.Actions.YES, Dialog.Actions.NO)
+                .showConfirm();
+        
+        if (cancel == Dialog.Actions.YES) {
+            getFrame().setClosed(true);
+            frameAnsweredListener.frameAnswered(getFrame(), false);
+            closeWindow();
+        }
     }
 
 }
