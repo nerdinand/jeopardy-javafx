@@ -29,6 +29,10 @@ package com.nerdinand.jeopardy;
  * @author Ferdinand Niedermann
  */
 class JeopardyLoaderException extends Exception {
+    public JeopardyLoaderException(String s) {
+        super(s);
+    }
+    
     public JeopardyLoaderException(Exception e) {
         super(e);
     }

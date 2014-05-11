@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.nerdinand.jeopardy;
 
 import com.nerdinand.jeopardy.models.Category;
@@ -29,6 +28,8 @@ import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Round;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -44,26 +45,42 @@ public class Loader {
     public Round load(String path) throws JeopardyLoaderException {
         File roundFile = new File(path);
         File roundDir = roundFile.getParentFile();
-        
+
         Round round = null;
 
         try {
             Yaml yaml = new Yaml(new Constructor(Round.class));
             round = (Round) yaml.load(new FileInputStream(path));
             round.setRootPath(roundDir);
-            
+
             for (Category category : round.getCategories()) {
                 for (Frame frame : category.getFrames()) {
                     frame.setCategoryName(category.getName());
                 }
             }
-            
+
             round.generateDoubleJeopardies();
-            
+            checkAssets(round);
+
         } catch (Exception e) {
             throw new JeopardyLoaderException(e);
         }
-        
+
         return round;
+    }
+
+    private void checkAssets(Round round) {
+        for (Category category : round.getCategories()) {
+            for (Frame frame : category.getFrames()) {
+                checkAsset(frame.getAnswer().getMediaPath());
+                checkAsset(frame.getQuestion().getMediaPath());
+            }
+        }
+    }
+
+    private void checkAsset(File mediaPath) {
+        if (!mediaPath.exists()) {
+            Logger.getLogger(Jeopardy.class.getName()).log(Level.WARNING, "Asset was not found: {0}", mediaPath);
+        }
     }
 }
