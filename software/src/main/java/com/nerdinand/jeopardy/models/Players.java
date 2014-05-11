@@ -33,8 +33,8 @@ import javafx.scene.input.KeyCode;
  * @author Ferdinand Niedermann
  */
 public class Players {
-
     private static List<Player> playerList;
+    private static Player doubleJeopardyPlayer;
 
     public static final List<KeyCode> VALID_KEYS = Arrays.asList(new KeyCode[]{KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D});
 
@@ -95,4 +95,7 @@ public class Players {
         return null;
     }
 
+    public static void setDoubleJeopardyPlayer(Player doubleJeopardyPlayer) {
+        Players.doubleJeopardyPlayer = doubleJeopardyPlayer;
+    }
 }

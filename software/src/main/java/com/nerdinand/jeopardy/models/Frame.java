@@ -41,6 +41,7 @@ public class Frame {
     private final List<Score> scores = new ArrayList<Score>();
     private String categoryName;
     private boolean hasDoubleJeopardy;
+    private int doubleJeopardyWager;
     
     public void setPoints(int points) {
         this.points = points;
@@ -97,11 +98,20 @@ public class Frame {
         return scores.get(scores.size() - 1);
     }
 
-    boolean hasDoubleJeopardy() {
+    public boolean hasDoubleJeopardy() {
         return hasDoubleJeopardy;
     }
 
     public void setHasDoubleJeopardy(boolean hasDoubleJeopardy) {
         this.hasDoubleJeopardy = hasDoubleJeopardy;
     }
+
+    public void setDoubleJeopardyWager(int doubleJeopardyWager) {
+        this.doubleJeopardyWager = doubleJeopardyWager;
+    }
+
+    public int getDoubleJeopardyWager() {
+        return doubleJeopardyWager;
+    }
+    
 }

@@ -27,14 +27,19 @@ import com.nerdinand.jeopardy.controllers.AnswerWindowController;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.models.Answer;
 import com.nerdinand.jeopardy.models.Frame;
+import com.nerdinand.jeopardy.models.Player;
+import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.SceneFactory;
 import com.nerdinand.jeopardy.services.Util;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -51,6 +56,10 @@ public class AnswerWindow {
         this.frame = frame;
         this.answer = frame.getAnswer();
         this.frameAnsweredListener = frameAnsweredListener;
+
+        if (getFrame().hasDoubleJeopardy()) {
+            handleDoubleJeopardy();
+        }
     }
 
     public Scene initialize() {
@@ -97,7 +106,7 @@ public class AnswerWindow {
         try {
             Image answerImage = new Image(uri);
             getController().showImage(answerImage);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Image file " + uri + " could not be read.", ex);
         }
     }
@@ -108,6 +117,38 @@ public class AnswerWindow {
 
     public FrameAnsweredListener getUpdateable() {
         return frameAnsweredListener;
+    }
+
+    private void handleDoubleJeopardy() {
+        Player player = Dialogs.create()
+                .owner(null)
+                .title("Double Jeopardy!")
+                .masthead(null)
+                .message("You have encountered a Double Jeopardy!\nWhich player are you?")
+                .showChoices(Players.getPlayerList());
+
+        Integer wager = Dialogs.create()
+                .owner(null)
+                .title("Double Jeopardy!")
+                .masthead(null)
+                .message("Player " + player + "!\nHow many points do you want to set?")
+                .showChoices(getDoubleJeopardyChoices(getFrame()));
+
+        Players.setDoubleJeopardyPlayer(player);
+        getFrame().setDoubleJeopardyWager(wager);
+    }
+
+    private List<Integer> getDoubleJeopardyChoices(Frame frame) {
+        List<Integer> choices = new ArrayList<>();
+
+        int amount = 100;
+
+        do {
+            choices.add(amount);
+            amount += 100;
+        } while (amount <= frame.getPoints() * 2);
+
+        return choices;
     }
 
 }

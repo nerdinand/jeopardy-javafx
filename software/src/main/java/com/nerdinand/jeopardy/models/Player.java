@@ -32,6 +32,7 @@ import javafx.scene.paint.Color;
  * @author Ferdinand Niedermann
  */
 public class Player {
+
     private int id;
     private String name;
     private Color color;
@@ -85,5 +86,9 @@ public class Player {
 
     public void addScore(Score score) {
         scores.add(score);
+    }
+
+    public String toString() {
+        return getName();
     }
 }
