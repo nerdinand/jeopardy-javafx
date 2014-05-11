@@ -120,19 +120,21 @@ public class AnswerWindow {
     }
 
     private void handleDoubleJeopardy() {
+        final List<Player> playerList = Players.getPlayerList();
         Player player = Dialogs.create()
                 .owner(null)
                 .title("Double Jeopardy!")
                 .masthead(null)
                 .message("You have encountered a Double Jeopardy!\nWhich player are you?")
-                .showChoices(Players.getPlayerList());
-
+                .showChoices(playerList.get(0), Players.getPlayerList());
+        
+        final List<Integer> doubleJeopardyChoices = getDoubleJeopardyChoices(getFrame());
         Integer wager = Dialogs.create()
                 .owner(null)
                 .title("Double Jeopardy!")
                 .masthead(null)
                 .message("Player " + player + "!\nHow many points do you want to set?")
-                .showChoices(getDoubleJeopardyChoices(getFrame()));
+                .showChoices(doubleJeopardyChoices.get(0), doubleJeopardyChoices);
 
         Players.setDoubleJeopardyPlayer(player);
         getFrame().setDoubleJeopardyWager(wager);
