@@ -97,8 +97,7 @@ public class AnswerWindowController implements Initializable {
 
         if (action == Dialog.Actions.YES) { // player has given the correct solution
             ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
-            Stage stage = (Stage) hBox.getScene().getWindow();
-            stage.close();
+            closeWindow();
 
             frameAnsweredListener.frameAnswered(frame, true);
         } else if (action == Dialog.Actions.NO) { // player has given the wrong solution
@@ -129,18 +128,21 @@ public class AnswerWindowController implements Initializable {
 
             if (action == Dialog.Actions.YES) { // player has given the correct solution
                 ScoreFactory.getInstance().createScore(player, frame, frame.getDoubleJeopardyWager());
-                Stage stage = (Stage) hBox.getScene().getWindow();
-                stage.close();
+                closeWindow();
 
                 frameAnsweredListener.frameAnswered(frame, true);
             } else if (action == Dialog.Actions.NO) { // player has given the wrong solution
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getDoubleJeopardyWager());
-                Stage stage = (Stage) hBox.getScene().getWindow();
-                stage.close();
+                closeWindow();
                 
                 frameAnsweredListener.frameAnswered(frame, false);
             }
         }
+    }
+
+    private void closeWindow() {
+        Stage stage = (Stage) hBox.getScene().getWindow();
+        stage.close();
     }
 
 }
