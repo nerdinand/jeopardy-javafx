@@ -98,4 +98,8 @@ public class Players {
     public static void setDoubleJeopardyPlayer(Player doubleJeopardyPlayer) {
         Players.doubleJeopardyPlayer = doubleJeopardyPlayer;
     }
+
+    public static Player getDoubleJeopardyPlayer() {
+        return doubleJeopardyPlayer;
+    }
 }
