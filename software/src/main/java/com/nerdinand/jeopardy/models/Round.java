@@ -23,7 +23,6 @@
  */
 package com.nerdinand.jeopardy.models;
 
-import com.nerdinand.jeopardy.Jeopardy;
 import java.io.File;
 import java.util.List;
 import java.util.Random;
@@ -35,14 +34,13 @@ import java.util.logging.Logger;
  * @author Ferdinand Niedermann
  */
 public class Round {
-
-    private final static int DOUBLE_JEOPARDY_COUNT = 2;
-
     private String name;
     private File rootPath;
     private List<Category> categories;
     private int version;
 
+    private int doubleJeopardyCount = 2; // default is 2, can be overwritten by round.yml file
+    
     public void setVersion(int version) {
         this.version = version;
     }
@@ -79,10 +77,18 @@ public class Round {
         return categories;
     }
 
+    public int getDoubleJeopardyCount() {
+        return doubleJeopardyCount;
+    }
+
+    public void setDoubleJeopardyCount(int doubleJeopardyCount) {
+        this.doubleJeopardyCount = doubleJeopardyCount;
+    }
+    
     public void generateDoubleJeopardies() {
         int count = 0;
 
-        while (count < DOUBLE_JEOPARDY_COUNT) {
+        while (count < getDoubleJeopardyCount()) {
             addDoubleJeopardy();
             count++;
         }
