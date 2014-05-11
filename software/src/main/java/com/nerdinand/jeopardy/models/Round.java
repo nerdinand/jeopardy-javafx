@@ -21,17 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.nerdinand.jeopardy.models;
 
+import com.nerdinand.jeopardy.Jeopardy;
 import java.io.File;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Ferdinand Niedermann
  */
 public class Round {
+
+    private final static int DOUBLE_JEOPARDY_COUNT = 2;
+
     private String name;
     private File rootPath;
     private List<Category> categories;
@@ -44,7 +50,7 @@ public class Round {
     public int getVersion() {
         return version;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -55,7 +61,7 @@ public class Round {
 
     public void setRootPath(File rootPath) {
         this.rootPath = rootPath;
-        
+
         for (Category category : getCategories()) {
             category.setRootPath(new File(getRootPath(), "media"));
         }
@@ -73,4 +79,34 @@ public class Round {
         return categories;
     }
 
+    public void generateDoubleJeopardies() {
+        int count = 0;
+
+        while (count < DOUBLE_JEOPARDY_COUNT) {
+            addDoubleJeopardy();
+            count++;
+        }
+    }
+
+    private void addDoubleJeopardy() {
+        Frame randomFrame;
+
+        do {
+            randomFrame = getRandomFrame();
+        } while (randomFrame.hasDoubleJeopardy());
+
+        Logger.getLogger(Round.class.getName()).log(Level.INFO, "adding double Jeopardy to " + randomFrame);
+
+        randomFrame.setHasDoubleJeopardy(true);
+    }
+
+    private Frame getRandomFrame() {
+        Random random = new Random();
+
+        int categoryIndex = random.nextInt(getCategories().size());
+        final Category category = getCategories().get(categoryIndex);
+        int frameIndex = random.nextInt(category.getFrames().size());
+
+        return category.getFrames().get(frameIndex);
+    }
 }

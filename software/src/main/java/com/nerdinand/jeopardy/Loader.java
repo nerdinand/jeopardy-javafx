@@ -58,6 +58,8 @@ public class Loader {
                 }
             }
             
+            round.generateDoubleJeopardies();
+            
         } catch (Exception e) {
             throw new JeopardyLoaderException(e);
         }
