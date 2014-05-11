@@ -120,24 +120,38 @@ public class AnswerWindow {
     }
 
     private void handleDoubleJeopardy() {
-        final List<Player> playerList = Players.getPlayerList();
-        Player player = Dialogs.create()
-                .owner(null)
-                .title("Double Jeopardy!")
-                .masthead(null)
-                .message("You have encountered a Double Jeopardy!\nWhich player are you?")
-                .showChoices(playerList.get(0), Players.getPlayerList());
-        
-        final List<Integer> doubleJeopardyChoices = getDoubleJeopardyChoices(getFrame());
-        Integer wager = Dialogs.create()
-                .owner(null)
-                .title("Double Jeopardy!")
-                .masthead(null)
-                .message("Player " + player + "!\nHow many points do you want to set?")
-                .showChoices(doubleJeopardyChoices.get(0), doubleJeopardyChoices);
+        Player player = askForPlayer();
+        Integer wager = askForWager(player);
 
         Players.setDoubleJeopardyPlayer(player);
         getFrame().setDoubleJeopardyWager(wager);
+    }
+
+    private Player askForPlayer() {
+        Player player = null;
+        do {
+            player = Dialogs.create()
+                    .owner(null)
+                    .title("Double Jeopardy!")
+                    .masthead(null)
+                    .message("You have encountered a Double Jeopardy!\nWhich player are you?")
+                    .showChoices(Players.getPlayerList());
+        } while (player == null);
+        return player;
+    }
+
+    private Integer askForWager(Player player) {
+        final List<Integer> doubleJeopardyChoices = getDoubleJeopardyChoices(getFrame());
+        Integer wager = 0;
+        do {
+            wager = Dialogs.create()
+                    .owner(null)
+                    .title("Double Jeopardy!")
+                    .masthead(null)
+                    .message("Player " + player + "!\nHow many points do you want to set?")
+                    .showChoices(doubleJeopardyChoices);
+        } while (wager == null);
+        return wager;
     }
 
     private List<Integer> getDoubleJeopardyChoices(Frame frame) {

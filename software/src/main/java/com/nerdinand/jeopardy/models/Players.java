@@ -33,6 +33,7 @@ import javafx.scene.input.KeyCode;
  * @author Ferdinand Niedermann
  */
 public class Players {
+
     private static List<Player> playerList;
     private static Player doubleJeopardyPlayer;
 
@@ -72,7 +73,7 @@ public class Players {
     public static List<Player> getPlayerList() {
         return playerList;
     }
-    
+
     public void setPlayersArmed(boolean armed) {
         for (Player player : playerList) {
             player.setArmed(armed);
@@ -84,7 +85,7 @@ public class Players {
 
         if (playerIndex != -1) {
             final Player player = getPlayerList().get(playerIndex);
-            
+
             if (player.isArmed()) {
                 return player;
             } else {
@@ -101,5 +102,17 @@ public class Players {
 
     public static Player getDoubleJeopardyPlayer() {
         return doubleJeopardyPlayer;
+    }
+
+    public static Player getWinner() {
+        Player winner = playerList.get(0);
+        
+        for (Player player : playerList) {
+            if (player.getPoints() > winner.getPoints()) {
+                winner = player;
+            }
+        }
+        
+        return winner;
     }
 }

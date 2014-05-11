@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -54,9 +55,9 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
         setPlayerKeyEventListener(new SetPlayerNameKeyEventListener());
         getPlayers().setPlayersArmed(true);
-        
+
         MainWindow.setControlStyle(statusBarLabel);
-        
+
         for (Label label : playerLabels) {
             MainWindow.setControlStyle(label);
         }
@@ -65,7 +66,6 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     private static Players getPlayers() {
         return Jeopardy.getPlayers();
     }
-
 
     @FXML
     private void onKeyPressed(KeyEvent event) {
@@ -134,15 +134,15 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     @Override
     public void frameAnswered(Frame frame, boolean correct) {
         updatePlayerStatuses();
-        
+
         if (correct) {
             frame.setClosed(true);
-            
+
             final String color = Util.toRGBCode(frame.getLastScore().getPlayer().getColor());
             Button button = getButtonForFrame(frame);
             button.setStyle("-fx-background-color: " + color + ";");
         }
-        
+
         if (MainWindow.isGameOver()) {
             showGameOverWindow();
         }
@@ -157,6 +157,11 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     private void showGameOverWindow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Dialogs.create()
+                .owner(null)
+                .title("Game over!")
+                .masthead(null)
+                .message("The game is over and the winner is "+Players.getWinner()+"!")
+                .showInformation();
     }
 }
