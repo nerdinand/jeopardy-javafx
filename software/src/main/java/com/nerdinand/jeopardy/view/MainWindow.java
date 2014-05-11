@@ -47,12 +47,13 @@ import javafx.scene.layout.GridPane;
  * @author Ferdinand Niedermann
  */
 public class MainWindow {
-    private final Round round;
+    private static Round round;
+
     private BorderPane root;
     private MainWindowController controller;
         
     public MainWindow(Round round) {
-        this.round = round;
+        MainWindow.round = round;
     }
 
     public void initialize() throws IOException {
@@ -118,5 +119,15 @@ public class MainWindow {
 
     public static void setControlStyle(Control control) {
         control.setStyle("-fx-font-size: 15pt;");
+    }
+    
+    public static boolean isGameOver() {
+        for (Frame frame : round.getAllFrames()) {
+            if (!frame.isClosed()) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

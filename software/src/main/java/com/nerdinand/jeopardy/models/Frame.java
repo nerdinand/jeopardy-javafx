@@ -32,68 +32,69 @@ import java.util.List;
  * @author Ferdinand Niedermann
  */
 public class Frame {
-    
+
     private int points;
     private Answer answer;
     private Question question;
     private File rootPath;
-    
+
     private final List<Score> scores = new ArrayList<Score>();
     private String categoryName;
     private boolean hasDoubleJeopardy;
     private int doubleJeopardyWager;
-    
+    private boolean closed;
+
     public void setPoints(int points) {
         this.points = points;
     }
-    
+
     public int getPoints() {
         return points;
     }
-    
+
     public void setAnswer(Answer answer) {
         this.answer = answer;
     }
-    
+
     public Answer getAnswer() {
         return answer;
     }
-    
+
     public void setQuestion(Question question) {
         this.question = question;
     }
-    
+
     public Question getQuestion() {
         return question;
     }
-    
+
     public void setRootPath(File rootPath) {
         this.rootPath = rootPath;
-        
+
         getAnswer().setRootPath(new File(rootPath, String.valueOf(getPoints())));
         getQuestion().setRootPath(new File(rootPath, String.valueOf(getPoints())));
     }
-    
+
     public File getRootPath() {
         return rootPath;
     }
-    
+
     public void addScore(Score score) {
         scores.add(score);
     }
-    
+
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
-    
+
     public String getCategoryName() {
         return categoryName;
     }
-    
+
     public String toString() {
         return getCategoryName() + " for " + getPoints();
     }
-    
+
     public Score getLastScore() {
         return scores.get(scores.size() - 1);
     }
@@ -114,4 +115,11 @@ public class Frame {
         return doubleJeopardyWager;
     }
     
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+    
+    public boolean isClosed() {
+        return closed;
+    }
 }

@@ -72,8 +72,6 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
         if (player != null) {
-            System.out.println(player.getName() + " pressed.");
-
             playerKeyEventListener.onPlayerKeyPressed(player);
             updatePlayerStatus(player);
         }
@@ -136,11 +134,17 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     @Override
     public void frameAnswered(Frame frame, boolean correct) {
         updatePlayerStatuses();
-
+        
         if (correct) {
+            frame.setClosed(true);
+            
             final String color = Util.toRGBCode(frame.getLastScore().getPlayer().getColor());
             Button button = getButtonForFrame(frame);
             button.setStyle("-fx-background-color: " + color + ";");
+        }
+        
+        if (MainWindow.isGameOver()) {
+            showGameOverWindow();
         }
     }
 
@@ -150,5 +154,9 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
     private Button getButtonForFrame(Frame frame) {
         return frameButtons.get(frame);
+    }
+
+    private void showGameOverWindow() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

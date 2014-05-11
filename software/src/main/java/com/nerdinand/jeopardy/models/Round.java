@@ -24,6 +24,7 @@
 package com.nerdinand.jeopardy.models;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -114,5 +115,15 @@ public class Round {
         int frameIndex = random.nextInt(category.getFrames().size());
 
         return category.getFrames().get(frameIndex);
+    }
+
+    public List<Frame> getAllFrames() {
+        List<Frame> frames = new ArrayList<>();
+        
+        for (Category category : getCategories()) {
+            frames.addAll(category.getFrames());
+        }
+        
+        return frames;
     }
 }
