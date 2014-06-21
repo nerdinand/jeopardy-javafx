@@ -193,7 +193,7 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
             answerSound.stop();
         }
 
-        Assets.jeopardyMusic.stop();
+        stopJeopardySound();
     }
 
     @FXML
@@ -228,5 +228,9 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
         player.addScore(new Score(player, null, Integer.parseInt(newScore) - oldScore));
 
         updatePlayerStatuses();
+    }
+
+    public static void stopJeopardySound() {
+        Assets.jeopardyMusic.stop();
     }
 }

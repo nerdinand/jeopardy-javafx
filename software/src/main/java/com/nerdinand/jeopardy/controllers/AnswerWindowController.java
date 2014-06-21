@@ -172,6 +172,8 @@ public class AnswerWindowController implements Initializable {
     private void closeWindow() {
         Stage stage = (Stage) hBox.getScene().getWindow();
         stage.close();
+        
+        MainWindowController.stopJeopardySound();
     }
 
     private void cancelFrame() {
