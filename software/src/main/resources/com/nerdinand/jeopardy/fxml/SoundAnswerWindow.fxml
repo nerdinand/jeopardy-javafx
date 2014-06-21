@@ -17,15 +17,26 @@
     spacing="10"
     fx:id="hBox"
 >
-    
-    <Label fx:id="textLabel" wrapText="true" prefHeight="400" text="Listen!" > 
-        <HBox.margin>
-            <javafx.geometry.Insets left="50" right="50" bottom="50" top="50" />   
-        </HBox.margin>
+    <VBox
+        alignment="CENTER"
+    >
         
-        <font>
-            <Font name="Arial" size="60" />
-        </font>
-    </Label>
+        <Label fx:id="textLabel" wrapText="true" prefHeight="400" text="Listen!" > 
+            <HBox.margin>
+                <javafx.geometry.Insets left="50" right="50" bottom="50" top="50" />   
+            </HBox.margin>
+
+            <font>
+                <Font name="Arial" size="60" />
+            </font>
+        </Label>
+        
+        <Button 
+            fx:id="playButton" 
+            text="Play" 
+            onAction="#onPlayButtonAction" 
+        /> 
+        
+    </VBox>
     
 </HBox>

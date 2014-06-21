@@ -76,6 +76,9 @@ public class AnswerWindow {
             case IMAGE:
                 setImageFromFile(mediaPath);
                 break;
+            case SOUND:
+                setSoundFromFile(mediaPath);
+                break;
         }
 
         return scene;
@@ -110,6 +113,16 @@ public class AnswerWindow {
             getController().showImage(answerImage);
         } catch (Exception ex) {
             Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Image file " + uri + " could not be read.", ex);
+        }
+    }
+    
+    private void setSoundFromFile(File mediaPath) {
+        final String uri = mediaPath.toURI().toString();
+        try {
+            AudioClip answerSound = new AudioClip(uri);
+            getController().setSound(answerSound);
+        } catch (Exception ex) {
+            Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Sound file " + uri + " could not be read.", ex);
         }
     }
 

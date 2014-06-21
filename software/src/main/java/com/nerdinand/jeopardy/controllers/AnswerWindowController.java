@@ -35,11 +35,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
@@ -60,8 +62,13 @@ public class AnswerWindowController implements Initializable {
     @FXML
     private ImageView imageView;
 
+    @FXML
+    private Button playButton;
+    
     private FrameKeyEventListener frameKeyEventListener;
     private FrameAnsweredListener frameAnsweredListener;
+    
+    private AudioClip sound;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,11 +82,21 @@ public class AnswerWindowController implements Initializable {
     public void showImage(Image image) {
         imageView.setImage(image);
     }
+    
+    public void setSound(AudioClip sound) {
+        this.sound = sound;
+    }
 
     private static Players getPlayers() {
         return Jeopardy.getPlayers();
     }
 
+    @FXML
+    private void onPlayButtonAction() {
+        sound.stop();
+        sound.play();
+    }
+    
     @FXML
     private void onKeyPressed(KeyEvent event) {
         final Keymap.Action action = Keymap.getInstance().getAction(event);
