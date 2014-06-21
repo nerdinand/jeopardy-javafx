@@ -239,7 +239,9 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     public static void stopJeopardySound() {
-        Assets.jeopardyMusic.stop();
+        if (Assets.jeopardyMusic != null) {
+            Assets.jeopardyMusic.stop();
+        }
     }
 
     private void showQuestion(Frame frame) {
