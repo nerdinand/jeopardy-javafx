@@ -38,6 +38,8 @@ public class SceneFactory {
                 return createTextScene(answerWindow);
             case IMAGE:
                 return createImageScene(answerWindow);
+            case SOUND:
+                return createSoundScene(answerWindow);
         }
 
         return null;
@@ -51,6 +53,10 @@ public class SceneFactory {
         return createScene(answerWindow, Assets.IMAGE_ANSWER_WINDOW_FXML);
     }
 
+    private Scene createSoundScene(AnswerWindow answerWindow) {
+        return createScene(answerWindow, Assets.SOUND_ANSWER_WINDOW_FXML);
+    }
+        
     private Scene createScene(AnswerWindow answerWindow, String fxmlAssetPath) {
         HBox root = null;
         

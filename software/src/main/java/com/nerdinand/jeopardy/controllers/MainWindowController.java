@@ -6,6 +6,7 @@ import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
 import com.nerdinand.jeopardy.controllers.listeners.SetPlayerNameKeyEventListener;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.models.Frame;
+import com.nerdinand.jeopardy.models.MediaType;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.Util;
@@ -14,6 +15,7 @@ import com.nerdinand.jeopardy.view.MainWindow;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -21,7 +23,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.controlsfx.dialog.Dialogs;
 
 /**
@@ -46,6 +50,7 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     private Map<Frame, Button> frameButtons;
     @FXML
     private GridPane gridPane;
+    private AudioClip answerSound;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -78,14 +83,16 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     public void handleFrameButtonClick(Frame frame) {
-        playJeopardyMusic();
+        if (frame.getAnswer().getMediaType() != MediaType.SOUND) {
+            playJeopardyMusic();
+        }
 
         openAnswerWindow(frame);
     }
 
     private void openAnswerWindow(Frame frame) {
         AnswerWindow answerWindow = new AnswerWindow(frame, this);
-
+        
         Button buttonForFrame = getButtonForFrame(frame);
         buttonForFrame.setDisable(true);
 
@@ -93,10 +100,16 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
         if (scene != null) {
             Stage stage = new Stage();
-
+            stage.setOnCloseRequest(createOnCloseHandler());
             stage.setTitle(frame.toString());
             stage.setScene(scene);
             stage.show();
+            
+            if (frame.getAnswer().getMediaType() == MediaType.SOUND) {
+                final String uri = frame.getAnswer().getMediaPath().toURI().toString();
+                this.answerSound = new AudioClip(uri);
+                this.answerSound.play();
+            }
 
             // we need to do the following in order to receive keyboard events in the new window...
             stage.getScene().getRoot().setFocusTraversable(true);
@@ -163,5 +176,15 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
                 .masthead(null)
                 .message("The game is over and the winner is "+Players.getWinner()+"!")
                 .showInformation();
+    }
+
+    private EventHandler<WindowEvent> createOnCloseHandler() {
+        return (WindowEvent event) -> {
+            if (answerSound != null) {
+                answerSound.stop();
+            }
+            
+            Assets.jeopardyMusic.stop();
+        };
     }
 }

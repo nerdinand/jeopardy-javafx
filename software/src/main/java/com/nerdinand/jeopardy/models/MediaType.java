@@ -30,13 +30,16 @@ package com.nerdinand.jeopardy.models;
  */
 public enum MediaType {
     IMAGE,
-    TEXT;
+    TEXT,
+    SOUND;
     
     public static MediaType fromString(String type) {
         if(type.equals(":image")) {
             return IMAGE;
         } else if (type.equals(":text")) {
             return TEXT;
+        } else if (type.equals(":sound")) {
+            return SOUND;
         }
             
         return null;

@@ -172,5 +172,5 @@ public class AnswerWindowController implements Initializable {
             closeWindow();
         }
     }
-
+    
 }

@@ -39,6 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import org.controlsfx.dialog.Dialogs;
 
 /**
@@ -51,6 +52,7 @@ public class AnswerWindow {
     private AnswerWindowController controller;
     private final Frame frame;
     private final FrameAnsweredListener frameAnsweredListener;
+    private AudioClip answerSound;
 
     public AnswerWindow(Frame frame, FrameAnsweredListener frameAnsweredListener) {
         this.frame = frame;
