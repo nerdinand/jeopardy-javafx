@@ -233,8 +233,10 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
                 .message("Edit " + player.getName() + "'s score:")
                 .showTextInput("" + oldScore);
 
-        player.addScore(new Score(player, null, Integer.parseInt(newScore) - oldScore));
-
+        if (newScore != null) {
+            player.addScore(new Score(player, null, Integer.parseInt(newScore) - oldScore));
+        }
+        
         updatePlayerStatuses();
     }
 
@@ -246,8 +248,8 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
     private void showQuestion(Frame frame) {
         final Question question = frame.getQuestion();
+        
         try {
-
             if (question.getMediaType() == MediaType.TEXT) {
                 String answerString;
                 answerString = Util.readUTF8File(question.getMediaPath());
