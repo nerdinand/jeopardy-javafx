@@ -22,7 +22,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
     
     compile files('lib/controlsfx-8.0.5.jar')
-    compile files('lib/snakeyaml-1.11.jar')
+    compile 'org.yaml:snakeyaml:1.13'
 }
 
 run {
