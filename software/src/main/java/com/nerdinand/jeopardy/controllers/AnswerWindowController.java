@@ -105,7 +105,9 @@ public class AnswerWindowController implements Initializable {
         if (action == Keymap.Action.PLAYER) {
             handlePlayerKeyPressed(event);
         } else if (action == Keymap.Action.CANCEL) {
-            cancelFrame();
+            if (!getFrame().hasDoubleJeopardy()) {
+                cancelFrame();
+            }
         }
     }
 
