@@ -27,10 +27,10 @@
             </BorderPane.margin>
             
             <Label text="This is the status bar" fx:id="statusBarLabel" prefWidth="300" /> 
-            <Label fx:id="player1Label" prefWidth="300" /> 
-            <Label fx:id="player2Label" prefWidth="300" /> 
-            <Label fx:id="player3Label" prefWidth="300" /> 
-            <Label fx:id="player4Label" prefWidth="300" /> 
+            <Label fx:id="player1Label" prefWidth="300" onMouseClicked="#onPlayerLabel1Click" /> 
+            <Label fx:id="player2Label" prefWidth="300" onMouseClicked="#onPlayerLabel2Click" /> 
+            <Label fx:id="player3Label" prefWidth="300" onMouseClicked="#onPlayerLabel3Click" /> 
+            <Label fx:id="player4Label" prefWidth="300" onMouseClicked="#onPlayerLabel4Click" /> 
         </HBox>
     </bottom>
 </BorderPane>
