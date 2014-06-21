@@ -26,6 +26,7 @@ package com.nerdinand.jeopardy.controllers;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
+import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener.FrameState;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
@@ -128,11 +129,11 @@ public class AnswerWindowController implements Initializable {
             ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
             closeWindow();
 
-            frameAnsweredListener.frameAnswered(frame, true);
+            frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
         } else if (action == Dialog.Actions.NO) { // player has given the wrong solution
             ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
 
-            frameAnsweredListener.frameAnswered(frame, false);
+            frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
         }
     }
 
@@ -159,12 +160,12 @@ public class AnswerWindowController implements Initializable {
                 ScoreFactory.getInstance().createScore(player, frame, frame.getDoubleJeopardyWager());
                 closeWindow();
 
-                frameAnsweredListener.frameAnswered(frame, true);
+                frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
             } else if (action == Dialog.Actions.NO) { // player has given the wrong solution
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getDoubleJeopardyWager());
                 closeWindow();
 
-                frameAnsweredListener.frameAnswered(frame, false);
+                frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
             }
         }
     }
@@ -187,7 +188,7 @@ public class AnswerWindowController implements Initializable {
         
         if (cancel == Dialog.Actions.YES) {
             getFrame().setClosed(true);
-            frameAnsweredListener.frameAnswered(getFrame(), false);
+            frameAnsweredListener.frameAnswered(getFrame(), FrameState.CANCELED);
             closeWindow();
         }
     }

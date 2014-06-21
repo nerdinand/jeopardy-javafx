@@ -13,5 +13,11 @@ import com.nerdinand.jeopardy.models.Frame;
  * @author Ferdinand Niedermann
  */
 public interface FrameAnsweredListener {
-    public void frameAnswered(Frame frame, boolean correct);
+    enum FrameState {
+        ANSWERED_CORRECT,
+        ANSWERED_WRONG,
+        CANCELED
+    }
+    
+    public void frameAnswered(Frame frame, FrameState state);
 }

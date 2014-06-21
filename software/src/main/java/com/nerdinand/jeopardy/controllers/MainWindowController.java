@@ -9,13 +9,17 @@ import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.MediaType;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
+import com.nerdinand.jeopardy.models.Question;
 import com.nerdinand.jeopardy.models.Score;
 import com.nerdinand.jeopardy.services.Util;
 import com.nerdinand.jeopardy.view.AnswerWindow;
 import com.nerdinand.jeopardy.view.MainWindow;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -149,17 +153,21 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     @Override
-    public void frameAnswered(Frame frame, boolean correct) {
+    public void frameAnswered(Frame frame, FrameState frameState) {
         updatePlayerStatuses();
 
-        if (correct) {
+        if (frameState == FrameState.ANSWERED_CORRECT) {
             frame.setClosed(true);
 
             final String color = Util.toRGBCode(frame.getLastScore().getPlayer().getColor());
             Button button = getButtonForFrame(frame);
             button.setStyle("-fx-background-color: " + color + ";");
         }
-
+        
+        if (frameState != FrameState.ANSWERED_WRONG) {
+            showQuestion(frame);
+        }
+        
         if (MainWindow.isGameOver()) {
             showGameOverWindow();
         }
@@ -232,5 +240,29 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
     public static void stopJeopardySound() {
         Assets.jeopardyMusic.stop();
+    }
+
+    private void showQuestion(Frame frame) {
+        final Question question = frame.getQuestion();
+        try {
+
+            if (question.getMediaType() == MediaType.TEXT) {
+                String answerString;
+                answerString = Util.readUTF8File(question.getMediaPath());
+                Dialogs.create()
+                        .owner(null)
+                        .title(frame.toString())
+                        .masthead(null)
+                        .message("The correct question is: \n" + answerString)
+                        .showInformation();
+
+            } else {
+                Logger.getLogger(MainWindowController.class.getName()).log(Level.WARNING, "Showing questions for type {0} is not supported yet.", question.getMediaType());
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
