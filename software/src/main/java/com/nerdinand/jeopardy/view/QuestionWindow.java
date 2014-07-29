@@ -25,51 +25,40 @@ package com.nerdinand.jeopardy.view;
 
 import com.nerdinand.jeopardy.controllers.AnswerWindowController;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
-import com.nerdinand.jeopardy.models.Answer;
 import com.nerdinand.jeopardy.models.Frame;
-import com.nerdinand.jeopardy.models.Player;
-import com.nerdinand.jeopardy.models.Players;
+import com.nerdinand.jeopardy.models.Question;
 import com.nerdinand.jeopardy.services.SceneFactory;
 import com.nerdinand.jeopardy.services.Util;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
-import org.controlsfx.dialog.Dialogs;
 
 /**
  *
  * @author Ferdinand Niedermann
  */
-public class AnswerWindow implements AnswerQuestionWindow {
+public class QuestionWindow implements AnswerQuestionWindow {
 
-    private final Answer answer;
+    private final Question question;
     private AnswerWindowController controller;
     private final Frame frame;
-    private final FrameAnsweredListener frameAnsweredListener;
     private AudioClip answerSound;
 
-    public AnswerWindow(Frame frame, FrameAnsweredListener frameAnsweredListener) {
+    public QuestionWindow(Frame frame, FrameAnsweredListener frameAnsweredListener) {
         this.frame = frame;
-        this.answer = frame.getAnswer();
-        this.frameAnsweredListener = frameAnsweredListener;
-
-        if (getFrame().hasDoubleJeopardy()) {
-            handleDoubleJeopardy();
-        }
+        this.question = frame.getQuestion();
     }
 
     public Scene initialize() {
-        Scene scene = SceneFactory.getInstance().sceneForTypeable(getAnswer(), this);
+        Scene scene = SceneFactory.getInstance().sceneForTypeable(getQuestion(), this);
 
-        final File mediaPath = getAnswer().getMediaPath();
+        final File mediaPath = getQuestion().getMediaPath();
 
-        switch (getAnswer().getMediaType()) {
+        switch (getQuestion().getMediaType()) {
             case TEXT:
                 setTextFromFile(mediaPath);
                 break;
@@ -84,14 +73,9 @@ public class AnswerWindow implements AnswerQuestionWindow {
         return scene;
     }
 
-    public Answer getAnswer() {
-        return answer;
-    }
-
     @Override
     public void setController(AnswerWindowController answerWindowController) {
         this.controller = answerWindowController;
-        getController().setFrameAnsweredListener(frameAnsweredListener);
     }
 
     public AnswerWindowController getController() {
@@ -132,56 +116,7 @@ public class AnswerWindow implements AnswerQuestionWindow {
         return frame;
     }
 
-    public FrameAnsweredListener getUpdateable() {
-        return frameAnsweredListener;
+    private Question getQuestion() {
+        return question;
     }
-
-    private void handleDoubleJeopardy() {
-        Player player = askForPlayer();
-        Integer wager = askForWager(player);
-
-        Players.setDoubleJeopardyPlayer(player);
-        getFrame().setDoubleJeopardyWager(wager);
-    }
-
-    private Player askForPlayer() {
-        Player player = null;
-        do {
-            player = Dialogs.create()
-                    .owner(null)
-                    .title("Double Jeopardy!")
-                    .masthead(null)
-                    .message("You have encountered a Double Jeopardy!\nWhich player are you?")
-                    .showChoices(Players.getPlayerList());
-        } while (player == null);
-        return player;
-    }
-
-    private Integer askForWager(Player player) {
-        final List<Integer> doubleJeopardyChoices = getDoubleJeopardyChoices(getFrame());
-        Integer wager = 0;
-        do {
-            wager = Dialogs.create()
-                    .owner(null)
-                    .title("Double Jeopardy!")
-                    .masthead(null)
-                    .message("Player " + player + "!\nHow many points do you want to set?")
-                    .showChoices(doubleJeopardyChoices);
-        } while (wager == null);
-        return wager;
-    }
-
-    private List<Integer> getDoubleJeopardyChoices(Frame frame) {
-        List<Integer> choices = new ArrayList<>();
-
-        int amount = 100;
-
-        do {
-            choices.add(amount);
-            amount += 100;
-        } while (amount <= frame.getPoints() * 2);
-
-        return choices;
-    }
-
 }
