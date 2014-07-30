@@ -26,7 +26,7 @@
                 <javafx.geometry.Insets left="10" right="10" bottom="10" top="10" />   
             </BorderPane.margin>
             
-            <Label text="This is the status bar" fx:id="statusBarLabel" prefWidth="300" /> 
+            <Label fx:id="statusBarLabel" prefWidth="300" /> 
             <Label fx:id="player1Label" prefWidth="300" onMouseClicked="#onPlayerLabel1Click" /> 
             <Label fx:id="player2Label" prefWidth="300" onMouseClicked="#onPlayerLabel2Click" /> 
             <Label fx:id="player3Label" prefWidth="300" onMouseClicked="#onPlayerLabel3Click" /> 

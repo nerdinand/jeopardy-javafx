@@ -121,7 +121,7 @@ public class MainWindow {
         control.setStyle("-fx-font-size: 15pt;");
     }
     
-    public static boolean isGameOver() {
+    public static boolean isGameOver() {        
         for (Frame frame : round.getAllFrames()) {
             if (!frame.isClosed()) {
                 return false;

@@ -153,6 +153,10 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     public void frameAnswered(Frame frame, FrameState frameState) {
         updatePlayerStatuses();
 
+        if (frame.hasDoubleJeopardy()) {
+            frame.setClosed(true);
+        }
+        
         if (frameState == FrameState.ANSWERED_CORRECT) {
             frame.setClosed(true);
 
