@@ -33,6 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
@@ -55,7 +56,7 @@ public class QuestionWindowController implements Initializable {
 
     @FXML
     private Button playButton;
-        
+
     private AudioClip sound;
 
     @Override
@@ -70,7 +71,7 @@ public class QuestionWindowController implements Initializable {
     public void showImage(Image image) {
         imageView.setImage(image);
     }
-    
+
     public void setSound(AudioClip sound) {
         this.sound = sound;
     }
@@ -84,17 +85,19 @@ public class QuestionWindowController implements Initializable {
         sound.stop();
         sound.play();
     }
-    
+
     @FXML
     private void onKeyPressed(KeyEvent event) {
-        closeWindow();
+        if (event.getCode() == KeyCode.ESCAPE || event.getCode() == KeyCode.ENTER) {
+            closeWindow();
+        }
     }
 
     private void closeWindow() {
         Stage stage = (Stage) hBox.getScene().getWindow();
         stage.close();
-        
+
         MainWindowController.stopJeopardySound();
     }
-    
+
 }
