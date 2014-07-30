@@ -29,9 +29,14 @@ import com.nerdinand.jeopardy.view.MainWindow;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -54,6 +59,22 @@ public class Jeopardy extends Application {
         final Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Action showConfirm = Dialogs.create()
+                        .owner(null)
+                        .title("Quitting...")
+                        .masthead(null)
+                        .message("Really quit?")
+                        .showConfirm();
+
+                if (showConfirm == Dialog.Actions.NO || showConfirm == Dialog.Actions.CANCEL) {
+                    event.consume();
+                }
+            }
+        });
     }
 
     /**
@@ -69,9 +90,12 @@ public class Jeopardy extends Application {
             round = loadRound();
 
             launch(args);
+
         } else {
-            Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, "Pass the round YAML file as an argument.");
-            System.exit(-1);
+            Logger.getLogger(Jeopardy.class
+                    .getName()).log(Level.SEVERE, "Pass the round YAML file as an argument.");
+            System.exit(
+                    -1);
         }
     }
 
@@ -81,7 +105,8 @@ public class Jeopardy extends Application {
             return loader.load(roundPath);
 
         } catch (JeopardyLoaderException ex) {
-            Logger.getLogger(Jeopardy.class.getName()).log(Level.SEVERE, "Round YAML file could not be loaded.", ex);
+            Logger.getLogger(Jeopardy.class
+                    .getName()).log(Level.SEVERE, "Round YAML file could not be loaded.", ex);
         }
 
         return null;
