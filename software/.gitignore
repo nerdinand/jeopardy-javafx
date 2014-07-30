@@ -1,0 +1,9 @@
+build/
+.gradle/
+src/main/resources/com/nerdinand/jeopardy/media/jeopardy.mp3
+nbproject/
+.nb-gradle/
+.nb-gradle-properties/
+.project
+*.log
+*.sh
