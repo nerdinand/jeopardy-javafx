@@ -34,11 +34,9 @@ import javafx.scene.input.KeyEvent;
 public class Keymap {
 
     private final KeyCode CANCEL_KEYCODE = KeyCode.ESCAPE;
-    private final KeyCode DEBUG_KEYCODE = KeyCode.X;
     
     public enum Action {
         PLAYER,
-        DEBUG,
         CANCEL
     }
 
@@ -59,8 +57,6 @@ public class Keymap {
             return Action.PLAYER;
         } else if (code.equals(CANCEL_KEYCODE)) {
             return Action.CANCEL;
-        } else if (code.equals(DEBUG_KEYCODE)) {
-            return Action.DEBUG;
         }
         
         return null;
