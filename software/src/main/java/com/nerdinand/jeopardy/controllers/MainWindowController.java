@@ -264,6 +264,10 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
                 this.answerSound = new AudioClip(uri);
                 this.answerSound.play();
             }
+            
+            // we need to do the following in order to receive keyboard events in the new window...
+            stage.getScene().getRoot().setFocusTraversable(true);
+            stage.getScene().getRoot().requestFocus();
         }
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<HBox 
+    xmlns:fx="http://javafx.com/fxml/1"
+    prefWidth="1280" 
+    prefHeight="800" 
+    fx:controller="com.nerdinand.jeopardy.controllers.QuestionWindowController"
+    onKeyPressed="#onKeyPressed"
+    alignment="CENTER"
+    spacing="10"
+    fx:id="hBox"
+>
+    
+    <ImageView fx:id="imageView" fitWidth="1280" fitHeight="800" preserveRatio="true" smooth="true" > 
+        <HBox.margin>
+            <javafx.geometry.Insets left="50" right="50" bottom="50" top="50" />   
+        </HBox.margin>
+    </ImageView>
+    
+</HBox>

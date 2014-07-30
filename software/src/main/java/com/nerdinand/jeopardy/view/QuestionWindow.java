@@ -23,7 +23,7 @@
  */
 package com.nerdinand.jeopardy.view;
 
-import com.nerdinand.jeopardy.controllers.AnswerWindowController;
+import com.nerdinand.jeopardy.controllers.QuestionWindowController;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Question;
@@ -41,12 +41,12 @@ import javafx.scene.media.AudioClip;
  *
  * @author Ferdinand Niedermann
  */
-public class QuestionWindow implements AnswerQuestionWindow {
+public class QuestionWindow {
 
     private final Question question;
-    private AnswerWindowController controller;
+    private QuestionWindowController controller;
     private final Frame frame;
-    private AudioClip answerSound;
+    private AudioClip questionSound;
 
     public QuestionWindow(Frame frame, FrameAnsweredListener frameAnsweredListener) {
         this.frame = frame;
@@ -54,7 +54,7 @@ public class QuestionWindow implements AnswerQuestionWindow {
     }
 
     public Scene initialize() {
-        Scene scene = SceneFactory.getInstance().sceneForTypeable(getQuestion(), this);
+        Scene scene = SceneFactory.getInstance().sceneForQuestion(getQuestion(), this);
 
         final File mediaPath = getQuestion().getMediaPath();
 
@@ -73,12 +73,7 @@ public class QuestionWindow implements AnswerQuestionWindow {
         return scene;
     }
 
-    @Override
-    public void setController(AnswerWindowController answerWindowController) {
-        this.controller = answerWindowController;
-    }
-
-    public AnswerWindowController getController() {
+    public QuestionWindowController getController() {
         return controller;
     }
 
@@ -104,19 +99,22 @@ public class QuestionWindow implements AnswerQuestionWindow {
     private void setSoundFromFile(File mediaPath) {
         final String uri = mediaPath.toURI().toString();
         try {
-            AudioClip answerSound = new AudioClip(uri);
-            getController().setSound(answerSound);
+            AudioClip questionSound = new AudioClip(uri);
+            getController().setSound(questionSound);
         } catch (Exception ex) {
             Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Sound file " + uri + " could not be read.", ex);
         }
     }
 
-    @Override
     public Frame getFrame() {
         return frame;
     }
 
     private Question getQuestion() {
         return question;
+    }
+
+    public void setController(QuestionWindowController controller) {
+        this.controller = controller;
     }
 }

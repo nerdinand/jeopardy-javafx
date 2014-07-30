@@ -46,7 +46,7 @@ import org.controlsfx.dialog.Dialogs;
  *
  * @author Ferdinand Niedermann
  */
-public class AnswerWindow implements AnswerQuestionWindow {
+public class AnswerWindow {
 
     private final Answer answer;
     private AnswerWindowController controller;
@@ -65,7 +65,7 @@ public class AnswerWindow implements AnswerQuestionWindow {
     }
 
     public Scene initialize() {
-        Scene scene = SceneFactory.getInstance().sceneForTypeable(getAnswer(), this);
+        Scene scene = SceneFactory.getInstance().sceneForAnswer(getAnswer(), this);
 
         final File mediaPath = getAnswer().getMediaPath();
 
@@ -88,7 +88,6 @@ public class AnswerWindow implements AnswerQuestionWindow {
         return answer;
     }
 
-    @Override
     public void setController(AnswerWindowController answerWindowController) {
         this.controller = answerWindowController;
         getController().setFrameAnsweredListener(frameAnsweredListener);
@@ -127,7 +126,6 @@ public class AnswerWindow implements AnswerQuestionWindow {
         }
     }
 
-    @Override
     public Frame getFrame() {
         return frame;
     }

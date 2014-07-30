@@ -7,9 +7,12 @@ package com.nerdinand.jeopardy.services;
 
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.controllers.AnswerWindowController;
+import com.nerdinand.jeopardy.controllers.QuestionWindowController;
 import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
-import com.nerdinand.jeopardy.models.Typeable;
-import com.nerdinand.jeopardy.view.AnswerQuestionWindow;
+import com.nerdinand.jeopardy.models.Answer;
+import com.nerdinand.jeopardy.models.Question;
+import com.nerdinand.jeopardy.view.AnswerWindow;
+import com.nerdinand.jeopardy.view.QuestionWindow;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,47 +35,89 @@ public class SceneFactory {
         return instance;
     }
 
-    public Scene sceneForTypeable(Typeable typeable, AnswerQuestionWindow answerQuestionWindow) {
-        switch (typeable.getMediaType()) {
+    public Scene sceneForAnswer(Answer answer, AnswerWindow answerWindow) {
+        switch (answer.getMediaType()) {
             case TEXT:
-                return createTextScene(answerQuestionWindow);
+                return createTextAnswerScene(answerWindow);
             case IMAGE:
-                return createImageScene(answerQuestionWindow);
+                return createImageAnswerScene(answerWindow);
             case SOUND:
-                return createSoundScene(answerQuestionWindow);
+                return createSoundAnswerScene(answerWindow);
         }
 
         return null;
     }
 
-    private Scene createTextScene(AnswerQuestionWindow answerQuestionWindow) {
-        return createScene(answerQuestionWindow, Assets.TEXT_WINDOW_FXML);
-    }
-    
-    private Scene createImageScene(AnswerQuestionWindow answerQuestionWindow) {
-        return createScene(answerQuestionWindow, Assets.IMAGE_WINDOW_FXML);
+    private Scene createTextAnswerScene(AnswerWindow answerWindow) {
+        return createAnswerScene(answerWindow, Assets.TEXT_ANSWER_WINDOW_FXML);
     }
 
-    private Scene createSoundScene(AnswerQuestionWindow answerQuestionWindow) {
-        return createScene(answerQuestionWindow, Assets.SOUND_WINDOW_FXML);
+    private Scene createImageAnswerScene(AnswerWindow answerWindow) {
+        return createAnswerScene(answerWindow, Assets.IMAGE_ANSWER_WINDOW_FXML);
     }
-        
-    private Scene createScene(AnswerQuestionWindow answerQuestionWindow, String fxmlAssetPath) {
+
+    private Scene createSoundAnswerScene(AnswerWindow answerWindow) {
+        return createAnswerScene(answerWindow, Assets.SOUND_ANSWER_WINDOW_FXML);
+    }
+
+    public Scene sceneForQuestion(Question question, QuestionWindow questionWindow) {
+        switch (question.getMediaType()) {
+            case TEXT:
+                return createTextQuestionScene(questionWindow);
+            case IMAGE:
+                return createImageQuestionScene(questionWindow);
+            case SOUND:
+                return createSoundQuestionScene(questionWindow);
+        }
+
+        return null;
+    }
+
+    private Scene createTextQuestionScene(QuestionWindow questionWindow) {
+        return createQuestionScene(questionWindow, Assets.TEXT_QUESTION_WINDOW_FXML);
+    }
+
+    private Scene createImageQuestionScene(QuestionWindow questionWindow) {
+        return createQuestionScene(questionWindow, Assets.IMAGE_QUESTION_WINDOW_FXML);
+    }
+
+    private Scene createSoundQuestionScene(QuestionWindow questionWindow) {
+        return createQuestionScene(questionWindow, Assets.SOUND_QUESTION_WINDOW_FXML);
+    }
+
+    private Scene createAnswerScene(AnswerWindow answerWindow, String fxmlAssetPath) {
         HBox root = null;
-        
+
         try {
             FXMLLoader fXMLLoader = new FXMLLoader();
             root = fXMLLoader.load(getClass().getResource(fxmlAssetPath).openStream());
             final AnswerWindowController controller = (AnswerWindowController) fXMLLoader.getController();
 
-            controller.setFrameKeyEventListener(new FrameKeyEventListener(answerQuestionWindow.getFrame()));
+            controller.setFrameKeyEventListener(new FrameKeyEventListener(answerWindow.getFrame()));
 
-            answerQuestionWindow.setController(controller);
-            
+            answerWindow.setController(controller);
+
         } catch (IOException ex) {
-            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, "Couldn't load or initialize FXML file from source "+fxmlAssetPath, ex);
+            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, "Couldn't load or initialize FXML file from source " + fxmlAssetPath, ex);
         }
-        
+
+        return new Scene(root);
+    }
+
+    private Scene createQuestionScene(QuestionWindow questionWindow, String fxmlAssetPath) {
+        HBox root = null;
+
+        try {
+            FXMLLoader fXMLLoader = new FXMLLoader();
+            root = fXMLLoader.load(getClass().getResource(fxmlAssetPath).openStream());
+            final QuestionWindowController controller = (QuestionWindowController) fXMLLoader.getController();
+
+            questionWindow.setController(controller);
+
+        } catch (IOException ex) {
+            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, "Couldn't load or initialize FXML file from source " + fxmlAssetPath, ex);
+        }
+
         return new Scene(root);
     }
 
