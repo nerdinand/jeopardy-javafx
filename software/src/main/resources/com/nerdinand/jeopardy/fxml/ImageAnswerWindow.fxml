@@ -9,8 +9,8 @@
 
 <HBox 
     xmlns:fx="http://javafx.com/fxml/1"
-    prefHeight="800" 
     prefWidth="1280" 
+    prefHeight="800" 
     fx:controller="com.nerdinand.jeopardy.controllers.AnswerWindowController"
     onKeyPressed="#onKeyPressed"
     alignment="CENTER"
@@ -18,7 +18,7 @@
     fx:id="hBox"
 >
     
-    <ImageView fx:id="imageView" > 
+    <ImageView fx:id="imageView" fitWidth="1280" fitHeight="800" preserveRatio="true" smooth="true" > 
         <HBox.margin>
             <javafx.geometry.Insets left="50" right="50" bottom="50" top="50" />   
         </HBox.margin>
