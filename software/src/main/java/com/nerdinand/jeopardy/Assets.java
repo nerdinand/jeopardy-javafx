@@ -36,9 +36,9 @@ public class Assets {
     public static final String JEOPARDY_MP3 = "/com/nerdinand/jeopardy/media/jeopardy.mp3";
 
     public static final String MAIN_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/MainWindow.fxml";
-    public static final String TEXT_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/TextAnswerWindow.fxml";
-    public static final String IMAGE_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/ImageAnswerWindow.fxml";
-    public static final String SOUND_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/SoundAnswerWindow.fxml";
+    public static final String TEXT_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/TextWindow.fxml";
+    public static final String IMAGE_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/ImageWindow.fxml";
+    public static final String SOUND_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/SoundWindow.fxml";
     
     public static final String MAIN_CSS = "com/nerdinand/jeopardy/fxml/styles/main.css";
             

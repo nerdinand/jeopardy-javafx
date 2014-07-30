@@ -46,15 +46,15 @@ public class SceneFactory {
     }
 
     private Scene createTextScene(AnswerQuestionWindow answerQuestionWindow) {
-        return createScene(answerQuestionWindow, Assets.TEXT_ANSWER_WINDOW_FXML);
+        return createScene(answerQuestionWindow, Assets.TEXT_WINDOW_FXML);
     }
     
     private Scene createImageScene(AnswerQuestionWindow answerQuestionWindow) {
-        return createScene(answerQuestionWindow, Assets.IMAGE_ANSWER_WINDOW_FXML);
+        return createScene(answerQuestionWindow, Assets.IMAGE_WINDOW_FXML);
     }
 
     private Scene createSoundScene(AnswerQuestionWindow answerQuestionWindow) {
-        return createScene(answerQuestionWindow, Assets.SOUND_ANSWER_WINDOW_FXML);
+        return createScene(answerQuestionWindow, Assets.SOUND_WINDOW_FXML);
     }
         
     private Scene createScene(AnswerQuestionWindow answerQuestionWindow, String fxmlAssetPath) {
