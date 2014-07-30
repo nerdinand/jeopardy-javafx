@@ -1,8 +1,1 @@
 .DS_Store
-
-software/build
-software/.gradle
-software/src/main/resources/com/nerdinand/jeopardy/media/jeopardy.mp3
-software/nbproject
-software/.nb-gradle
-software/.nb-gradle-properties
