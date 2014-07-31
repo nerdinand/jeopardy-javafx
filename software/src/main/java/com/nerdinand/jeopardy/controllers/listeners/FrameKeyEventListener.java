@@ -21,36 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.nerdinand.jeopardy.controllers.listeners;
 
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
+import java.util.ArrayList;
+import java.util.List;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
+import org.controlsfx.dialog.Dialogs.CommandLink;
 
 /**
  *
  * @author ferdi
  */
 public class FrameKeyEventListener {
+
+    public static final String YES = "Yes";
+    public static final String YOU_TRIED = "You tried...";
+    public static final String OOPS = "Oops!";
+    public static final String NO = "No";
+
     private final Frame frame;
 
     public FrameKeyEventListener(Frame frame) {
         this.frame = frame;
     }
 
-    public Action onPlayerKeyPressed(Player player) {
-        return Dialogs.create()
+    public CommandLink onPlayerKeyPressed(Player player) {
+        List<Dialogs.CommandLink> choices = new ArrayList<>();
+
+        choices.add(new Dialogs.CommandLink(YES, "Award " + player.getName() + " " + frame.getPoints() + " points."));
+        choices.add(new Dialogs.CommandLink(YOU_TRIED, "Award " + player.getName() + " " + frame.getYouTriedPoints() + " points."));
+        choices.add(new Dialogs.CommandLink(OOPS, "This was a mistake..."));
+        choices.add(new Dialogs.CommandLink(NO, "Punish " + player.getName() + " with -" + frame.getPoints() + " points."));
+
+        return (CommandLink) Dialogs.create()
                 .owner(null)
                 .title("Question")
                 .masthead(null)
                 .message("Player " + player.getName() + ", your solution please?")
-                .showConfirm();
+                .showCommandLinks(choices);
     }
 
     public Frame getFrame() {
         return frame;
     }
-    
+
 }
