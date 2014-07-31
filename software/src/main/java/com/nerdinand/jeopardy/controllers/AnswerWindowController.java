@@ -23,6 +23,7 @@
  */
 package com.nerdinand.jeopardy.controllers;
 
+import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
@@ -34,7 +35,6 @@ import com.nerdinand.jeopardy.services.Keymap;
 import com.nerdinand.jeopardy.services.ScoreFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -129,14 +129,17 @@ public class AnswerWindowController implements Initializable {
         Frame frame = getFrame();
 
         if (commandLink.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
+            Assets.playRandomSound(Assets.yesSounds);
             ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
             closeWindow();
 
             frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
         } else if (commandLink.getText().equals(FrameKeyEventListener.YOU_TRIED)) {
+            Assets.playRandomSound(Assets.youTriedSounds);
             ScoreFactory.getInstance().createScore(player, frame, frame.getYouTriedPoints());
 
         } else if (commandLink.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
+            Assets.playRandomSound(Assets.noSounds);
             ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
 
             frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
@@ -163,11 +166,13 @@ public class AnswerWindowController implements Initializable {
             Frame frame = getFrame();
 
             if (commandLink.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
+                Assets.playRandomSound(Assets.yesSounds);
                 ScoreFactory.getInstance().createScore(player, frame, frame.getDoubleJeopardyWager());
                 closeWindow();
 
                 frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
             } else if (commandLink.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
+                Assets.playRandomSound(Assets.noSounds);
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getDoubleJeopardyWager());
                 closeWindow();
 

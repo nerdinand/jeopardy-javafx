@@ -23,6 +23,7 @@
  */
 package com.nerdinand.jeopardy.controllers.listeners;
 
+import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import java.util.ArrayList;
@@ -49,6 +50,10 @@ public class FrameKeyEventListener {
     }
 
     public CommandLink onPlayerKeyPressed(Player player) {
+        if (Assets.buzzerSound != null) {
+            Assets.buzzerSound.play();
+        }
+        
         if (getFrame().hasDoubleJeopardy()) {
             return onDoubleJeopardyFramePlayerKeyPressed(player);
         } else {
