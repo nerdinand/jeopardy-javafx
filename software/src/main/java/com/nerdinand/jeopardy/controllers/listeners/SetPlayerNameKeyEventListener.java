@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package com.nerdinand.jeopardy.controllers.listeners;
 
 import com.nerdinand.jeopardy.models.Player;
@@ -40,14 +39,23 @@ public class SetPlayerNameKeyEventListener implements PlayerKeyEventListener {
     public void onPlayerKeyPressed(Player player) {
         player.setArmed(false);
 
-        String name = Dialogs.create()
-                .owner(null)
-                .title("Name")
-                .masthead(null)
-                .message("Player " + player.getId() + ", please give us your name!")
-                .showTextInput(player.getName());
+        String name = askForPlayerName(player);
 
         player.setName(name);
     }
-    
+
+    private String askForPlayerName(Player player) {
+        String name = null;
+        do {
+            name = Dialogs.create()
+                    .owner(null)
+                    .title("Name")
+                    .masthead(null)
+                    .message("Player " + player.getId() + ", please give us your name!")
+                    .showTextInput(player.getName());
+        } while (name == null);
+        
+        return name;
+    }
+
 }
