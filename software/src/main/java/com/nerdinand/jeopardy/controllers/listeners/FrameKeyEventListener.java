@@ -39,8 +39,8 @@ public class FrameKeyEventListener {
 
     public static final String YES = "Yes";
     public static final String YOU_TRIED = "You tried...";
-    public static final String OOPS = "Oops!";
     public static final String NO = "No";
+    public static final String OOPS = "Oops!";
 
     private final Frame frame;
 
@@ -49,19 +49,52 @@ public class FrameKeyEventListener {
     }
 
     public CommandLink onPlayerKeyPressed(Player player) {
+        if (getFrame().hasDoubleJeopardy()) {
+            return onDoubleJeopardyFramePlayerKeyPressed(player);
+        } else {
+            return onFramePlayerKeyPressed(player);
+        }
+    }
+
+    private CommandLink onDoubleJeopardyFramePlayerKeyPressed(Player player) {
         List<Dialogs.CommandLink> choices = new ArrayList<>();
+        
+        choices.add(new Dialogs.CommandLink(YES, null));
+        choices.add(new Dialogs.CommandLink(NO, null));
 
-        choices.add(new Dialogs.CommandLink(YES, "Award " + player.getName() + " " + frame.getPoints() + " points."));
-        choices.add(new Dialogs.CommandLink(YOU_TRIED, "Award " + player.getName() + " " + frame.getYouTriedPoints() + " points."));
+        Action answer = null;
+
+        do {
+            answer = Dialogs.create()
+                    .owner(null)
+                    .title("Question")
+                    .masthead(null)
+                    .message("Player " + player.getName() + ", your solution please?")
+                    .showCommandLinks(choices);
+        } while (!(answer instanceof CommandLink));
+
+        return (CommandLink) answer;    }
+    
+    private CommandLink onFramePlayerKeyPressed(Player player) {
+        List<Dialogs.CommandLink> choices = new ArrayList<>();
+        
+        choices.add(new Dialogs.CommandLink(YES, "Award " + player.getName() + " " + getFrame().getPoints() + " points."));
+        choices.add(new Dialogs.CommandLink(YOU_TRIED, "Award " + player.getName() + " " + getFrame().getYouTriedPoints() + " points."));
+        choices.add(new Dialogs.CommandLink(NO, "Punish " + player.getName() + " with -" + getFrame().getPoints() + " points."));
         choices.add(new Dialogs.CommandLink(OOPS, "This was a mistake..."));
-        choices.add(new Dialogs.CommandLink(NO, "Punish " + player.getName() + " with -" + frame.getPoints() + " points."));
 
-        return (CommandLink) Dialogs.create()
-                .owner(null)
-                .title("Question")
-                .masthead(null)
-                .message("Player " + player.getName() + ", your solution please?")
-                .showCommandLinks(choices);
+        Action answer = null;
+
+        do {
+            answer = Dialogs.create()
+                    .owner(null)
+                    .title("Question")
+                    .masthead(null)
+                    .message("Player " + player.getName() + ", your solution please?")
+                    .showCommandLinks(choices);
+        } while (!(answer instanceof CommandLink));
+
+        return (CommandLink) answer;
     }
 
     public Frame getFrame() {
