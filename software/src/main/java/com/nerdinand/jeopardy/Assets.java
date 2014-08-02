@@ -63,8 +63,6 @@ public class Assets {
     public static final String IMAGE_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/ImageWindow.fxml";
     public static final String SOUND_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/SoundWindow.fxml";
 
-    public static final String MAIN_CSS = "com/nerdinand/jeopardy/fxml/styles/main.css";
-
     public static AudioClip jeopardyMusic;
     public static AudioClip buzzerSound;
 

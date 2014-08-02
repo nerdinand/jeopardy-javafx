@@ -118,7 +118,7 @@ public class MainWindow {
     }    
 
     public static void setControlStyle(Control control) {
-        control.setStyle("-fx-font-size: 15pt;");
+        control.setStyle("-fx-font-size: 25pt;");
     }
     
     public static boolean isGameOver() {        

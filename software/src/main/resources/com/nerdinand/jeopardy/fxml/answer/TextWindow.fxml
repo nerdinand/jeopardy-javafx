@@ -24,7 +24,7 @@
         </HBox.margin>
         
         <font>
-            <Font name="Arial" size="40" />
+            <Font name="Arial" size="60" />
         </font>
     </Label>
     
