@@ -33,7 +33,19 @@ import javafx.scene.media.AudioClip;
  * @author Ferdinand Niedermann
  */
 public class Assets {
+    
+    public class FXML {
+        public static final String MAIN_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/MainWindow.fxml";
 
+        public static final String TEXT_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/answer/TextWindow.fxml";
+        public static final String IMAGE_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/answer/ImageWindow.fxml";
+        public static final String SOUND_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/answer/SoundWindow.fxml";
+
+        public static final String TEXT_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/TextWindow.fxml";
+        public static final String IMAGE_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/ImageWindow.fxml";
+        public static final String SOUND_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/SoundWindow.fxml";
+    }
+    
     public static final String BUZZER_SOUND = "/com/nerdinand/jeopardy/media/Comical Metal Gong.wav";
 
     public static final String[] YES_SOUNDS = {
@@ -52,17 +64,7 @@ public class Assets {
     };
 
     public static final String JEOPARDY_MP3 = "/com/nerdinand/jeopardy/media/jeopardy.mp3";
-
-    public static final String MAIN_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/MainWindow.fxml";
-
-    public static final String TEXT_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/answer/TextWindow.fxml";
-    public static final String IMAGE_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/answer/ImageWindow.fxml";
-    public static final String SOUND_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/answer/SoundWindow.fxml";
-
-    public static final String TEXT_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/TextWindow.fxml";
-    public static final String IMAGE_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/ImageWindow.fxml";
-    public static final String SOUND_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/SoundWindow.fxml";
-
+    
     public static AudioClip jeopardyMusic;
     public static AudioClip buzzerSound;
 

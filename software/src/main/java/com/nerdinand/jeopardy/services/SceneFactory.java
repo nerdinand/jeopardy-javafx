@@ -49,15 +49,15 @@ public class SceneFactory {
     }
 
     private Scene createTextAnswerScene(AnswerWindow answerWindow) {
-        return createAnswerScene(answerWindow, Assets.TEXT_ANSWER_WINDOW_FXML);
+        return createAnswerScene(answerWindow, Assets.FXML.TEXT_ANSWER_WINDOW_FXML);
     }
 
     private Scene createImageAnswerScene(AnswerWindow answerWindow) {
-        return createAnswerScene(answerWindow, Assets.IMAGE_ANSWER_WINDOW_FXML);
+        return createAnswerScene(answerWindow, Assets.FXML.IMAGE_ANSWER_WINDOW_FXML);
     }
 
     private Scene createSoundAnswerScene(AnswerWindow answerWindow) {
-        return createAnswerScene(answerWindow, Assets.SOUND_ANSWER_WINDOW_FXML);
+        return createAnswerScene(answerWindow, Assets.FXML.SOUND_ANSWER_WINDOW_FXML);
     }
 
     public Scene sceneForQuestion(Question question, QuestionWindow questionWindow) {
@@ -74,15 +74,15 @@ public class SceneFactory {
     }
 
     private Scene createTextQuestionScene(QuestionWindow questionWindow) {
-        return createQuestionScene(questionWindow, Assets.TEXT_QUESTION_WINDOW_FXML);
+        return createQuestionScene(questionWindow, Assets.FXML.TEXT_QUESTION_WINDOW_FXML);
     }
 
     private Scene createImageQuestionScene(QuestionWindow questionWindow) {
-        return createQuestionScene(questionWindow, Assets.IMAGE_QUESTION_WINDOW_FXML);
+        return createQuestionScene(questionWindow, Assets.FXML.IMAGE_QUESTION_WINDOW_FXML);
     }
 
     private Scene createSoundQuestionScene(QuestionWindow questionWindow) {
-        return createQuestionScene(questionWindow, Assets.SOUND_QUESTION_WINDOW_FXML);
+        return createQuestionScene(questionWindow, Assets.FXML.SOUND_QUESTION_WINDOW_FXML);
     }
 
     private Scene createAnswerScene(AnswerWindow answerWindow, String fxmlAssetPath) {

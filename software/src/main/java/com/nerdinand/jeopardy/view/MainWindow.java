@@ -58,7 +58,7 @@ public class MainWindow {
 
     public void initialize() throws IOException {
         FXMLLoader fXMLLoader = new FXMLLoader();
-        BorderPane root = fXMLLoader.load(getClass().getResource(Assets.MAIN_WINDOW_FXML).openStream());
+        BorderPane root = fXMLLoader.load(getClass().getResource(Assets.FXML.MAIN_WINDOW_FXML).openStream());
         this.root = root;
         this.controller = (MainWindowController) fXMLLoader.getController();
                 
