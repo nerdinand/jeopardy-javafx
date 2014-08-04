@@ -33,10 +33,6 @@ import java.util.logging.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-/**
- *
- * @author Ferdinand Niedermann
- */
 public class Loader {
 
     public Loader() {

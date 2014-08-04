@@ -50,7 +50,7 @@ public class Jeopardy extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Assets.load();
+        Assets.load("config.yml");
 
         MainWindow mainWindow = new MainWindow(round);
         mainWindow.initialize();

@@ -50,9 +50,7 @@ public class FrameKeyEventListener {
     }
 
     public CommandLink onPlayerKeyPressed(Player player) {
-        if (Assets.buzzerSound != null) {
-            Assets.buzzerSound.play();
-        }
+        Assets.playRandomSound(Assets.getInstance().buzzerSounds);
         
         if (getFrame().hasDoubleJeopardy()) {
             return onDoubleJeopardyFramePlayerKeyPressed(player);

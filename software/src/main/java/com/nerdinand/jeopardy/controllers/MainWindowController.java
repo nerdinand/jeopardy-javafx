@@ -123,9 +123,11 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     private void playJeopardyMusic() {
-        if (Assets.jeopardyMusic != null) {
-            Assets.jeopardyMusic.stop();
-            Assets.jeopardyMusic.play();
+        final AudioClip jeopardyMusic = Assets.getInstance().jeopardyMusic;
+
+        if (jeopardyMusic != null) {
+            jeopardyMusic.stop();
+            jeopardyMusic.play();
         }
     }
 
@@ -242,8 +244,10 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     public static void stopJeopardySound() {
-        if (Assets.jeopardyMusic != null) {
-            Assets.jeopardyMusic.stop();
+        final AudioClip jeopardyMusic = Assets.getInstance().jeopardyMusic;
+        
+        if (jeopardyMusic != null) {
+            jeopardyMusic.stop();
         }
     }
 

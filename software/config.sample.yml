@@ -1,0 +1,13 @@
+sounds:
+  jeopardy: "/com/nerdinand/jeopardy/media/jeopardy.mp3"
+  yes:
+    - "/com/nerdinand/jeopardy/media/aj-yeehaw.mp3"
+    - "/com/nerdinand/jeopardy/media/bigm-eeyup.mp3"
+    - "/com/nerdinand/jeopardy/media/flutters-you-rock-woohoo.mp3"
+  no:
+    - "/com/nerdinand/jeopardy/media/bigm-nope.mp3"
+    - "/com/nerdinand/jeopardy/media/pp-wrong.wav"
+  youTried:
+    - "/com/nerdinand/jeopardy/media/aj-nah.mp3"
+  buzzer:
+    - "/com/nerdinand/jeopardy/media/Comical Metal Gong.wav"

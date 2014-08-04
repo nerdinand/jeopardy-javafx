@@ -102,7 +102,7 @@ public class Round {
             randomFrame = getRandomFrame();
         } while (randomFrame.hasDoubleJeopardy());
 
-        Logger.getLogger(Round.class.getName()).log(Level.INFO, "adding double Jeopardy to " + randomFrame);
+        Logger.getLogger(Round.class.getName()).log(Level.INFO, "adding double Jeopardy to {0}", randomFrame);
 
         randomFrame.setHasDoubleJeopardy(true);
     }

@@ -33,8 +33,17 @@ import javafx.scene.media.AudioClip;
  * @author Ferdinand Niedermann
  */
 public class Assets {
-    
+
+    public static Assets instance;
+
+    public static Assets getInstance() {
+        return instance;
+    }
+
+    private Config config;
+
     public class FXML {
+
         public static final String MAIN_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/MainWindow.fxml";
 
         public static final String TEXT_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/answer/TextWindow.fxml";
@@ -45,59 +54,46 @@ public class Assets {
         public static final String IMAGE_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/ImageWindow.fxml";
         public static final String SOUND_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/SoundWindow.fxml";
     }
-    
-    public static final String BUZZER_SOUND = "/com/nerdinand/jeopardy/media/Comical Metal Gong.wav";
 
-    public static final String[] YES_SOUNDS = {
-        "/com/nerdinand/jeopardy/media/aj-yeehaw.mp3",
-        "/com/nerdinand/jeopardy/media/bigm-eeyup.mp3",
-        "/com/nerdinand/jeopardy/media/flutters-you-rock-woohoo.mp3"
-    };
+    public AudioClip jeopardyMusic;
+    public AudioClip[] buzzerSounds;
+    public AudioClip[] yesSounds;
+    public AudioClip[] noSounds;
+    public AudioClip[] youTriedSounds;
 
-    public static final String[] NO_SOUNDS = {
-        "/com/nerdinand/jeopardy/media/bigm-nope.mp3",
-        "/com/nerdinand/jeopardy/media/pp-wrong.wav"
-    };
-
-    public static final String[] YOU_TRIED_SOUNDS = {
-        "/com/nerdinand/jeopardy/media/aj-nah.mp3"
-    };
-
-    public static final String JEOPARDY_MP3 = "/com/nerdinand/jeopardy/media/jeopardy.mp3";
-    
-    public static AudioClip jeopardyMusic;
-    public static AudioClip buzzerSound;
-
-    public static AudioClip[] yesSounds = new AudioClip[YES_SOUNDS.length];
-    public static AudioClip[] noSounds = new AudioClip[NO_SOUNDS.length];
-    public static AudioClip[] youTriedSounds = new AudioClip[YOU_TRIED_SOUNDS.length];
-
-    public static void load() {
-        loadAudio();
+    public static void load(String configPath) {
+        Assets assets = new Assets();
+        assets.loadConfiguration(configPath);
+        assets.loadAudio();
+        instance = assets;
     }
 
-    private static void loadAudio() {
-        jeopardyMusic = tryLoading(Assets.JEOPARDY_MP3);
+    private void loadConfiguration(String configPath) {
+        Logger.getLogger(Jeopardy.class.getName()).log(Level.INFO, "Loading configuration from {0}", configPath);
 
-        buzzerSound = tryLoading(Assets.BUZZER_SOUND);
+        this.config = Config.load(configPath);
+    }
+
+    private void loadAudio() {
+        jeopardyMusic = tryLoading(config.sounds.jeopardy);
+        buzzerSounds = loadSoundArray(config.sounds.buzzer);
+        yesSounds = loadSoundArray(config.sounds.yes);
+        noSounds = loadSoundArray(config.sounds.no);
+        youTriedSounds = loadSoundArray(config.sounds.youTried);
+    }
+
+    private AudioClip[] loadSoundArray(String[] paths) {
+        AudioClip[] sounds = new AudioClip[paths.length];
 
         int i = 0;
-        for (String path : YES_SOUNDS) {
-            yesSounds[i++] = tryLoading(path);
+        for (String path : paths) {
+            sounds[i++] = tryLoading(path);
         }
 
-        i = 0;
-        for (String path : NO_SOUNDS) {
-            noSounds[i++] = tryLoading(path);
-        }
-
-        i = 0;
-        for (String path : YOU_TRIED_SOUNDS) {
-            youTriedSounds[i++] = tryLoading(path);
-        }
+        return sounds;
     }
 
-    private static AudioClip tryLoading(String path) {
+    private AudioClip tryLoading(String path) {
         AudioClip sound = null;
 
         try {
@@ -105,8 +101,7 @@ public class Assets {
                     .getResource(path).toString();
             sound = new AudioClip(source);
         } catch (Exception ex) {
-            Logger.getLogger(Assets.class
-                    .getName()).log(Level.WARNING, "Sound file not found at src{0}", path);
+            Logger.getLogger(Assets.class.getName()).log(Level.WARNING, "Sound file not found at src{0}", path);
         }
 
         return sound;

@@ -129,17 +129,17 @@ public class AnswerWindowController implements Initializable {
         Frame frame = getFrame();
 
         if (commandLink.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
-            Assets.playRandomSound(Assets.yesSounds);
+            Assets.playRandomSound(Assets.getInstance().yesSounds);
             ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
             closeWindow();
 
             frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
         } else if (commandLink.getText().equals(FrameKeyEventListener.YOU_TRIED)) {
-            Assets.playRandomSound(Assets.youTriedSounds);
+            Assets.playRandomSound(Assets.getInstance().youTriedSounds);
             ScoreFactory.getInstance().createScore(player, frame, frame.getYouTriedPoints());
 
         } else if (commandLink.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
-            Assets.playRandomSound(Assets.noSounds);
+            Assets.playRandomSound(Assets.getInstance().noSounds);
             ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
 
             frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
@@ -166,13 +166,13 @@ public class AnswerWindowController implements Initializable {
             Frame frame = getFrame();
 
             if (commandLink.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
-                Assets.playRandomSound(Assets.yesSounds);
+                Assets.playRandomSound(Assets.getInstance().yesSounds);
                 ScoreFactory.getInstance().createScore(player, frame, frame.getDoubleJeopardyWager());
                 closeWindow();
 
                 frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
             } else if (commandLink.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
-                Assets.playRandomSound(Assets.noSounds);
+                Assets.playRandomSound(Assets.getInstance().noSounds);
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getDoubleJeopardyWager());
                 closeWindow();
 
