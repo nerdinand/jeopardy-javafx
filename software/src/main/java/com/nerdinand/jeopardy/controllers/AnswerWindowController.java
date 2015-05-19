@@ -33,11 +33,10 @@ import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.Keymap;
 import com.nerdinand.jeopardy.services.ScoreFactory;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -48,6 +47,9 @@ import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -125,20 +127,20 @@ public class AnswerWindowController implements Initializable {
     }
 
     private void handleNormalFrame(Player player) {
-        Dialogs.CommandLink commandLink = frameKeyEventListener.onPlayerKeyPressed(player);
+        ButtonType answer = frameKeyEventListener.onPlayerKeyPressed(player);
         Frame frame = getFrame();
 
-        if (commandLink.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
+        if (answer.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
             Assets.playRandomSound(Assets.yesSounds);
             ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
             closeWindow();
 
             frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
-        } else if (commandLink.getText().equals(FrameKeyEventListener.YOU_TRIED)) {
+        } else if (answer.getText().equals(FrameKeyEventListener.YOU_TRIED)) {
             Assets.playRandomSound(Assets.youTriedSounds);
             ScoreFactory.getInstance().createScore(player, frame, frame.getYouTriedPoints());
 
-        } else if (commandLink.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
+        } else if (answer.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
             Assets.playRandomSound(Assets.noSounds);
             ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
 
@@ -162,16 +164,16 @@ public class AnswerWindowController implements Initializable {
         // check if the player who wants to answer is the double jeopardy player 
         // (otherwise ignore the buzzer press)
         if (Players.getDoubleJeopardyPlayer() == player) {
-            Dialogs.CommandLink commandLink = frameKeyEventListener.onPlayerKeyPressed(player);
+            ButtonType answer = frameKeyEventListener.onPlayerKeyPressed(player);
             Frame frame = getFrame();
 
-            if (commandLink.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
+            if (answer.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
                 Assets.playRandomSound(Assets.yesSounds);
                 ScoreFactory.getInstance().createScore(player, frame, frame.getDoubleJeopardyWager());
                 closeWindow();
 
                 frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
-            } else if (commandLink.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
+            } else if (answer.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
                 Assets.playRandomSound(Assets.noSounds);
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getDoubleJeopardyWager());
                 closeWindow();
@@ -194,10 +196,10 @@ public class AnswerWindowController implements Initializable {
                 .title("Cancel")
                 .masthead(null)
                 .message("Really cancel this frame?")
-                .actions(Dialog.Actions.YES, Dialog.Actions.NO)
+                .actions(Dialog.ACTION_YES, Dialog.ACTION_NO)
                 .showConfirm();
 
-        if (cancel == Dialog.Actions.YES) {
+        if (cancel == Dialog.ACTION_YES) {
             getFrame().setClosed(true);
             frameAnsweredListener.frameAnswered(getFrame(), FrameState.CANCELED);
             closeWindow();

@@ -26,11 +26,12 @@ package com.nerdinand.jeopardy.controllers.listeners;
 import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
+import javafx.scene.control.ButtonType;
+import org.controlsfx.dialog.CommandLinksDialog;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
-import org.controlsfx.dialog.Dialogs.CommandLink;
+import java.util.Optional;
 
 /**
  *
@@ -49,7 +50,7 @@ public class FrameKeyEventListener {
         this.frame = frame;
     }
 
-    public CommandLink onPlayerKeyPressed(Player player) {
+    public ButtonType onPlayerKeyPressed(Player player) {
         if (Assets.buzzerSound != null) {
             Assets.buzzerSound.play();
         }
@@ -61,45 +62,44 @@ public class FrameKeyEventListener {
         }
     }
 
-    private CommandLink onDoubleJeopardyFramePlayerKeyPressed(Player player) {
-        List<Dialogs.CommandLink> choices = new ArrayList<>();
+    private ButtonType onDoubleJeopardyFramePlayerKeyPressed(Player player) {
+        List<CommandLinksDialog.CommandLinksButtonType> choices = new ArrayList<>();
         
-        choices.add(new Dialogs.CommandLink(YES, null));
-        choices.add(new Dialogs.CommandLink(NO, null));
+        choices.add(new CommandLinksDialog.CommandLinksButtonType(YES, null, true));
+        choices.add(new CommandLinksDialog.CommandLinksButtonType(NO, null, false));
 
-        Action answer = null;
+        Optional<ButtonType> answer;
 
         do {
-            answer = Dialogs.create()
-                    .owner(null)
-                    .title("Question")
-                    .masthead(null)
-                    .message("Player " + player.getName() + ", your solution please?")
-                    .showCommandLinks(choices);
-        } while (!(answer instanceof CommandLink));
+            CommandLinksDialog dialog = new CommandLinksDialog(choices);
+            dialog.setTitle("Question");
+            dialog.setContentText("Player " + player.getName() + ", your solution please?");
+            answer = dialog.showAndWait();
 
-        return (CommandLink) answer;    }
+        } while (!answer.isPresent());
+
+        return answer.get();
+    }
     
-    private CommandLink onFramePlayerKeyPressed(Player player) {
-        List<Dialogs.CommandLink> choices = new ArrayList<>();
-        
-        choices.add(new Dialogs.CommandLink(YES, "Award " + player.getName() + " " + getFrame().getPoints() + " points."));
-        choices.add(new Dialogs.CommandLink(YOU_TRIED, "Award " + player.getName() + " " + getFrame().getYouTriedPoints() + " points."));
-        choices.add(new Dialogs.CommandLink(NO, "Punish " + player.getName() + " with -" + getFrame().getPoints() + " points."));
-        choices.add(new Dialogs.CommandLink(OOPS, "This was a mistake..."));
+    private ButtonType onFramePlayerKeyPressed(Player player) {
+        List<CommandLinksDialog.CommandLinksButtonType> choices = new ArrayList<>();
 
-        Action answer = null;
+        choices.add(new CommandLinksDialog.CommandLinksButtonType(YES, "Award " + player.getName() + " " + getFrame().getPoints() + " points.", true));
+        choices.add(new CommandLinksDialog.CommandLinksButtonType(YOU_TRIED, "Award " + player.getName() + " " + getFrame().getYouTriedPoints() + " points.", false));
+        choices.add(new CommandLinksDialog.CommandLinksButtonType(NO, "Punish " + player.getName() + " with -" + getFrame().getPoints() + " points.", false));
+        choices.add(new CommandLinksDialog.CommandLinksButtonType(OOPS, "This was a mistake...", false));
+
+        Optional<ButtonType> answer;
 
         do {
-            answer = Dialogs.create()
-                    .owner(null)
-                    .title("Question")
-                    .masthead(null)
-                    .message("Player " + player.getName() + ", your solution please?")
-                    .showCommandLinks(choices);
-        } while (!(answer instanceof CommandLink));
+            CommandLinksDialog dialog = new CommandLinksDialog(choices);
+            dialog.setTitle("Question");
+            dialog.setContentText("Player " + player.getName() + ", your solution please?");
+            answer = dialog.showAndWait();
 
-        return (CommandLink) answer;
+        } while (!answer.isPresent());
+
+        return answer.get();
     }
 
     public Frame getFrame() {

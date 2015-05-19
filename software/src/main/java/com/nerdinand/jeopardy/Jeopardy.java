@@ -70,7 +70,7 @@ public class Jeopardy extends Application {
                         .message("Really quit?")
                         .showConfirm();
 
-                if (showConfirm == Dialog.Actions.NO || showConfirm == Dialog.Actions.CANCEL) {
+                if (showConfirm == Dialog.ACTION_NO || showConfirm == Dialog.ACTION_CANCEL) {
                     event.consume();
                 }
             }

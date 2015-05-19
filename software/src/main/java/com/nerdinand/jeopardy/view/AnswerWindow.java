@@ -31,16 +31,18 @@ import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.SceneFactory;
 import com.nerdinand.jeopardy.services.Util;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import org.controlsfx.dialog.Dialogs;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -143,7 +145,7 @@ public class AnswerWindow {
     }
 
     private Player askForPlayer() {
-        Player player = null;
+        Optional<Player> player;
         do {
             player = Dialogs.create()
                     .owner(null)
@@ -152,12 +154,12 @@ public class AnswerWindow {
                     .message("You have encountered a Double Jeopardy!\nWhich player are you?")
                     .showChoices(Players.getPlayerList());
         } while (player == null);
-        return player;
+        return player.get();
     }
 
     private Integer askForWager(Player player) {
         final List<Integer> doubleJeopardyChoices = getDoubleJeopardyChoices(getFrame());
-        Integer wager = 0;
+        Optional<Integer> wager;
         do {
             wager = Dialogs.create()
                     .owner(null)
@@ -166,7 +168,7 @@ public class AnswerWindow {
                     .message("Player " + player + "!\nHow many points do you want to set?")
                     .showChoices(doubleJeopardyChoices);
         } while (wager == null);
-        return wager;
+        return wager.get();
     }
 
     private List<Integer> getDoubleJeopardyChoices(Frame frame) {

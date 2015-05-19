@@ -16,6 +16,7 @@ import com.nerdinand.jeopardy.view.MainWindow;
 import com.nerdinand.jeopardy.view.QuestionWindow;
 import java.net.URL;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -227,15 +228,15 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
     private void editPlayerScore(Player player) {
         final int oldScore = player.getPoints();
-        String newScore = Dialogs.create()
+        Optional<String> newScore = Dialogs.create()
                 .owner(null)
                 .title(player.getName())
                 .masthead(null)
                 .message("Edit " + player.getName() + "'s score:")
                 .showTextInput("" + oldScore);
 
-        if (newScore != null) {
-            player.addScore(new Score(player, null, Integer.parseInt(newScore) - oldScore));
+        if (newScore.isPresent()) {
+            player.addScore(new Score(player, null, Integer.parseInt(newScore.get()) - oldScore));
         }
         
         updatePlayerStatuses();

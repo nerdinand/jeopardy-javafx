@@ -26,6 +26,8 @@ package com.nerdinand.jeopardy.controllers.listeners;
 import com.nerdinand.jeopardy.models.Player;
 import org.controlsfx.dialog.Dialogs;
 
+import java.util.Optional;
+
 /**
  *
  * @author Ferdinand Niedermann
@@ -45,7 +47,7 @@ public class SetPlayerNameKeyEventListener implements PlayerKeyEventListener {
     }
 
     private String askForPlayerName(Player player) {
-        String name = null;
+        Optional<String> name;
         do {
             name = Dialogs.create()
                     .owner(null)
@@ -55,7 +57,7 @@ public class SetPlayerNameKeyEventListener implements PlayerKeyEventListener {
                     .showTextInput(player.getName());
         } while (name == null);
         
-        return name;
+        return name.get();
     }
 
 }
