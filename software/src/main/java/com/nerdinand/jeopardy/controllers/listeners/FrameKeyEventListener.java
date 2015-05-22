@@ -51,10 +51,6 @@ public class FrameKeyEventListener {
     }
 
     public ButtonType onPlayerKeyPressed(Player player) {
-        if (Assets.buzzerSound != null) {
-            Assets.buzzerSound.play();
-        }
-        
         if (getFrame().hasDoubleJeopardy()) {
             return onDoubleJeopardyFramePlayerKeyPressed(player);
         } else {

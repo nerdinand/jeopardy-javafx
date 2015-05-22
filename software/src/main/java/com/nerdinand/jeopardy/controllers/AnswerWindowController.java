@@ -41,6 +41,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
@@ -75,6 +76,8 @@ public class AnswerWindowController implements Initializable {
     private FrameAnsweredListener frameAnsweredListener;
 
     private AudioClip sound;
+
+    private Player answeredPlayer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -113,21 +116,24 @@ public class AnswerWindowController implements Initializable {
             if (!getFrame().hasDoubleJeopardy()) {
                 cancelFrame();
             }
+        } else if (event.getCode() == KeyCode.ENTER && answeredPlayer != null) {
+            if (getFrame().hasDoubleJeopardy()) {
+                handleDoubleJeopardyFrame(answeredPlayer);
+            } else {
+                handleNormalFrame(answeredPlayer);
+            }
         }
     }
 
     private void handlePlayerKeyPressed(KeyEvent event) {
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
-        changeBackgroundColor(player.getColor());
-
-        if (player != null) {
-            if (getFrame().hasDoubleJeopardy()) {
-                handleDoubleJeopardyFrame(player);
-            } else {
-                handleNormalFrame(player);
-            }
+        if (Assets.buzzerSound != null) {
+            Assets.buzzerSound.play();
         }
+
+        answeredPlayer = player;
+        changeBackgroundColor(player.getColor());
     }
 
     private void changeBackgroundColor(Color color) {
