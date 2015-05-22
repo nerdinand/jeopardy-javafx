@@ -34,21 +34,18 @@ import javafx.scene.media.AudioClip;
  */
 public class Assets {
 
-    public static final String BUZZER_SOUND = "/com/nerdinand/jeopardy/media/Comical Metal Gong.wav";
+    public static final String BUZZER_SOUND = "/com/nerdinand/jeopardy/media/comical-metal-gong.wav";
 
     public static final String[] YES_SOUNDS = {
-        "/com/nerdinand/jeopardy/media/aj-yeehaw.mp3",
-        "/com/nerdinand/jeopardy/media/bigm-eeyup.mp3",
-        "/com/nerdinand/jeopardy/media/flutters-you-rock-woohoo.mp3"
+        "/com/nerdinand/jeopardy/media/applause.wav",
+        "/com/nerdinand/jeopardy/media/supertoll.wav"
     };
 
     public static final String[] NO_SOUNDS = {
-        "/com/nerdinand/jeopardy/media/bigm-nope.mp3",
-        "/com/nerdinand/jeopardy/media/pp-wrong.wav"
+        "/com/nerdinand/jeopardy/media/buzzer.wav"
     };
 
     public static final String[] YOU_TRIED_SOUNDS = {
-        "/com/nerdinand/jeopardy/media/aj-nah.mp3"
     };
 
     public static final String JEOPARDY_MP3 = "/com/nerdinand/jeopardy/media/jeopardy.mp3";
