@@ -32,7 +32,7 @@ import java.util.List;
  * @author Ferdinand Niedermann
  */
 public class Frame {
-    private final float YOU_TRIED_PERCENTAGE = 0.2f;
+    private final float YOU_TRIED_FACTOR = 0.2f;
 
     private int points;
     private Answer answer;
@@ -54,7 +54,7 @@ public class Frame {
     }
     
     public int getYouTriedPoints() {
-        return (int) (points * YOU_TRIED_PERCENTAGE);
+        return (int) (points * YOU_TRIED_FACTOR);
     }
 
     public void setAnswer(Answer answer) {

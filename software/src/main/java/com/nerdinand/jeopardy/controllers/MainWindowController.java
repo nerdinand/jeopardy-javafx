@@ -161,7 +161,7 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
             final String color = Util.toRGBCode(frame.getLastScore().getPlayer().getColor());
             Button button = getButtonForFrame(frame);
-            button.setStyle("-fx-background-color: " + color + ";");
+            button.setStyle(button.getStyle() + " -fx-background-color: " + color + ";");
         }
         
         if (frameState != FrameState.ANSWERED_WRONG) {
