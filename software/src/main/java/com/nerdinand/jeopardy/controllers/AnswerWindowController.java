@@ -33,6 +33,7 @@ import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.Keymap;
 import com.nerdinand.jeopardy.services.ScoreFactory;
+import com.nerdinand.jeopardy.services.Util;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -43,6 +44,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
@@ -117,6 +119,8 @@ public class AnswerWindowController implements Initializable {
     private void handlePlayerKeyPressed(KeyEvent event) {
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
+        changeBackgroundColor(player.getColor());
+
         if (player != null) {
             if (getFrame().hasDoubleJeopardy()) {
                 handleDoubleJeopardyFrame(player);
@@ -124,6 +128,10 @@ public class AnswerWindowController implements Initializable {
                 handleNormalFrame(player);
             }
         }
+    }
+
+    private void changeBackgroundColor(Color color) {
+        hBox.getScene().getRoot().setStyle("-fx-background-color: " + Util.toRGBCode(color) + ";");
     }
 
     private void handleNormalFrame(Player player) {
