@@ -91,7 +91,7 @@ public class SceneFactory {
         try {
             FXMLLoader fXMLLoader = new FXMLLoader();
             root = fXMLLoader.load(getClass().getResource(fxmlAssetPath).openStream());
-            final AnswerWindowController controller = (AnswerWindowController) fXMLLoader.getController();
+            final AnswerWindowController controller = fXMLLoader.getController();
 
             controller.setFrameKeyEventListener(new FrameKeyEventListener(answerWindow.getFrame()));
 
@@ -110,7 +110,7 @@ public class SceneFactory {
         try {
             FXMLLoader fXMLLoader = new FXMLLoader();
             root = fXMLLoader.load(getClass().getResource(fxmlAssetPath).openStream());
-            final QuestionWindowController controller = (QuestionWindowController) fXMLLoader.getController();
+            final QuestionWindowController controller = fXMLLoader.getController();
 
             questionWindow.setController(controller);
 

@@ -60,19 +60,16 @@ public class Jeopardy extends Application {
         stage.setScene(scene);
         stage.show();
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                Action showConfirm = Dialogs.create()
-                        .owner(null)
-                        .title("Quitting...")
-                        .masthead(null)
-                        .message("Really quit?")
-                        .showConfirm();
+        stage.setOnCloseRequest(event -> {
+            Action showConfirm = Dialogs.create()
+                    .owner(null)
+                    .title("Quitting...")
+                    .masthead(null)
+                    .message("Really quit?")
+                    .showConfirm();
 
-                if (showConfirm == Dialog.ACTION_NO || showConfirm == Dialog.ACTION_CANCEL) {
-                    event.consume();
-                }
+            if (showConfirm == Dialog.ACTION_NO || showConfirm == Dialog.ACTION_CANCEL) {
+                event.consume();
             }
         });
     }

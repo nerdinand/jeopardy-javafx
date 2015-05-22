@@ -60,7 +60,7 @@ public class MainWindow {
         FXMLLoader fXMLLoader = new FXMLLoader();
         BorderPane root = fXMLLoader.load(getClass().getResource(Assets.MAIN_WINDOW_FXML).openStream());
         this.root = root;
-        this.controller = (MainWindowController) fXMLLoader.getController();
+        this.controller = fXMLLoader.getController();
                 
         Map<Frame, Button> frameButtons = initializeGridMainWindow(root);
         controller.setFrameButtons(frameButtons);
@@ -71,12 +71,7 @@ public class MainWindow {
         frameButton.setPrefHeight(150);
         frameButton.setPrefWidth(500);
         
-        frameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                controller.handleFrameButtonClick(frame);
-            }
-        });
+        frameButton.setOnMouseClicked(event -> controller.handleFrameButtonClick(frame));
         
         return frameButton;
     }
@@ -88,7 +83,7 @@ public class MainWindow {
     private Map<Frame, Button> initializeGridMainWindow(BorderPane root) {
         GridPane gridPain = (GridPane) root.getCenter();
 
-        Map<Frame, Button> frameButtons = new HashMap<Frame, Button>();
+        Map<Frame, Button> frameButtons = new HashMap<>();
         
         int categoryIndex = 0;
         

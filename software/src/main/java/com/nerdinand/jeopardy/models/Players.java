@@ -49,22 +49,22 @@ public class Players {
         Player player;
         player = new Player(1);
         player.setColor(javafx.scene.paint.Color.MEDIUMTURQUOISE);
-        player.setName("Foo");
+        player.setName("Player 1");
         playerList.add(player);
 
         player = new Player(2);
         player.setColor(javafx.scene.paint.Color.ORANGE);
-        player.setName("Bar");
+        player.setName("Player 2");
         playerList.add(player);
 
         player = new Player(3);
         player.setColor(javafx.scene.paint.Color.FIREBRICK);
-        player.setName("Baz");
+        player.setName("Player 3");
         playerList.add(player);
 
         player = new Player(4);
         player.setColor(javafx.scene.paint.Color.PURPLE);
-        player.setName("Barz");
+        player.setName("Player 4");
         playerList.add(player);
 
         return playerList;

@@ -31,5 +31,5 @@ import com.nerdinand.jeopardy.models.Player;
  * @author Ferdinand Niedermann
  */
 public interface PlayerKeyEventListener {
-    public void onPlayerKeyPressed(Player player);
+    void onPlayerKeyPressed(Player player);
 }

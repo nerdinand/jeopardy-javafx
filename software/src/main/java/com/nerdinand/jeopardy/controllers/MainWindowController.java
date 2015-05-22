@@ -141,9 +141,7 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     private void updatePlayerStatuses() {
-        for (Player player : getPlayers().getPlayerList()) {
-            updatePlayerStatus(player);
-        }
+        Players.getPlayerList().forEach(this::updatePlayerStatus);
     }
 
     private void setPlayerKeyEventListener(PlayerKeyEventListener playerKeyEventListener) {

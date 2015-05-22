@@ -46,7 +46,7 @@ public class Loader {
         File roundFile = new File(path);
         File roundDir = roundFile.getParentFile();
 
-        Round round = null;
+        Round round;
 
         try {
             Yaml yaml = new Yaml(new Constructor(Round.class));
