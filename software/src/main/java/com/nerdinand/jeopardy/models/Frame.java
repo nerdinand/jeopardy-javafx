@@ -39,7 +39,7 @@ public class Frame {
     private Question question;
     private File rootPath;
 
-    private final List<Score> scores = new ArrayList<Score>();
+    private final List<Score> scores = new ArrayList<>();
     private String categoryName;
     private boolean hasDoubleJeopardy;
     private int doubleJeopardyWager;
