@@ -23,9 +23,8 @@
  */
 package com.nerdinand.jeopardy;
 
-import com.nerdinand.jeopardy.models.Category;
-import com.nerdinand.jeopardy.models.Frame;
-import com.nerdinand.jeopardy.models.Round;
+import com.nerdinand.jeopardy.models.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.logging.Level;
@@ -38,9 +37,6 @@ import org.yaml.snakeyaml.constructor.Constructor;
  * @author Ferdinand Niedermann
  */
 public class Loader {
-
-    public Loader() {
-    }
 
     public Round load(String path) throws JeopardyLoaderException {
         File roundFile = new File(path);
@@ -72,8 +68,12 @@ public class Loader {
     private void checkAssets(Round round) {
         for (Category category : round.getCategories()) {
             for (Frame frame : category.getFrames()) {
-                checkAsset(frame.getAnswer().getMediaPath());
-                checkAsset(frame.getQuestion().getMediaPath());
+                if (frame.getAnswer().getMediaType() != MediaType.TEXT) {
+                    checkAsset(frame.getAnswer().getMediaPath());
+                }
+                if (frame.getQuestion().getMediaType() != MediaType.TEXT) {
+                    checkAsset(frame.getQuestion().getMediaPath());
+                }
             }
         }
     }
