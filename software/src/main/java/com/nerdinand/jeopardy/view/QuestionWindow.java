@@ -60,7 +60,7 @@ public class QuestionWindow {
 
         switch (getQuestion().getMediaType()) {
             case TEXT:
-                setTextFromFile(mediaPath);
+                setTextFromValue(getQuestion().getValue());
                 break;
             case IMAGE:
                 setImageFromFile(mediaPath);
@@ -77,13 +77,8 @@ public class QuestionWindow {
         return controller;
     }
 
-    private void setTextFromFile(File mediaPath) {
-        try {
-            String answerString = Util.readUTF8File(mediaPath);
-            getController().showText(answerString);
-        } catch (IOException ex) {
-            Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Text file " + mediaPath + " could not be read.", ex);
-        }
+    private void setTextFromValue(String value) {
+        getController().showText(value);
     }
 
     private void setImageFromFile(File mediaPath) {

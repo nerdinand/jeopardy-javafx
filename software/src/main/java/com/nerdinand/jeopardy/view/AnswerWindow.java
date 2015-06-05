@@ -30,14 +30,12 @@ import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.services.SceneFactory;
-import com.nerdinand.jeopardy.services.Util;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import org.controlsfx.dialog.Dialogs;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +71,7 @@ public class AnswerWindow {
 
         switch (getAnswer().getMediaType()) {
             case TEXT:
-                setTextFromFile(mediaPath);
+                setTextFromValue(getAnswer().getValue());
                 break;
             case IMAGE:
                 setImageFromFile(mediaPath);
@@ -99,13 +97,8 @@ public class AnswerWindow {
         return controller;
     }
 
-    private void setTextFromFile(File mediaPath) {
-        try {
-            String answerString = Util.readUTF8File(mediaPath);
-            getController().showText(answerString);
-        } catch (IOException ex) {
-            Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Text file " + mediaPath + " could not be read.", ex);
-        }
+    private void setTextFromValue(String value) {
+        getController().showText(value);
     }
 
     private void setImageFromFile(File mediaPath) {
