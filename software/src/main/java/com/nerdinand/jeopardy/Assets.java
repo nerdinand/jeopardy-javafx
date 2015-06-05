@@ -108,6 +108,10 @@ public class Assets {
     }
 
     public static void playRandomSound(AudioClip[] sounds) {
+        if (sounds.length == 0) {
+            return;
+        }
+
         AudioClip sound = sounds[new Random().nextInt(sounds.length)];
 
         if (sound != null) {
