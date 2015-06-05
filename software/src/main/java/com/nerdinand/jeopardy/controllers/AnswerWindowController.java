@@ -132,8 +132,12 @@ public class AnswerWindowController implements Initializable {
             Assets.buzzerSound.play();
         }
 
-        answeredPlayer = player;
-        changeBackgroundColor(player.getColor());
+        if (player != null) {
+            answeredPlayer = player;
+            changeBackgroundColor(player.getColor());
+        }
+        
+        getPlayers().setPlayersArmed(false);
     }
 
     private void changeBackgroundColor(Color color) {
@@ -153,13 +157,22 @@ public class AnswerWindowController implements Initializable {
         } else if (answer.getText().equals(FrameKeyEventListener.YOU_TRIED)) {
             Assets.playRandomSound(Assets.youTriedSounds);
             ScoreFactory.getInstance().createScore(player, frame, frame.getYouTriedPoints());
+            reopenAnswer();
 
         } else if (answer.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
             Assets.playRandomSound(Assets.noSounds);
             ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
 
             frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
+            reopenAnswer();
+        } else {
+            reopenAnswer();
         }
+    }
+
+    private void reopenAnswer() {
+        getPlayers().setPlayersArmed(true);
+        changeBackgroundColor(Color.WHITE);
     }
 
     private Frame getFrame() {
