@@ -56,8 +56,12 @@ public class SetPlayerNameKeyEventListener implements PlayerKeyEventListener {
                     .message("Player " + player.getId() + ", please give us your name!")
                     .showTextInput(player.getName());
         } while (name == null);
-        
-        return name.get();
+
+        if (name.isPresent()) {
+            return name.get();
+        } else {
+            return player.getName();
+        }
     }
 
 }
