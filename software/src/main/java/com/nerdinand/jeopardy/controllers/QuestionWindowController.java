@@ -24,6 +24,7 @@
 package com.nerdinand.jeopardy.controllers;
 
 import com.nerdinand.jeopardy.Jeopardy;
+import com.nerdinand.jeopardy.models.Audio;
 import com.nerdinand.jeopardy.models.Players;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -58,6 +59,7 @@ public class QuestionWindowController implements Initializable {
     private Button playButton;
 
     private AudioClip sound;
+    private Audio audio;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,6 +76,10 @@ public class QuestionWindowController implements Initializable {
 
     public void setSound(AudioClip sound) {
         this.sound = sound;
+    }
+
+    public void setAudio(Audio audio) {
+        this.audio = audio;
     }
 
     private static Players getPlayers() {
@@ -97,7 +103,7 @@ public class QuestionWindowController implements Initializable {
         Stage stage = (Stage) hBox.getScene().getWindow();
         stage.close();
 
-        MainWindowController.stopJeopardySound();
+        audio.stopBackgroundMusic();
     }
 
 }

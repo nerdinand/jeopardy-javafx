@@ -39,15 +39,19 @@ public class Round {
     private File rootPath;
     private List<Category> categories;
     private int version;
+    private Audio audio;
 
     private int doubleJeopardyCount = 2; // default is 2, can be overwritten by round.yml file
-    
-    public void setVersion(int version) {
-        this.version = version;
-    }
 
-    public int getVersion() {
-        return version;
+    public void initialise(File rootPath) {
+        setRootPath(rootPath);
+
+        for (Category category : getCategories()) {
+            category.setRootPath(new File(getRootPath(), "media"));
+        }
+
+        // load the audio
+        audio.loadAudio(rootPath);
     }
 
     public void setName(String name) {
@@ -60,10 +64,6 @@ public class Round {
 
     public void setRootPath(File rootPath) {
         this.rootPath = rootPath;
-
-        for (Category category : getCategories()) {
-            category.setRootPath(new File(getRootPath(), "media"));
-        }
     }
 
     public File getRootPath() {
@@ -76,6 +76,22 @@ public class Round {
 
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setAudio(Audio audio) {
+        this.audio = audio;
+    }
+
+    public Audio getAudio() {
+        return audio;
     }
 
     public int getDoubleJeopardyCount() {

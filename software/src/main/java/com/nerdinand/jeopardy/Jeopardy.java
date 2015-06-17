@@ -27,7 +27,6 @@ import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.models.Round;
 import com.nerdinand.jeopardy.view.MainWindow;
 import javafx.application.Application;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -35,7 +34,6 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
-import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -55,13 +53,12 @@ public class Jeopardy extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Assets.load();
 
         bundle = ResourceBundle
                 .getBundle("i18n.locale", new Locale("en"));
 
         MainWindow mainWindow = new MainWindow(round);
-        mainWindow.initialize();
+        mainWindow.initialise();
         stage.setTitle(bundle.getString("app_name"));
         final Parent root = mainWindow.getRoot();
         final Scene scene = new Scene(root);

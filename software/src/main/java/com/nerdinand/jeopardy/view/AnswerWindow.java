@@ -25,10 +25,7 @@ package com.nerdinand.jeopardy.view;
 
 import com.nerdinand.jeopardy.controllers.AnswerWindowController;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
-import com.nerdinand.jeopardy.models.Answer;
-import com.nerdinand.jeopardy.models.Frame;
-import com.nerdinand.jeopardy.models.Player;
-import com.nerdinand.jeopardy.models.Players;
+import com.nerdinand.jeopardy.models.*;
 import com.nerdinand.jeopardy.services.SceneFactory;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -52,7 +49,6 @@ public class AnswerWindow {
     private AnswerWindowController controller;
     private final Frame frame;
     private final FrameAnsweredListener frameAnsweredListener;
-    private AudioClip answerSound;
 
     public AnswerWindow(Frame frame, FrameAnsweredListener frameAnsweredListener) {
         this.frame = frame;
@@ -64,7 +60,7 @@ public class AnswerWindow {
         }
     }
 
-    public Scene initialize() {
+    public Scene initialise() {
         Scene scene = SceneFactory.getInstance().sceneForAnswer(getAnswer(), this);
 
         final File mediaPath = getAnswer().getMediaPath();
@@ -77,7 +73,6 @@ public class AnswerWindow {
                 setImageFromFile(mediaPath);
                 break;
             case SOUND:
-                setSoundFromFile(mediaPath);
                 break;
         }
 
@@ -108,16 +103,6 @@ public class AnswerWindow {
             getController().showImage(answerImage);
         } catch (Exception ex) {
             Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Image file " + uri + " could not be read.", ex);
-        }
-    }
-    
-    private void setSoundFromFile(File mediaPath) {
-        final String uri = mediaPath.toURI().toString();
-        try {
-            AudioClip answerSound = new AudioClip(uri);
-            getController().setSound(answerSound);
-        } catch (Exception ex) {
-            Logger.getLogger(AnswerWindow.class.getName()).log(Level.SEVERE, "Sound file " + uri + " could not be read.", ex);
         }
     }
 

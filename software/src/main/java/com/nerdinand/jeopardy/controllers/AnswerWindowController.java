@@ -23,11 +23,11 @@
  */
 package com.nerdinand.jeopardy.controllers;
 
-import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener.FrameState;
+import com.nerdinand.jeopardy.models.Audio;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import com.nerdinand.jeopardy.models.Players;
@@ -44,7 +44,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
@@ -75,7 +74,7 @@ public class AnswerWindowController implements Initializable {
     private FrameKeyEventListener frameKeyEventListener;
     private FrameAnsweredListener frameAnsweredListener;
 
-    private AudioClip sound;
+    private Audio audio;
 
     private Player answeredPlayer;
 
@@ -92,8 +91,8 @@ public class AnswerWindowController implements Initializable {
         imageView.setImage(image);
     }
 
-    public void setSound(AudioClip sound) {
-        this.sound = sound;
+    public void setAudio(Audio audio) {
+        this.audio = audio;
     }
 
     private static Players getPlayers() {
@@ -102,8 +101,7 @@ public class AnswerWindowController implements Initializable {
 
     @FXML
     private void onPlayButtonAction() {
-        sound.stop();
-        sound.play();
+        audio.playBackgroundMusic();
     }
 
     @FXML
@@ -128,9 +126,7 @@ public class AnswerWindowController implements Initializable {
     private void handlePlayerKeyPressed(KeyEvent event) {
         Player player = getPlayers().getArmedPlayerForKey(event.getCode());
 
-        if (Assets.buzzerSound != null) {
-            Assets.buzzerSound.play();
-        }
+        audio.buzzer();
 
         if (player != null) {
             answeredPlayer = player;
@@ -149,18 +145,18 @@ public class AnswerWindowController implements Initializable {
         Frame frame = getFrame();
 
         if (answer.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
-            Assets.playRandomSound(Assets.yesSounds);
+            audio.yes();
             ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
             closeWindow();
 
             frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
         } else if (answer.getText().equals(FrameKeyEventListener.YOU_TRIED)) {
-            Assets.playRandomSound(Assets.youTriedSounds);
+            audio.youTried();
             ScoreFactory.getInstance().createScore(player, frame, frame.getYouTriedPoints());
             reopenAnswer();
 
         } else if (answer.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
-            Assets.playRandomSound(Assets.noSounds);
+            audio.no();
             ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
 
             frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
@@ -195,13 +191,13 @@ public class AnswerWindowController implements Initializable {
             Frame frame = getFrame();
 
             if (answer.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
-                Assets.playRandomSound(Assets.yesSounds);
+                audio.yes();
                 ScoreFactory.getInstance().createScore(player, frame, frame.getDoubleJeopardyWager());
                 closeWindow();
 
                 frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
             } else if (answer.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
-                Assets.playRandomSound(Assets.noSounds);
+                audio.no();
                 ScoreFactory.getInstance().createScore(player, frame, -frame.getDoubleJeopardyWager());
                 closeWindow();
 
@@ -214,7 +210,7 @@ public class AnswerWindowController implements Initializable {
         Stage stage = (Stage) hBox.getScene().getWindow();
         stage.close();
 
-        MainWindowController.stopJeopardySound();
+        audio.stopBackgroundMusic();
     }
 
     private void cancelFrame() {

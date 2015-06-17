@@ -33,23 +33,6 @@ import javafx.scene.media.AudioClip;
  * @author Ferdinand Niedermann
  */
 public class Assets {
-
-    public static final String BUZZER_SOUND = "/com/nerdinand/jeopardy/media/comical-metal-gong.wav";
-
-    public static final String[] YES_SOUNDS = {
-        "/com/nerdinand/jeopardy/media/applause.wav",
-        "/com/nerdinand/jeopardy/media/supertoll.wav"
-    };
-
-    public static final String[] NO_SOUNDS = {
-        "/com/nerdinand/jeopardy/media/buzzer.wav"
-    };
-
-    public static final String[] YOU_TRIED_SOUNDS = {
-    };
-
-    public static final String JEOPARDY_MP3 = "/com/nerdinand/jeopardy/media/jeopardy.mp3";
-
     public static final String MAIN_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/MainWindow.fxml";
 
     public static final String TEXT_ANSWER_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/answer/TextWindow.fxml";
@@ -59,63 +42,4 @@ public class Assets {
     public static final String TEXT_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/TextWindow.fxml";
     public static final String IMAGE_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/ImageWindow.fxml";
     public static final String SOUND_QUESTION_WINDOW_FXML = "/com/nerdinand/jeopardy/fxml/question/SoundWindow.fxml";
-
-    public static AudioClip jeopardyMusic;
-    public static AudioClip buzzerSound;
-
-    public static AudioClip[] yesSounds = new AudioClip[YES_SOUNDS.length];
-    public static AudioClip[] noSounds = new AudioClip[NO_SOUNDS.length];
-    public static AudioClip[] youTriedSounds = new AudioClip[YOU_TRIED_SOUNDS.length];
-
-    public static void load() {
-        loadAudio();
-    }
-
-    private static void loadAudio() {
-        jeopardyMusic = tryLoading(Assets.JEOPARDY_MP3);
-
-        buzzerSound = tryLoading(Assets.BUZZER_SOUND);
-
-        int i = 0;
-        for (String path : YES_SOUNDS) {
-            yesSounds[i++] = tryLoading(path);
-        }
-
-        i = 0;
-        for (String path : NO_SOUNDS) {
-            noSounds[i++] = tryLoading(path);
-        }
-
-        i = 0;
-        for (String path : YOU_TRIED_SOUNDS) {
-            youTriedSounds[i++] = tryLoading(path);
-        }
-    }
-
-    private static AudioClip tryLoading(String path) {
-        AudioClip sound = null;
-
-        try {
-            String source = Assets.class
-                    .getResource(path).toString();
-            sound = new AudioClip(source);
-        } catch (Exception ex) {
-            Logger.getLogger(Assets.class
-                    .getName()).log(Level.WARNING, "Sound file not found at src{0}", path);
-        }
-
-        return sound;
-    }
-
-    public static void playRandomSound(AudioClip[] sounds) {
-        if (sounds.length == 0) {
-            return;
-        }
-
-        AudioClip sound = sounds[new Random().nextInt(sounds.length)];
-
-        if (sound != null) {
-            sound.play();
-        }
-    }
 }

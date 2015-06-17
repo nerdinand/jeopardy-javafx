@@ -1,15 +1,10 @@
 package com.nerdinand.jeopardy.controllers;
 
-import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.PlayerKeyEventListener;
 import com.nerdinand.jeopardy.controllers.listeners.SetPlayerNameKeyEventListener;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
-import com.nerdinand.jeopardy.models.Frame;
-import com.nerdinand.jeopardy.models.MediaType;
-import com.nerdinand.jeopardy.models.Player;
-import com.nerdinand.jeopardy.models.Players;
-import com.nerdinand.jeopardy.models.Score;
+import com.nerdinand.jeopardy.models.*;
 import com.nerdinand.jeopardy.services.Util;
 import com.nerdinand.jeopardy.view.AnswerWindow;
 import com.nerdinand.jeopardy.view.MainWindow;
@@ -56,7 +51,10 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     @FXML
     private GridPane gridPane;
 
+    // if the media type is audio, this will hold the audio clip being played
     private AudioClip answerSound;
+
+    private Audio audio;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,6 +70,10 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
         for (Label label : playerLabels) {
             MainWindow.setControlStyle(label);
         }
+    }
+
+    public void setAudio(Audio audio) {
+        this.audio = audio;
     }
 
     private static Players getPlayers() {
@@ -93,16 +95,18 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
             playJeopardyMusic();
         }
 
-        openAnswerWindow(frame);
+        openAnswerWindow(audio, frame);
     }
 
-    private void openAnswerWindow(Frame frame) {
+    private void openAnswerWindow(Audio audio, Frame frame) {
         AnswerWindow answerWindow = new AnswerWindow(frame, this);
 
         Button buttonForFrame = getButtonForFrame(frame);
         buttonForFrame.setDisable(true);
 
-        Scene scene = answerWindow.initialize();
+        Scene scene = answerWindow.initialise();
+
+        answerWindow.getController().setAudio(audio);
 
         if (scene != null) {
             Stage stage = new Stage();
@@ -124,10 +128,7 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     private void playJeopardyMusic() {
-        if (Assets.jeopardyMusic != null) {
-            Assets.jeopardyMusic.stop();
-            Assets.jeopardyMusic.play();
-        }
+        audio.playBackgroundMusic();
     }
 
     private void showStatus(String string) {
@@ -240,10 +241,8 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
         updatePlayerStatuses();
     }
 
-    public static void stopJeopardySound() {
-        if (Assets.jeopardyMusic != null) {
-            Assets.jeopardyMusic.stop();
-        }
+    public void stopJeopardySound() {
+        audio.stopBackgroundMusic();
     }
 
     private void showQuestion(Frame frame) {

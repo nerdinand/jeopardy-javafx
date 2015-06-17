@@ -51,19 +51,20 @@ public class MainWindow {
 
     private BorderPane root;
     private MainWindowController controller;
-        
+
     public MainWindow(Round round) {
         MainWindow.round = round;
     }
 
-    public void initialize() throws IOException {
+    public void initialise() throws IOException {
         FXMLLoader fXMLLoader = new FXMLLoader();
         BorderPane root = fXMLLoader.load(getClass().getResource(Assets.MAIN_WINDOW_FXML).openStream());
         this.root = root;
         this.controller = fXMLLoader.getController();
-                
+
         Map<Frame, Button> frameButtons = initializeGridMainWindow(root);
         controller.setFrameButtons(frameButtons);
+        controller.setAudio(round.getAudio());
     }
 
     private Button initializeFrameButton(final Frame frame) {
@@ -116,7 +117,7 @@ public class MainWindow {
         control.setStyle("-fx-font-size: 25pt;");
     }
     
-    public static boolean isGameOver() {        
+    public static boolean isGameOver() {
         for (Frame frame : round.getAllFrames()) {
             if (!frame.isClosed()) {
                 return false;

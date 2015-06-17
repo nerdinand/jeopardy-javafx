@@ -45,9 +45,13 @@ public class Loader {
         Round round;
 
         try {
+            // Be advised: Every class loaded by YAML must be a bean.
+            // Java optimises away attributes that aren't accessed by getters or setters.
+            // Either add getters and setters, or make the attributes public
             Yaml yaml = new Yaml(new Constructor(Round.class));
             round = (Round) yaml.load(new FileInputStream(path));
-            round.setRootPath(roundDir);
+            round.initialise(roundDir);
+
 
             for (Category category : round.getCategories()) {
                 for (Frame frame : category.getFrames()) {

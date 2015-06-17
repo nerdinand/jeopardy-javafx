@@ -98,7 +98,7 @@ public class SceneFactory {
             answerWindow.setController(controller);
 
         } catch (IOException ex) {
-            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, "Couldn't load or initialize FXML file from source " + fxmlAssetPath, ex);
+            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, "Couldn't load or initialise FXML file from source " + fxmlAssetPath, ex);
         }
 
         return new Scene(root);
@@ -115,7 +115,7 @@ public class SceneFactory {
             questionWindow.setController(controller);
 
         } catch (IOException ex) {
-            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, "Couldn't load or initialize FXML file from source " + fxmlAssetPath, ex);
+            Logger.getLogger(SceneFactory.class.getName()).log(Level.SEVERE, "Couldn't load or initialise FXML file from source " + fxmlAssetPath, ex);
         }
 
         return new Scene(root);
