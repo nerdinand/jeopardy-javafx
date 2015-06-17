@@ -250,6 +250,8 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
         Scene scene = questionWindow.initialize();
 
+        questionWindow.getController().setAudio(audio);
+
         if (scene != null) {
             Stage stage = new Stage();
             stage.setOnCloseRequest(createOnCloseHandler());
