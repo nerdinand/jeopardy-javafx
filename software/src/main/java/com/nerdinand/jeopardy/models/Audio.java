@@ -86,15 +86,18 @@ public class Audio {
     }
 
     private ArrayList<AudioClip> loadSoundCollection(List<String> fileNames) {
-        ArrayList<AudioClip> ret = new ArrayList<>();
+        ArrayList<AudioClip> audioClips = new ArrayList<>();
+
         if(fileNames != null) {
-            for(String buzzerSoundFile : buzzerSoundFiles) {
-                AudioClip snd = tryLoading(buzzerSoundFile);
-                if(snd != null)
-                    ret.add(snd);
+            for(String soundFile : fileNames) {
+                AudioClip audioClip = tryLoading(soundFile);
+                if(audioClip != null) {
+                    audioClips.add(audioClip);
+                }
             }
         }
-        return ret;
+
+        return audioClips;
     }
 
     private AudioClip tryLoading(String path) {
