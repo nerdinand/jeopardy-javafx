@@ -15,9 +15,9 @@
     fx:id="hBox"
 >
     
-    <Label fx:id="textLabel" wrapText="true" prefHeight="400"  > 
+    <Label fx:id="textLabel" wrapText="true" prefHeight="800"  >
         <HBox.margin>
-            <javafx.geometry.Insets left="50" right="50" bottom="50" top="50" />   
+            <javafx.geometry.Insets left="50" right="50" bottom="50" top="50" />
         </HBox.margin>
         
         <font>
