@@ -81,7 +81,7 @@ public class AnswerWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        getPlayers().setPlayersArmed(true);
+        rearmPlayers();
     }
 
     public void showText(String text) {
@@ -113,11 +113,47 @@ public class AnswerWindowController implements Initializable {
         if (action == Keymap.Action.PLAYER) {
             handlePlayerKeyPressed(event);
         } else if (action == Keymap.Action.CANCEL) {
-            if (!getFrame().hasDoubleJeopardy()) {
-                cancelFrame();
+            cancelIfNoDoubleJeopardy();
+        } else if (event.getCode() == KeyCode.ENTER) {
+            handleFrame();
+        }
+    }
+
+    private void cancelIfNoDoubleJeopardy() {
+        if (!isDoubleJeopardyFrame()) {
+            cancelFrame();
+        }
+    }
+
+    private void handlePlayerKeyPressed(KeyEvent event) {
+        playBuzzerSound();
+
+        handlePlayerAndDisarm(getPlayers().getArmedPlayerForKey(event.getCode()));
+
+        if (isDoubleJeopardyFrame()) {
+            if (isDoubleJeopardyPlayer(answeredPlayer)) {
+                disarmPlayers();
+            } else {
+                reopenAnswer();
             }
-        } else if (event.getCode() == KeyCode.ENTER && answeredPlayer != null) {
-            if (getFrame().hasDoubleJeopardy()) {
+        }
+    }
+
+    private void rearmPlayers() {
+        getPlayers().setPlayersArmed(true);
+    }
+
+    private void disarmPlayers() {
+        getPlayers().setPlayersArmed(false);
+    }
+
+    private boolean isDoubleJeopardyPlayer(Player player) {
+        return Players.getDoubleJeopardyPlayer() == player;
+    }
+
+    private void handleFrame() {
+        if (answeredPlayer != null) {
+            if (isDoubleJeopardyFrame()) {
                 handleDoubleJeopardyFrame(answeredPlayer);
             } else {
                 handleNormalFrame(answeredPlayer);
@@ -125,19 +161,26 @@ public class AnswerWindowController implements Initializable {
         }
     }
 
-    private void handlePlayerKeyPressed(KeyEvent event) {
-        Player player = getPlayers().getArmedPlayerForKey(event.getCode());
+    private boolean isDoubleJeopardyFrame() {
+        return getFrame().hasDoubleJeopardy();
+    }
 
-        if (Assets.buzzerSound != null) {
-            Assets.buzzerSound.play();
-        }
+    private void handlePlayerAndDisarm(Player player) {
+        handlePlayer(player);
+        disarmPlayers();
+    }
 
+    private void handlePlayer(Player player) {
         if (player != null) {
             answeredPlayer = player;
             changeBackgroundColor(player.getColor());
         }
-        
-        getPlayers().setPlayersArmed(false);
+    }
+
+    private void playBuzzerSound() {
+        if (Assets.buzzerSound != null) {
+            Assets.buzzerSound.play();
+        }
     }
 
     private void changeBackgroundColor(Color color) {
@@ -171,7 +214,7 @@ public class AnswerWindowController implements Initializable {
     }
 
     private void reopenAnswer() {
-        getPlayers().setPlayersArmed(true);
+        rearmPlayers();
         changeBackgroundColor(Color.WHITE);
     }
 
@@ -190,7 +233,7 @@ public class AnswerWindowController implements Initializable {
     private void handleDoubleJeopardyFrame(Player player) {
         // check if the player who wants to answer is the double jeopardy player 
         // (otherwise ignore the buzzer press)
-        if (Players.getDoubleJeopardyPlayer() == player) {
+        if (isDoubleJeopardyPlayer(player)) {
             ButtonType answer = frameKeyEventListener.onPlayerKeyPressed(player);
             Frame frame = getFrame();
 
