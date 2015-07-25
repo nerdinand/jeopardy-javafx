@@ -61,12 +61,23 @@ public class Loader {
 
             round.generateDoubleJeopardies();
             checkAssets(round);
+            checkNoQuestionsWithSound(round);
 
         } catch (Exception e) {
-            throw new JeopardyLoaderException(e);
+            throw new JeopardyLoaderException("An exception occurred during round loading", e);
         }
 
         return round;
+    }
+
+    private void checkNoQuestionsWithSound(Round round) throws JeopardyLoaderException {
+        for (Category category : round.getCategories()) {
+            for (Frame frame : category.getFrames()) {
+                if (frame.getQuestion().getMediaType() == MediaType.SOUND) {
+                    throw new JeopardyLoaderException("Media type of questions must not be :sound", null);
+                }
+            }
+        }
     }
 
     private void checkAssets(Round round) {

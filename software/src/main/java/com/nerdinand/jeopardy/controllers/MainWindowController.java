@@ -115,12 +115,6 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
             stage.setScene(scene);
             stage.show();
 
-            if (frame.getAnswer().getMediaType() == MediaType.SOUND) {
-                final String uri = frame.getAnswer().getMediaPath().toURI().toString();
-                this.answerSound = new AudioClip(uri);
-                this.answerSound.play();
-            }
-
             // we need to do the following in order to receive keyboard events in the new window...
             stage.getScene().getRoot().setFocusTraversable(true);
             stage.getScene().getRoot().requestFocus();
@@ -258,12 +252,6 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
             stage.setTitle(frame.toString());
             stage.setScene(scene);
             stage.show();
-
-            if (frame.getQuestion().getMediaType() == MediaType.SOUND) {
-                final String uri = frame.getQuestion().getMediaPath().toURI().toString();
-                this.answerSound = new AudioClip(uri);
-                this.answerSound.play();
-            }
             
             // we need to do the following in order to receive keyboard events in the new window...
             stage.getScene().getRoot().setFocusTraversable(true);

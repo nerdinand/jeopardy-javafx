@@ -29,7 +29,7 @@ package com.nerdinand.jeopardy;
  * @author Ferdinand Niedermann
  */
 class JeopardyLoaderException extends Exception {
-    public JeopardyLoaderException(Exception e) {
-        super(e);
+    public JeopardyLoaderException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

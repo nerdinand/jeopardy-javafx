@@ -27,10 +27,7 @@ import com.nerdinand.jeopardy.Jeopardy;
 import com.nerdinand.jeopardy.controllers.listeners.FrameKeyEventListener;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener;
 import com.nerdinand.jeopardy.interfaces.FrameAnsweredListener.FrameState;
-import com.nerdinand.jeopardy.models.Audio;
-import com.nerdinand.jeopardy.models.Frame;
-import com.nerdinand.jeopardy.models.Player;
-import com.nerdinand.jeopardy.models.Players;
+import com.nerdinand.jeopardy.models.*;
 import com.nerdinand.jeopardy.services.Keymap;
 import com.nerdinand.jeopardy.services.ScoreFactory;
 import com.nerdinand.jeopardy.services.Util;
@@ -44,6 +41,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
@@ -78,6 +76,8 @@ public class AnswerWindowController implements Initializable {
 
     private Player answeredPlayer;
 
+    private AudioClip answerSound;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         rearmPlayers();
@@ -101,7 +101,18 @@ public class AnswerWindowController implements Initializable {
 
     @FXML
     private void onPlayButtonAction() {
-        audio.playBackgroundMusic();
+        if (getFrame().getAnswer().getMediaType() == MediaType.SOUND) {
+            if (answerSound == null) {
+                final String uri = getFrame().getAnswer().getMediaPath().toURI().toString();
+                this.answerSound = new AudioClip(uri);
+            }
+
+            if (answerSound.isPlaying()) {
+                answerSound.stop();
+            } else {
+                answerSound.play();
+            }
+        }
     }
 
     @FXML
@@ -215,7 +226,7 @@ public class AnswerWindowController implements Initializable {
     }
 
     private Frame getFrame() {
-        return frameKeyEventListener.getFrame();
+            return frameKeyEventListener.getFrame();
     }
 
     public void setFrameKeyEventListener(FrameKeyEventListener frameKeyEventListener) {

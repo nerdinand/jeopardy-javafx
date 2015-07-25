@@ -19,5 +19,5 @@ public interface FrameAnsweredListener {
         CANCELED
     }
     
-    public void frameAnswered(Frame frame, FrameState state);
+    void frameAnswered(Frame frame, FrameState state);
 }
