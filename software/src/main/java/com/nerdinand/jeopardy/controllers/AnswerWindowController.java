@@ -264,6 +264,10 @@ public class AnswerWindowController implements Initializable {
         Stage stage = (Stage) hBox.getScene().getWindow();
         stage.close();
 
+        if (answerSound != null) {
+            answerSound.stop();
+        }
+
         audio.stopBackgroundMusic();
     }
 
