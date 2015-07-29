@@ -32,7 +32,7 @@
         
         <Button 
             fx:id="playButton" 
-            text="Play" 
+            text="Play / Stop"
             onAction="#onPlayButtonAction" 
         /> 
         
