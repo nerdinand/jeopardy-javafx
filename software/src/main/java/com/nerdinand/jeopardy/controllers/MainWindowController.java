@@ -34,17 +34,25 @@ import org.controlsfx.dialog.Dialogs;
 public class MainWindowController implements Initializable, FrameAnsweredListener {
 
     @FXML
-    private Label statusBarLabel;
+    private Label player1NameLabel;
     @FXML
-    private Label player1Label;
+    private Label player2NameLabel;
     @FXML
-    private Label player2Label;
+    private Label player3NameLabel;
     @FXML
-    private Label player3Label;
-    @FXML
-    private Label player4Label;
+    private Label player4NameLabel;
 
-    private Label[] playerLabels;
+    @FXML
+    private Label player1ScoreLabel;
+    @FXML
+    private Label player2ScoreLabel;
+    @FXML
+    private Label player3ScoreLabel;
+    @FXML
+    private Label player4ScoreLabel;
+
+    private Label[] playerNameLabels;
+    private Label[] playerScoreLabels;
     private PlayerKeyEventListener playerKeyEventListener;
     private Map<Frame, Button> frameButtons;
 
@@ -58,16 +66,18 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        playerLabels = new Label[]{player1Label, player2Label, player3Label, player4Label};
+        playerNameLabels = new Label[]{player1NameLabel, player2NameLabel, player3NameLabel, player4NameLabel};
+        playerScoreLabels = new Label[]{player1ScoreLabel, player2ScoreLabel, player3ScoreLabel, player4ScoreLabel};
 
         updatePlayerStatuses();
 
         setPlayerKeyEventListener(new SetPlayerNameKeyEventListener());
         getPlayers().setPlayersArmed(true);
 
-        MainWindow.setControlStyle(statusBarLabel);
-
-        for (Label label : playerLabels) {
+        for (Label label : playerNameLabels) {
+            MainWindow.setControlStyle(label);
+        }
+        for (Label label : playerScoreLabels) {
             MainWindow.setControlStyle(label);
         }
     }
@@ -125,14 +135,14 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
         audio.playBackgroundMusic();
     }
 
-    private void showStatus(String string) {
-        statusBarLabel.setText(string);
-    }
-
     private void updatePlayerStatus(Player player) {
-        Label playerLabel = playerLabels[player.getId() - 1];
-        playerLabel.setTextFill(player.getColor());
-        playerLabel.setText(player.getName() + ": " + player.getPoints());
+        Label playerNameLabel = playerNameLabels[player.getId() - 1];
+        playerNameLabel.setTextFill(player.getColor());
+        playerNameLabel.setText(player.getName());
+
+        Label playerScoreLabel = playerScoreLabels[player.getId() - 1];
+        playerScoreLabel.setTextFill(player.getColor());
+        playerScoreLabel.setText("" + player.getPoints());
     }
 
     private void updatePlayerStatuses() {
@@ -200,22 +210,22 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     @FXML
-    private void onPlayerLabel1Click(MouseEvent e) {
+    private void onPlayerScoreLabel1Click(MouseEvent e) {
         editPlayerScore(Players.getPlayerList().get(0));
     }
 
     @FXML
-    private void onPlayerLabel2Click(MouseEvent e) {
+    private void onPlayerScoreLabel2Click(MouseEvent e) {
         editPlayerScore(Players.getPlayerList().get(1));
     }
 
     @FXML
-    private void onPlayerLabel3Click(MouseEvent e) {
+    private void onPlayerScoreLabel3Click(MouseEvent e) {
         editPlayerScore(Players.getPlayerList().get(2));
     }
 
     @FXML
-    private void onPlayerLabel4Click(MouseEvent e) {
+    private void onPlayerScoreLabel4Click(MouseEvent e) {
         editPlayerScore(Players.getPlayerList().get(3));
     }
 

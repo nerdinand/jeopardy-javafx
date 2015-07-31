@@ -18,16 +18,27 @@
         </GridPane> 
     </center>
     <bottom>
-        <HBox spacing="10" >
-            <BorderPane.margin>
-                <javafx.geometry.Insets left="10" right="10" bottom="10" top="10" />   
-            </BorderPane.margin>
-            
-            <Label fx:id="statusBarLabel" prefWidth="300" /> 
-            <Label fx:id="player1Label" prefWidth="300" onMouseClicked="#onPlayerLabel1Click" /> 
-            <Label fx:id="player2Label" prefWidth="300" onMouseClicked="#onPlayerLabel2Click" /> 
-            <Label fx:id="player3Label" prefWidth="300" onMouseClicked="#onPlayerLabel3Click" /> 
-            <Label fx:id="player4Label" prefWidth="300" onMouseClicked="#onPlayerLabel4Click" /> 
-        </HBox>
+        <VBox spacing="10" >
+            <HBox spacing="10" >
+                <BorderPane.margin>
+                    <javafx.geometry.Insets left="10" right="10" bottom="10" top="10" />
+                </BorderPane.margin>
+
+                <Label fx:id="player1NameLabel" prefWidth="400" />
+                <Label fx:id="player2NameLabel" prefWidth="400" />
+                <Label fx:id="player3NameLabel" prefWidth="400" />
+                <Label fx:id="player4NameLabel" prefWidth="400" />
+            </HBox>
+            <HBox spacing="10" >
+                <BorderPane.margin>
+                    <javafx.geometry.Insets left="10" right="10" bottom="10" top="10" />
+                </BorderPane.margin>
+
+                <Label fx:id="player1ScoreLabel" prefWidth="400" onMouseClicked="#onPlayerScoreLabel1Click" />
+                <Label fx:id="player2ScoreLabel" prefWidth="400" onMouseClicked="#onPlayerScoreLabel2Click" />
+                <Label fx:id="player3ScoreLabel" prefWidth="400" onMouseClicked="#onPlayerScoreLabel3Click" />
+                <Label fx:id="player4ScoreLabel" prefWidth="400" onMouseClicked="#onPlayerScoreLabel4Click" />
+            </HBox>
+        </VBox>
     </bottom>
 </BorderPane>
