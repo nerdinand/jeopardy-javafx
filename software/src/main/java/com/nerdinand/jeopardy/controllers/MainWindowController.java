@@ -142,7 +142,8 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
         Label playerScoreLabel = playerScoreLabels[player.getId() - 1];
         playerScoreLabel.setTextFill(player.getColor());
-        playerScoreLabel.setText("" + player.getPoints());
+        playerScoreLabel
+                .setText("" + player.getPoints());
     }
 
     private void updatePlayerStatuses() {
