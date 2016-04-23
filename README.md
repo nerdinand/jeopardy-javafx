@@ -10,7 +10,7 @@ Requirements
 
 Run
 ---
-`./gradlew run '-Pargs=/path/to/your/round.yml'`
+`cd software && ./gradlew run '-Pargs=/path/to/your/round.yml'`
 
 Development
 -----------
