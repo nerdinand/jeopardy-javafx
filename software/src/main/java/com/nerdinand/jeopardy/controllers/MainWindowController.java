@@ -17,15 +17,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -188,12 +189,9 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
     }
 
     private void showGameOverWindow() {
-        Dialogs.create()
-                .owner(null)
-                .title("Game over!")
-                .masthead(null)
-                .message("The game is over and the winner is " + Players.getWinner() + "!")
-                .showInformation();
+        Alert alertDialog = new Alert(Alert.AlertType.INFORMATION, "The game is over and the winner is " + Players.getWinner() + "!");
+        alertDialog.setTitle("Game over!");
+        alertDialog.showAndWait();
     }
 
     private EventHandler<WindowEvent> createOnCloseHandler() {
@@ -232,12 +230,11 @@ public class MainWindowController implements Initializable, FrameAnsweredListene
 
     private void editPlayerScore(Player player) {
         final int oldScore = player.getPoints();
-        Optional<String> newScore = Dialogs.create()
-                .owner(null)
-                .title(player.getName())
-                .masthead(null)
-                .message("Edit " + player.getName() + "'s score:")
-                .showTextInput("" + oldScore);
+        
+        TextInputDialog dialog = new TextInputDialog("" + oldScore);
+        dialog.setTitle("Name");
+        dialog.setContentText("Edit " + player.getName() + "'s score:");
+        Optional<String> newScore = dialog.showAndWait();
 
         if (newScore.isPresent()) {
             player.addScore(new Score(player, null, Integer.parseInt(newScore.get()) - oldScore));

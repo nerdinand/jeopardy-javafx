@@ -23,11 +23,6 @@
  */
 package com.nerdinand.jeopardy;
 
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.media.AudioClip;
-
 /**
  *
  * @author Ferdinand Niedermann

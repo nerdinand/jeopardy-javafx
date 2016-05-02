@@ -5,17 +5,17 @@
 <?import javafx.scene.layout.*?>
 <BorderPane
     xmlns:fx="http://javafx.com/fxml/1"
-    prefHeight="800" 
-    prefWidth="1280" 
+    prefHeight="800"
+    prefWidth="1280"
     fx:controller="com.nerdinand.jeopardy.controllers.MainWindowController"
-    onKeyPressed="#onKeyPressed" 
+    onKeyPressed="#onKeyPressed"
 >
     <center>
-        <GridPane fx:id="gridPane" hgap="10" vgap="10" >             
+        <GridPane fx:id="gridPane" hgap="10" vgap="10" >
             <BorderPane.margin>
-                <javafx.geometry.Insets left="10" right="10" bottom="10" top="10" />   
+                <javafx.geometry.Insets left="10" right="10" bottom="10" top="10" />
             </BorderPane.margin>
-        </GridPane> 
+        </GridPane>
     </center>
     <bottom>
         <VBox spacing="10" >

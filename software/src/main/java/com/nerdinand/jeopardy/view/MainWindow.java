@@ -32,13 +32,11 @@ import com.nerdinand.jeopardy.models.Round;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -92,7 +90,11 @@ public class MainWindow {
             int frameIndex = 0;
             
             final Label label = new Label(category.getName());
-            setControlStyle(label);
+            label.setStyle("-fx-font-size: 20pt;");
+            label.setPrefHeight(150);
+            label.setPrefWidth(200);
+            label.setWrapText(true);
+
             gridPain.add(label, categoryIndex, frameIndex);
             
             for (Frame frame : category.getFrames()) {

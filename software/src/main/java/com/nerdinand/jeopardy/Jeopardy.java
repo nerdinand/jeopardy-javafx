@@ -26,18 +26,17 @@ package com.nerdinand.jeopardy;
 import com.nerdinand.jeopardy.models.Players;
 import com.nerdinand.jeopardy.models.Round;
 import com.nerdinand.jeopardy.view.MainWindow;
-import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
-
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -65,17 +64,12 @@ public class Jeopardy extends Application {
         stage.setScene(scene);
         stage.show();
 
-        stage.setOnCloseRequest(event -> {
-            Action showConfirm = Dialogs.create()
-                    .owner(null)
-                    .title("Quitting...")
-                    .masthead(null)
-                    .message("Really quit?")
-                    .showConfirm();
-
-            if (showConfirm == Dialog.ACTION_NO || showConfirm == Dialog.ACTION_CANCEL) {
-                event.consume();
-            }
+        stage.setOnCloseRequest((WindowEvent event) -> {
+            Alert alertDialog = new Alert(Alert.AlertType.CONFIRMATION, "Really quit?");
+            alertDialog.setTitle("Quitting...");
+            alertDialog.showAndWait()
+                .filter(response -> (response == ButtonType.NO || response == ButtonType.CANCEL))
+                .ifPresent(response -> event.consume());
         });
     }
 

@@ -44,12 +44,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -198,25 +196,29 @@ public class AnswerWindowController implements Initializable {
         ButtonType answer = frameKeyEventListener.onPlayerKeyPressed(player);
         Frame frame = getFrame();
 
-        if (answer.getText().equals(FrameKeyEventListener.YES)) { // player has given the correct solution
-            audio.yes();
-            ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
-            closeWindow();
-
-            frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
-        } else if (answer.getText().equals(FrameKeyEventListener.YOU_TRIED)) {
-            audio.youTried();
-            ScoreFactory.getInstance().createScore(player, frame, frame.getYouTriedPoints());
-            reopenAnswer();
-
-        } else if (answer.getText().equals(FrameKeyEventListener.NO)) { // player has given the wrong solution
-            audio.no();
-            ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
-
-            frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
-            reopenAnswer();
-        } else {
-            reopenAnswer();
+        switch (answer.getText()) {
+            case FrameKeyEventListener.YES:
+                // player has given the correct solution
+                audio.yes();
+                ScoreFactory.getInstance().createScore(player, frame, frame.getPoints());
+                closeWindow();
+                frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_CORRECT);
+                break;
+            case FrameKeyEventListener.YOU_TRIED:
+                audio.youTried();
+                ScoreFactory.getInstance().createScore(player, frame, frame.getYouTriedPoints());
+                reopenAnswer();
+                break;
+            case FrameKeyEventListener.NO:
+                // player has given the wrong solution
+                audio.no();
+                ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
+                frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
+                reopenAnswer();
+                break;
+            default:
+                reopenAnswer();
+                break;
         }
     }
 
@@ -272,19 +274,17 @@ public class AnswerWindowController implements Initializable {
     }
 
     private void cancelFrame() {
-        Action cancel = Dialogs.create()
-                .owner(null)
-                .title("Cancel")
-                .masthead(null)
-                .message("Really cancel this frame?")
-                .actions(Dialog.ACTION_YES, Dialog.ACTION_NO)
-                .showConfirm();
-
-        if (cancel == Dialog.ACTION_YES) {
-            getFrame().setClosed(true);
-            frameAnsweredListener.frameAnswered(getFrame(), FrameState.CANCELED);
-            closeWindow();
-        }
+        Alert alertDialog = new Alert(Alert.AlertType.CONFIRMATION, "Really cancel this frame?");
+        alertDialog.setTitle("Cancel");
+        alertDialog.showAndWait()
+            .filter(response -> response == ButtonType.OK)
+            .ifPresent(
+                response -> {
+                    getFrame().setClosed(true);
+                    frameAnsweredListener.frameAnswered(getFrame(), FrameState.CANCELED);
+                    closeWindow();
+                }
+            );
     }
 
 }

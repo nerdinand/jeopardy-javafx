@@ -23,7 +23,6 @@
  */
 package com.nerdinand.jeopardy.controllers.listeners;
 
-import com.nerdinand.jeopardy.Assets;
 import com.nerdinand.jeopardy.models.Frame;
 import com.nerdinand.jeopardy.models.Player;
 import javafx.scene.control.ButtonType;

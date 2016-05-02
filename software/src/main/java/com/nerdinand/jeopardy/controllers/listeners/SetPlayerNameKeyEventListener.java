@@ -24,9 +24,9 @@
 package com.nerdinand.jeopardy.controllers.listeners;
 
 import com.nerdinand.jeopardy.models.Player;
-import org.controlsfx.dialog.Dialogs;
 
 import java.util.Optional;
+import javafx.scene.control.TextInputDialog;
 
 /**
  *
@@ -49,13 +49,11 @@ public class SetPlayerNameKeyEventListener implements PlayerKeyEventListener {
     private String askForPlayerName(Player player) {
         Optional<String> name;
         do {
-            name = Dialogs.create()
-                    .owner(null)
-                    .title("Name")
-                    .masthead(null)
-                    .message("Player " + player.getId() + ", please give us your name!")
-                    .showTextInput(player.getName());
-        } while (name == null);
+            TextInputDialog dialog = new TextInputDialog(player.getName());
+            dialog.setTitle("Name");
+            dialog.setContentText("Player " + player.getId() + ", please give us your name!");
+            name = dialog.showAndWait();
+        } while (!name.isPresent());
 
         if (name.isPresent()) {
             return name.get();

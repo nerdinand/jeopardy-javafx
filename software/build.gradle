@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.controlsfx:controlsfx:8.20.8'
+    compile 'org.controlsfx:controlsfx:8.40.10'
     compile 'org.yaml:snakeyaml:1.13'
 }
 

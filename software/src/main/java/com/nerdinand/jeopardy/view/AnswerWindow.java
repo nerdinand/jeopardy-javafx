@@ -29,8 +29,6 @@ import com.nerdinand.jeopardy.models.*;
 import com.nerdinand.jeopardy.services.SceneFactory;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.media.AudioClip;
-import org.controlsfx.dialog.Dialogs;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +36,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.ChoiceDialog;
 
 /**
  *
@@ -124,14 +123,14 @@ public class AnswerWindow {
 
     private Player askForPlayer() {
         Optional<Player> player;
+        
         do {
-            player = Dialogs.create()
-                    .owner(null)
-                    .title("Double Jeopardy!")
-                    .masthead(null)
-                    .message("You have encountered a Double Jeopardy!\nWhich player are you?")
-                    .showChoices(Players.getPlayerList());
-        } while (player == null);
+            ChoiceDialog dialog = new ChoiceDialog<>(Players.getPlayerList().get(0), Players.getPlayerList());
+            dialog.setTitle("Double Jeopardy!");
+            dialog.setContentText("You have encountered a Double Jeopardy!\nWhich player are you?");
+            player = dialog.showAndWait();
+        } while (!player.isPresent());
+                
         return player.get();
     }
 
@@ -139,13 +138,11 @@ public class AnswerWindow {
         final List<Integer> doubleJeopardyChoices = getDoubleJeopardyChoices(getFrame());
         Optional<Integer> wager;
         do {
-            wager = Dialogs.create()
-                    .owner(null)
-                    .title("Double Jeopardy!")
-                    .masthead(null)
-                    .message("Player " + player + "!\nHow many points do you want to set?")
-                    .showChoices(doubleJeopardyChoices);
-        } while (wager == null);
+            ChoiceDialog dialog = new ChoiceDialog<>(doubleJeopardyChoices.get(0), doubleJeopardyChoices);
+            dialog.setTitle("Double Jeopardy!");
+            dialog.setContentText("Player " + player + "!\nHow many points do you want to set?");
+            wager = dialog.showAndWait();
+        } while (!wager.isPresent());
         return wager.get();
     }
 
