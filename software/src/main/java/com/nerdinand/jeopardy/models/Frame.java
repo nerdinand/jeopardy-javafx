@@ -76,8 +76,8 @@ public class Frame {
     public void setRootPath(File rootPath) {
         this.rootPath = rootPath;
 
-        getAnswer().setRootPath(new File(rootPath, String.valueOf(getPoints())));
-        getQuestion().setRootPath(new File(rootPath, String.valueOf(getPoints())));
+        getAnswer().setRootPath(rootPath);
+        getQuestion().setRootPath(rootPath);
     }
 
     public File getRootPath() {

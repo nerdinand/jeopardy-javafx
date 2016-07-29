@@ -51,7 +51,7 @@ public class Question extends Typeable {
     }
     
     public File getMediaPath() {
-        return new File(new File(getRootPath(), "question"), value);
+        return new File(getRootPath(), value);
     }
     
 }
