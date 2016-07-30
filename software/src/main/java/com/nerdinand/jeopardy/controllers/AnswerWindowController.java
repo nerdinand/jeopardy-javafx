@@ -212,7 +212,7 @@ public class AnswerWindowController implements Initializable {
             case FrameKeyEventListener.NO:
                 // player has given the wrong solution
                 audio.no();
-                ScoreFactory.getInstance().createScore(player, frame, -frame.getPoints());
+                ScoreFactory.getInstance().createScore(player, frame, frame.getWrongPoints());
                 frameAnsweredListener.frameAnswered(frame, FrameState.ANSWERED_WRONG);
                 reopenAnswer();
                 break;

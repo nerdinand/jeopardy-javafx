@@ -32,7 +32,8 @@ import java.util.List;
  * @author Ferdinand Niedermann
  */
 public class Frame {
-    private final float YOU_TRIED_FACTOR = 0.2f;
+    private final float YOU_TRIED_FACTOR = 0.5f;
+    private final float WRONG_FACTOR = -0.5f;
 
     private int points;
     private Answer answer;
@@ -55,6 +56,10 @@ public class Frame {
     
     public int getYouTriedPoints() {
         return (int) (points * YOU_TRIED_FACTOR);
+    }
+
+    public int getWrongPoints() {
+        return (int) (points * WRONG_FACTOR);
     }
 
     public void setAnswer(Answer answer) {

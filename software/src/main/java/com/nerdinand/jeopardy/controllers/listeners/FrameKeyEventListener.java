@@ -81,7 +81,7 @@ public class FrameKeyEventListener {
 
         choices.add(new CommandLinksDialog.CommandLinksButtonType(YES, "Award " + player.getName() + " " + getFrame().getPoints() + " points.", true));
         choices.add(new CommandLinksDialog.CommandLinksButtonType(YOU_TRIED, "Award " + player.getName() + " " + getFrame().getYouTriedPoints() + " points.", false));
-        choices.add(new CommandLinksDialog.CommandLinksButtonType(NO, "Punish " + player.getName() + " with -" + getFrame().getPoints() + " points.", false));
+        choices.add(new CommandLinksDialog.CommandLinksButtonType(NO, "Punish " + player.getName() + " with " + getFrame().getWrongPoints() + " points.", false));
         choices.add(new CommandLinksDialog.CommandLinksButtonType(OOPS, "This was a mistake...", false));
 
         Optional<ButtonType> answer;
